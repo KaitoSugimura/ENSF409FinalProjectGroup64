@@ -15,5 +15,4 @@ public class FoodItem extends Nutrition{
     public String getName(){
         return this.NAME;
     }
-
 }

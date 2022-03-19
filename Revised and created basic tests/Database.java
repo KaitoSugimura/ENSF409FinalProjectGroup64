@@ -1,7 +1,6 @@
 import java.sql.*;
 
 public class Database{
-
     public final String DBURL;
     public final String USERNAME;
     public final String PASSWORD;    
@@ -14,9 +13,7 @@ public class Database{
     //javac -cp .;lib/mysql-connector-java-8.0.23.jar *.java
     //java -cp .;lib/mysql-connector-java-8.0.23.jar Main
 
-    
     public Database(String url, String user, String pw){
-
         // Database URL
         this.DBURL = url;
 
@@ -24,7 +21,6 @@ public class Database{
         this.USERNAME = user;
         this.PASSWORD = pw;
     }
-
 
     /* creates a connection to the data base using the initialized finals from the constructor:
      * DBURL (path-url), USERNAME (username), and PASSWORD (password)
@@ -35,19 +31,19 @@ public class Database{
     }
     
     // getters
-    String getDburl(){
+    String getDburl() {
         return this.DBURL;
     }
 
-    String getUsername(){
+    String getUsername() {
         return this.USERNAME;
     }
     
-    String getPassword(){
+    String getPassword() {
         return this.PASSWORD;
     }
 
-    public int[] getClientValues(String bodyType){
+    public int[] getClientValues(String bodyType) {
         int[] nutValues = new int[5];
 
         try {                    
@@ -73,7 +69,7 @@ public class Database{
         return nutValues;
     }
 
-    // PLEASE CHANGE THIS FUNCTIOn
+    // PLEASE CHANGE THIS FUNCTION
     public String[] getNextFoodValues(int i){
         String[] foodValues = new String[7];
 
@@ -100,22 +96,15 @@ public class Database{
 
         return foodValues;
     }
-
-
     
-
-    /* Closes the Connection and ResultSet
-     */
+    /* Closes the Connection and ResultSet */
     public void close() {
-        
         try {
             results.close();
             dbConnect.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }              
-
     }
-    
 }
 

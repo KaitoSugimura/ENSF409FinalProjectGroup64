@@ -9,11 +9,13 @@ public class Nutrition {
 
     public Nutrition(ClientType bodyType){
         Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
+
         try {
             database.initializeConnection();
         } catch(SQLException e){
             e.printStackTrace();
         }
+        
         int[] nutValues = database.getClientValues(bodyType.toString());
 
         this.WHOLE_GRAINS = nutValues[0];

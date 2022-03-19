@@ -1,8 +1,6 @@
-
 import java.util.*;
 
 public class Application {
-    
     private ArrayList<Hamper> hampers = new ArrayList<>();
     private int index = -1;
 
@@ -11,7 +9,8 @@ public class Application {
         inventory.validateOrder(this.hampers);
     }
 
-    public void addHamper() throws HamperHasNoClientsException{
+    public void addHamper() throws HamperHasNoClientsException {
+        // Check to ensure the user does not add another hamper if the last one has no clients
         if(index > -1 && this.hampers.get(index).getClients().isEmpty()){
             throw new HamperHasNoClientsException();
         }
@@ -20,7 +19,7 @@ public class Application {
     }
 
     public void removeHamper() throws IllegalStateException{
-        if(index < 0){
+        if (index < 0) {
             throw new IllegalStateException();
         }
         this.hampers.remove(index--);
