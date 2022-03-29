@@ -181,4 +181,12 @@ public class ApplicationTest {
         Boolean actualBool = client.isHandicapped();
         assertEquals("isHandicapped() did not return the correct boolean", true, actualBool);
     }
+
+    /* HAMPER TESTS */
+
+    /* INVENTORY TESTS */
+
+    /* FOODITEM TESTS */
+
+    /* NUTRITION TESTS(?) */
 }
