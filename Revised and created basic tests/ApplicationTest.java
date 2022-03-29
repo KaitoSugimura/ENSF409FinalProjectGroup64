@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class ApplicationTest {
     private Application app = new Application();
 
-    // Tests for Application class
+    /* APPLICATION TESTS */
 
     // addHamper() is used to add a hamper.
     // getHampers() returns an ArrayList which contains the added hamper.
@@ -73,7 +73,6 @@ public class ApplicationTest {
     // getClient() returns an ArrayList where the removed client is absent.
     @Test
     public void testRemoveClientRemovesClient(){
-
         try{
             app.addHamper();
 
@@ -122,7 +121,6 @@ public class ApplicationTest {
     // getHamper() returns an empty ArrayList.
     @Test
     public void testResetApplicationRemovesAllHampers(){
-
         boolean isEmpty = false;
         int expectedIndex = -1;
         int actualIndex = 0;
@@ -141,23 +139,19 @@ public class ApplicationTest {
 
         } catch (HamperHasNoClientsException e){
             // This exception is tested in another test.
-
         }
 
         assertEquals("resetApplication() did not empty hamper", true, isEmpty);
         assertEquals("Application hamper is not empty upon reset", expectedIndex, actualIndex); // TO-DO: change or remove
-           
     }
 
     // addHamper() is used where an existing hamper has no clients.
     // addHamper() throws HamperHasNoClientsException.
     @Test
     public void testApplicationThrowsHamperHasNoClientsException(){
-
         boolean correctException = false;
 
         try{
-
             app.addHamper();
             app.addHamper();
         } catch (HamperHasNoClientsException e){
@@ -166,5 +160,25 @@ public class ApplicationTest {
 
         assertEquals("addHamper() did not throw HamperHasNoClientsException when an existing hamper is empty"
             , true, correctException);
+    }
+
+    /* CLIENT TESTS */
+
+    // Client(ClientType) is called
+    // getType() returns the correct ClientType
+    @Test
+    public void testGetType() {
+        Client client = new Client(ClientType.ADULT_MALE);
+        ClientType actualType = client.getType();
+        assertEquals("getType() did not return the correct type",ClientType.ADULT_MALE, actualType);
+    }
+
+    // Client(ClientType) is called
+    // isHandicapped() returns the correct Boolean
+    @Test
+    public void testisHandicapped() {
+        Client client = new Client(ClientType.ADULT_MALE, true);
+        Boolean actualBool = client.isHandicapped();
+        assertEquals("isHandicapped() did not return the correct boolean", true, actualBool);
     }
 }
