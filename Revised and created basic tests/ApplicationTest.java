@@ -8,9 +8,6 @@ import org.junit.Test;
 import org.junit.Assert;
 import static org.junit.Assert.*;
 
-import java.beans.Transient;
-
-
 public class ApplicationTest {
     private Application app = new Application();
 
@@ -26,7 +23,7 @@ public class ApplicationTest {
             // This exception is tested in another test.
         }
 
-        assertFalse("A new hamper is not added when called addHamper", app.getHamper().isEmpty());
+        assertFalse("addHamper() did not add hamper", app.getHamper().isEmpty());
     }
 
     // removeHamper() is used to remove a hamper.
@@ -39,7 +36,7 @@ public class ApplicationTest {
         } catch (HamperHasNoClientsException e){
             // This exception is tested in another test.
         }
-        assertTrue("Hamper is not removed when called removeHamper: ", app.getHamper().isEmpty());
+        assertTrue("removeHamper() did not remove hamper", app.getHamper().isEmpty());
     }
 
     // removeHamper() is called on an application with no hampers.
@@ -54,7 +51,7 @@ public class ApplicationTest {
             correctException = true;
         }
 
-        assertEquals("Application did not throw an exception when removing hampers when there are none: "
+        assertEquals("removeHamper() did not throw exception when no hampers existed"
             , true, correctException);
     }
 
@@ -69,7 +66,7 @@ public class ApplicationTest {
             // This exception is tested in another test.
         }
 
-        assertFalse("Clients are succesfully added: ", app.getHamper().get(0).getClients().isEmpty());
+        assertFalse("addClient() did not add client", app.getHamper().get(0).getClients().isEmpty());
     }
 
     // removeClient() is used to remove a client from a hamper.
@@ -97,7 +94,7 @@ public class ApplicationTest {
             // This exception is tested in another test.
         }
 
-        assertTrue("Clients are not succesfully removed: ", app.getHamper().get(0).getClients().isEmpty());
+        assertTrue("removeClient() did not remove client", app.getHamper().get(0).getClients().isEmpty());
     }
 
     // removeClient() is used to remove a client from a hamper with no clients.
@@ -117,7 +114,7 @@ public class ApplicationTest {
             // This exception is tested in another test.
         }
 
-        assertEquals("Application did not throw an exception when removing clients when there are none: "
+        assertEquals("removeClient() did not remove client when none existed"
             , true, correctException);
     } 
 
@@ -147,8 +144,8 @@ public class ApplicationTest {
 
         }
 
-        assertEquals("Application hamper is not empty upon reset: ", true, isEmpty);
-        assertEquals("Application hamper is not empty upon reset: ", expectedIndex, actualIndex);
+        assertEquals("resetApplication() did not empty hamper", true, isEmpty);
+        assertEquals("Application hamper is not empty upon reset", expectedIndex, actualIndex); // TO-DO: change or remove
            
     }
 
@@ -167,7 +164,7 @@ public class ApplicationTest {
             correctException = true;
         }
 
-        assertEquals("Application did not throw a HamperHasNoClientsException when creating a new hamper while old is empty: "
+        assertEquals("addHamper() did not throw HamperHasNoClientsException when an existing hamper is empty"
             , true, correctException);
     }
 }
