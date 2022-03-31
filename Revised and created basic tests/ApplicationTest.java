@@ -227,5 +227,15 @@ public class ApplicationTest {
 
     /* FOODITEM TESTS */
 
+    //FoodItem(int ID, String name, int wholeGrain, int fruitsVeggies, int protein, int other, int calories)
+    //Checks if getItemID() returns correct value
+    @Test
+    public void testAddGetItemID(){
+        FoodItem myItem = new FoodItem(42069, "Food?", 345, 456, 678, 7, 5678);
+        int expected = 42069;
+        int actual =  myItem.getItemID();
+        assertEquals("FoodItem fails to correctly add/or get itemID", expected, actual);
+    }
+
     /* NUTRITION TESTS(?) */
 }
