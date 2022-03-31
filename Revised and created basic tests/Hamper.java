@@ -19,7 +19,7 @@ public class Hamper {
     }
 
     public void removeClient(ClientType bodyType){
-        for(int i = 0; i < clients.size(); i ++){
+        for(int i = 0; i < clients.size(); i++){
             if(bodyType == clients.get(i).getType()){
                 clients.remove(i);
                 break;
@@ -35,7 +35,15 @@ public class Hamper {
         return this.clients;
     }
 
-    public void removeClient(ClientType adultMale, int i) {
+    public void removeClient(ClientType bodyType, int N) {
+        for(int i = 0, n = 0; i < clients.size(); i++){
+            if (bodyType == clients.get(i).getType()){
+                clients.remove(i--);
+                if (n == N) {
+                    break;
+                }
+            }
+        }
     }
 
 }

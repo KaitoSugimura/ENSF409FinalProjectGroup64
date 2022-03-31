@@ -2,7 +2,6 @@ import java.util.*;
 
 public class Application {
     private ArrayList<Hamper> hampers = new ArrayList<>();
-    private int index = -1;
 
     public void calculateOrder(){
         var inventory = new Inventory();  //should not have to initialize on actual implementation
@@ -11,47 +10,45 @@ public class Application {
 
     public void addHamper() throws HamperHasNoClientsException {
         // Check to ensure the user does not add another hamper if the last one has no clients
-        if (index > -1 && this.hampers.get(index).getClients().isEmpty()){
+        if (!hampers.isEmpty() && hampers.get(hampers.size() - 1).getClients().isEmpty()){
             throw new HamperHasNoClientsException();
         }
         this.hampers.add(new Hamper());
-        index++;
     }
 
-    public void removeHamper() throws IllegalStateException{
-        if (index < 0) {
+    public void removeHamper(int i) throws IllegalStateException{
+        if (this.hampers.isEmpty() || i < 0 | i >= hampers.size()) {
             throw new IllegalStateException();
         }
-        this.hampers.remove(index--);
+        this.hampers.remove(i);
     }
 
-    public void addClient(ClientType bodyType, int quantity){
-        this.hampers.get(index).addClient(bodyType, quantity);
+    public void addClient(int i, ClientType bodyType, int quantity){
+        this.hampers.get(i).addClient(bodyType, quantity);
     }
 
-    public void removeClient(ClientType bodyType) throws IllegalStateException {
-        if(this.hampers.get(index).getClients().isEmpty()){
+    public void removeClient(int i, ClientType bodyType) throws IllegalStateException {
+        if(this.hampers.get(i).getClients().isEmpty()){
             throw new IllegalStateException();
         }
-        this.hampers.get(index).removeClient(bodyType);
+        this.hampers.get(i).removeClient(bodyType);
     }
 
     public void resetApplication(){
         this.hampers = new ArrayList<>();
-        this.index = -1;
     }
 
     public void requestOrderForm(){
 
     }
 
-    public ArrayList<Hamper> getHamper(){
+    public ArrayList<Hamper> getHampers(){
         return hampers;
     }
 
-    public int getIndex(){
-        return index;
-    }
+    // public int getIndex(){
+    //     return index;
+    // }
 
     @Override
     public String toString() {

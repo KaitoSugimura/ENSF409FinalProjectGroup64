@@ -28,7 +28,7 @@ public class ApplicationTest {
             // This exception is tested in another test.
         }
 
-        assertFalse("addHamper() did not add hamper", app.getHamper().isEmpty());
+        assertFalse("addHamper() did not add hamper", app.getHampers().isEmpty());
     }
 
     // removeHamper() is used to remove a hamper.
@@ -37,11 +37,11 @@ public class ApplicationTest {
     public void testRemoveHamperRemovesHamper(){
         try{
             app.addHamper();
-            app.removeHamper();
+            app.removeHamper(0);
         } catch (HamperHasNoClientsException e){
             // This exception is tested in another test.
         }
-        assertTrue("removeHamper() did not remove hamper", app.getHamper().isEmpty());
+        assertTrue("removeHamper() did not remove hamper", app.getHampers().isEmpty());
     }
 
     // removeHamper() is called on an application with no hampers.
@@ -51,7 +51,7 @@ public class ApplicationTest {
         boolean correctException = false;
 
         try{
-            app.removeHamper();
+            app.removeHamper(0);
         } catch (IllegalStateException e){
             correctException = true;
         }
@@ -66,12 +66,12 @@ public class ApplicationTest {
     public void testAddClientAddsClient(){
         try{
             app.addHamper();
-            app.addClient(ClientType.ADULT_MALE, 1);
+            app.addClient(0, ClientType.ADULT_MALE, 1);
         } catch (HamperHasNoClientsException e){
             // This exception is tested in another test.
         }
 
-        assertFalse("addClient() did not add client", app.getHamper().get(0).getClients().isEmpty());
+        assertFalse("addClient() did not add client", app.getHampers().get(0).getClients().isEmpty());
     }
 
     // removeClient() is used to remove a client from a hamper.
@@ -81,24 +81,24 @@ public class ApplicationTest {
         try{
             app.addHamper();
 
-            app.addClient(ClientType.ADULT_MALE, 1);
-            app.addClient(ClientType.ADULT_FEMALE, 10);
-            app.addClient(ClientType.CHILD_OVER_8, 20);
-            app.addClient(ClientType.CHILD_UNDER_8, 2);
+            app.addClient(0, ClientType.ADULT_MALE, 1);
+            app.addClient(0, ClientType.ADULT_FEMALE, 10);
+            app.addClient(0, ClientType.CHILD_OVER_8, 20);
+            app.addClient(0, ClientType.CHILD_UNDER_8, 2);
 
-            app.removeClient(ClientType.ADULT_MALE);
+            app.removeClient(0, ClientType.ADULT_MALE);
             for(int i = 0; i<10; i++)
-                app.removeClient(ClientType.ADULT_FEMALE);
+                app.removeClient(0, ClientType.ADULT_FEMALE);
             for(int i = 0; i<20; i++)
-                app.removeClient(ClientType.CHILD_OVER_8);
-            app.removeClient(ClientType.CHILD_UNDER_8);
-            app.removeClient(ClientType.CHILD_UNDER_8);
+                app.removeClient(0, ClientType.CHILD_OVER_8);
+            app.removeClient(0, ClientType.CHILD_UNDER_8);
+            app.removeClient(0, ClientType.CHILD_UNDER_8);
 
         } catch (HamperHasNoClientsException e){
             // This exception is tested in another test.
         }
 
-        assertTrue("removeClient() did not remove client", app.getHamper().get(0).getClients().isEmpty());
+        assertTrue("removeClient() did not remove client", app.getHampers().get(0).getClients().isEmpty());
     }
 
     // removeClient() is used to remove a client from a hamper with no clients.
@@ -110,7 +110,7 @@ public class ApplicationTest {
         try{
 
             app.addHamper();
-            app.removeClient(ClientType.ADULT_MALE);
+            app.removeClient(0, ClientType.ADULT_MALE);
 
         } catch (IllegalStateException e){
             correctException = true;
@@ -127,27 +127,22 @@ public class ApplicationTest {
     @Test
     public void testResetApplicationRemovesAllHampers(){
         boolean isEmpty = false;
-        int expectedIndex = -1;
-        int actualIndex = 0;
         try{
 
             app.addHamper();
-            app.addClient(ClientType.ADULT_MALE, 2);
+            app.addClient(0, ClientType.ADULT_MALE, 2);
             app.addHamper();
-            app.addClient(ClientType.ADULT_MALE, 1);
-            app.addClient(ClientType.ADULT_FEMALE, 1);
-            app.addClient(ClientType.CHILD_OVER_8, 1);
-            app.addClient(ClientType.CHILD_UNDER_8, 1);
+            app.addClient(1, ClientType.ADULT_MALE, 1);
+            app.addClient(1, ClientType.ADULT_FEMALE, 1);
+            app.addClient(1, ClientType.CHILD_OVER_8, 1);
+            app.addClient(1, ClientType.CHILD_UNDER_8, 1);
             app.resetApplication();
-            isEmpty = app.getHamper().isEmpty();
-            actualIndex = app.getIndex();
-
+            isEmpty = app.getHampers().isEmpty();
         } catch (HamperHasNoClientsException e){
             // This exception is tested in another test.
         }
 
         assertEquals("resetApplication() did not empty hamper", true, isEmpty);
-        assertEquals("Application hamper is not empty upon reset", expectedIndex, actualIndex); // TO-DO: change or remove
     }
 
     // addHamper() is used where an existing hamper has no clients.
@@ -204,27 +199,27 @@ public class ApplicationTest {
 	//The element present in clients should be the same as the created Client
 	@Test
 	public void testAddGetClient(){
-		Hamper hamper=new Hamper();
-		Client client=new Client(ClientType.ADULT_MALE, false);
+		Hamper hamper = new Hamper();
+		ClientType expectedClientType = ClientType.ADULT_MALE;
 		hamper.addClient(ClientType.ADULT_MALE, 10);
 		ArrayList<Client> clients=hamper.getClients();
-		Client actualClient=clients.get(0);
-		assertEquals("Hamper fails to correctly add and/or get Client",client,actualClient);
+		ClientType actualClientType=clients.get(0).getType();
+		assertEquals("Hamper fails to correctly add and/or get Client",expectedClientType,actualClientType);
 	}
 	
 	// Client(ClientType, int) is called and added to Array
 	// Checks if the Arraylist is empty after removing the only client present in it
 	@Test
-	public void testRemoveClient(){
-		Hamper hamper=new Hamper();
+	public void testRemoveClient() {
+		Hamper hamper = new Hamper();
 		hamper.addClient(ClientType.ADULT_MALE, 10);
 		hamper.removeClient(ClientType.ADULT_MALE, 10);
-		ArrayList<Client> clients=hamper.getClients();
-		boolean expected = false;
+		ArrayList<Client> clients = hamper.getClients();
+		boolean removed = false;
 		if (clients.isEmpty()) {
-			expected = true;
+			removed = true;
 		}
-		assertTrue("The client object was not removed from the clients ArrayList",expected);
+		assertTrue("The client object was not removed from the clients ArrayList", removed);
 	}
 
     /* INVENTORY TESTS */
