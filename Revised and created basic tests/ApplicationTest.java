@@ -183,6 +183,8 @@ public class ApplicationTest {
     }
 
     /* HAMPER TESTS */
+	//FoodItem is called and FoodItem object is added to Hamper. 
+	//The element present in ArrayList should be same as the created FoodItem. 
 	@Test
 	public void testAddGetFood(){
 		Hamper hamper=new Hamper();
@@ -192,6 +194,9 @@ public class ApplicationTest {
 		FoodItem actualFood=returnArray.get(0);
 		assertEquals("Hamper fails to correctly add and/or get FoodItem",food,actualFood);
 	}
+	
+	//Client(ClientType, int id) is called and added to ArrayList clients in Hamper
+	//The element present in clients should be the same as the created Client
 	@Test
 	public void testAddGetClient(){
 		Hamper hamper=new Hamper();
@@ -202,6 +207,8 @@ public class ApplicationTest {
 		assertEquals("Hamper fails to correctly add and/or get Client",client,actualClient);
 	}
 	
+	//Client(ClientType, int) is called and added to Array
+	//Checks if the Arraylist is empty after removing the only client present in it
 	@Test
 	public void testRemoveClient(){
 		Hamper hamper=new Hamper();
