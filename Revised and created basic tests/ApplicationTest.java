@@ -239,7 +239,8 @@ public class ApplicationTest {
 
     //FoodItem(int ID, String name, int wholeGrain, int fruitsVeggies, int protein, int other, int calories)
     //Checks if getName() returns correct value
-    @Test public void testAddGetName(){
+    @Test
+     public void testAddGetName(){
         String expected = "Food?";
         FoodItem myItem = new FoodItem(42069, expected, 345, 456, 678, 7, 5678);
         String actual = myItem.getName();
@@ -247,4 +248,17 @@ public class ApplicationTest {
     }
 
     /* NUTRITION TESTS(?) */
+
+    //Creates food item  and clientand tests return whole grains
+    @Test
+    public void testAddGetWholeGrains(){
+        int expected = 345;
+        FoodItem myItem = new FoodItem(42069, "Food?", 345, 456, 678, 7, 5678);
+        int actual = myItem.getWholeGrains();
+        assertEquals("FoodItem fails to correctly add/or get Wholegrains", expected, actual);
+        Client client= new Client(ClientType.ADULT_MALE,0);
+        expected = 0; //Constant from database
+        actual = client.getWholeGrains();
+        assertEquals("Client fails to correctly add/or get Wholegrains", expected, actual);
+    }
 }
