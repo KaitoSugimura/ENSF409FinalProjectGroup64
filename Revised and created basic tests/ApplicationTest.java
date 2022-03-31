@@ -183,6 +183,38 @@ public class ApplicationTest {
     }
 
     /* HAMPER TESTS */
+	@Test
+	public void testAddGetFood(){
+		Hamper hamper=new Hamper();
+		FoodItem food=new FoodItem(0,"default",0,0,0,0,0);
+		hamper.addItem(food);
+		ArrayList<FoodItem> returnArray=hamper.getItems();
+		FoodItem actualFood=returnArray.get(0);
+		assertEquals("Hamper fails to correctly add and/or get FoodItem",food,actualFood);
+	}
+	@Test
+	public void testAddGetClient(){
+		Hamper hamper=new Hamper();
+		Client client=new Client(ClientType.ADULT_MALE,0);
+		hamper.addClient(0,10);
+		ArrayList<Client> clients=hamper.getClients();
+		Client actualClient=clients.get(0);
+		assertEquals("Hamper fails to correctly add and/or get Client",client,actualClient);
+	}
+	
+	@Test
+	public void testRemoveClient(){
+		Hamper hamper=new Hamper();
+		Client client=new Client(ClientType.ADULT_MALE,0);
+		hamper.addClient(0,10);
+		hamper.removeClient(0,10);
+		ArrayList<Client> clients=hamper.getClients();
+		boolean expected=true;
+		if(client.get(0)!=null){
+			expected=false;
+		}
+		assertTrue("The client object was not removed from the clients ArrayList",expected);
+	}
 
     /* INVENTORY TESTS */
 
