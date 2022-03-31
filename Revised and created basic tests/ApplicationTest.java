@@ -237,5 +237,12 @@ public class ApplicationTest {
         assertEquals("FoodItem fails to correctly add/or get itemID", expected, actual);
     }
 
+    @Test public void testAddGetName(){
+        String expected = "Food?";
+        FoodItem myItem = new FoodItem(42069, expected, 345, 456, 678, 7, 5678);
+        String actual = myItem.getName();
+        assertEquals("FoodItem fails to correctly add/or get name", expected, actual);     
+    }
+
     /* NUTRITION TESTS(?) */
 }
