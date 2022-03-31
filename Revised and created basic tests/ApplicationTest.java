@@ -4,12 +4,17 @@
 // javac -cp .;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar;lib/mysql-connector-java-8.0.23.jar *.java
 // java -cp .;lib/mysql-connector-java-8.0.23.jar;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore ApplicationTest
 
-import org.junit.Test;
-import org.junit.Assert;
+import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.ArrayList;
 
 public class ApplicationTest {
-    private Application app = new Application();
+    private Application app;
+
+    @Before
+    public void setUp() {
+        app = new Application();
+    }
 
     /* APPLICATION TESTS */
 
@@ -200,25 +205,24 @@ public class ApplicationTest {
 	@Test
 	public void testAddGetClient(){
 		Hamper hamper=new Hamper();
-		Client client=new Client(ClientType.ADULT_MALE,0);
-		hamper.addClient(0,10);
+		Client client=new Client(ClientType.ADULT_MALE, false);
+		hamper.addClient(ClientType.ADULT_MALE, 10);
 		ArrayList<Client> clients=hamper.getClients();
 		Client actualClient=clients.get(0);
 		assertEquals("Hamper fails to correctly add and/or get Client",client,actualClient);
 	}
 	
-	//Client(ClientType, int) is called and added to Array
-	//Checks if the Arraylist is empty after removing the only client present in it
+	// Client(ClientType, int) is called and added to Array
+	// Checks if the Arraylist is empty after removing the only client present in it
 	@Test
 	public void testRemoveClient(){
 		Hamper hamper=new Hamper();
-		Client client=new Client(ClientType.ADULT_MALE,0);
-		hamper.addClient(0,10);
-		hamper.removeClient(0,10);
+		hamper.addClient(ClientType.ADULT_MALE, 10);
+		hamper.removeClient(ClientType.ADULT_MALE, 10);
 		ArrayList<Client> clients=hamper.getClients();
-		boolean expected=true;
-		if(client.get(0)!=null){
-			expected=false;
+		boolean expected = false;
+		if (clients.isEmpty()) {
+			expected = true;
 		}
 		assertTrue("The client object was not removed from the clients ArrayList",expected);
 	}
@@ -256,7 +260,7 @@ public class ApplicationTest {
         FoodItem myItem = new FoodItem(42069, "Food?", 345, 456, 678, 7, 5678);
         int actual = myItem.getWholeGrains();
         assertEquals("FoodItem fails to correctly add/or get Wholegrains", expected, actual);
-        Client client= new Client(ClientType.ADULT_MALE,0);
+        Client client= new Client(ClientType.ADULT_MALE, false);
         expected = 0; //Constant from database
         actual = client.getWholeGrains();
         assertEquals("Client fails to correctly add/or get Wholegrains", expected, actual);
@@ -269,7 +273,7 @@ public class ApplicationTest {
         FoodItem myItem = new FoodItem(42069, "Food?", 345, 456, 678, 7, 5678);
         int actual = myItem.getFruitVeggies();
         assertEquals("FoodItem fails to correctly add/or get Wholegrains", expected, actual);
-        Client client= new Client(ClientType.ADULT_MALE,0);
+        Client client= new Client(ClientType.ADULT_MALE, false);
         expected = 0; //Constant from database
         actual = client.getFruitVeggies();
         assertEquals("Client fails to correctly add/or get Wholegrains", expected, actual);
@@ -282,7 +286,7 @@ public class ApplicationTest {
         FoodItem myItem = new FoodItem(42069, "Food?", 345, 456, 678, 7, 5678);
         int actual = myItem.getProtein();
         assertEquals("FoodItem fails to correctly add/or get Wholegrains", expected, actual);
-        Client client= new Client(ClientType.ADULT_MALE,0);
+        Client client= new Client(ClientType.ADULT_MALE, false);
         expected = 0; //Constant from database
         actual = client.getProtein();
         assertEquals("Client fails to correctly add/or get Wholegrains", expected, actual);
@@ -295,7 +299,7 @@ public class ApplicationTest {
         FoodItem myItem = new FoodItem(42069, "Food?", 345, 456, 678, 7, 5678);
         int actual = myItem.getOther();
         assertEquals("FoodItem fails to correctly add/or get Wholegrains", expected, actual);
-        Client client= new Client(ClientType.ADULT_MALE,0);
+        Client client= new Client(ClientType.ADULT_MALE, false);
         expected = 0; //Constant from database
         actual = client.getOther();
         assertEquals("Client fails to correctly add/or get Wholegrains", expected, actual);
@@ -308,7 +312,7 @@ public class ApplicationTest {
         FoodItem myItem = new FoodItem(42069, "Food?", 345, 456, 678, 7, 5678);
         int actual = myItem.getCalories();
         assertEquals("FoodItem fails to correctly add/or get Wholegrains", expected, actual);
-        Client client= new Client(ClientType.ADULT_MALE,0);
+        Client client= new Client(ClientType.ADULT_MALE, false);
         expected = 0; //Constant from database
         actual = client.getCalories();
         assertEquals("Client fails to correctly add/or get Wholegrains", expected, actual);

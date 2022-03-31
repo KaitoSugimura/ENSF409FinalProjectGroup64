@@ -11,7 +11,7 @@ public class Application {
 
     public void addHamper() throws HamperHasNoClientsException {
         // Check to ensure the user does not add another hamper if the last one has no clients
-        if(index > -1 && this.hampers.get(index).getClients().isEmpty()){
+        if (index > -1 && this.hampers.get(index).getClients().isEmpty()){
             throw new HamperHasNoClientsException();
         }
         this.hampers.add(new Hamper());

@@ -35,4 +35,7 @@ public class Hamper {
         return this.clients;
     }
 
+    public void removeClient(ClientType adultMale, int i) {
+    }
+
 }
