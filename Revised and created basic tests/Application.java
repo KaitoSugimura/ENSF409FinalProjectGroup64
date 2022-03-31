@@ -10,12 +10,15 @@ public class Application {
 
     public void addHamper() throws HamperHasNoClientsException {
         // Check to ensure the user does not add another hamper if the last one has no clients
+        // I'm not sure we should keep this check anymore.
+        // The user might find it convenient to add several hampers in a row before adding any clients.
         if (!hampers.isEmpty() && hampers.get(hampers.size() - 1).getClients().isEmpty()){
             throw new HamperHasNoClientsException();
         }
         this.hampers.add(new Hamper());
     }
 
+    // Removes the hamper at index i in the hampers ArrayList
     public void removeHamper(int i) throws IllegalStateException{
         if (this.hampers.isEmpty() || i < 0 | i >= hampers.size()) {
             throw new IllegalStateException();
@@ -45,10 +48,6 @@ public class Application {
     public ArrayList<Hamper> getHampers(){
         return hampers;
     }
-
-    // public int getIndex(){
-    //     return index;
-    // }
 
     @Override
     public String toString() {
