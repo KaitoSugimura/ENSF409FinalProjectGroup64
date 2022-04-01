@@ -22,12 +22,7 @@ public class ApplicationTest {
     // getHampers() returns an ArrayList which contains the added hamper.
     @Test
     public void testAddHamperAddsHamper() {
-        try {
-            app.addHamper();
-        } catch (HamperHasNoClientsException e){
-            // This exception is tested in another test.
-        }
-
+        app.addHamper();
         assertFalse("addHamper() did not add hamper", app.getHampers().isEmpty());
     }
 
@@ -35,12 +30,8 @@ public class ApplicationTest {
     // getHampers() returns an ArrayList where the removed hamper is absent.
     @Test
     public void testRemoveHamperRemovesHamper() {
-        try {
-            app.addHamper();
-            app.removeHamper(0);
-        } catch (HamperHasNoClientsException e){
-            // This exception is tested in another test.
-        }
+        app.addHamper();
+        app.removeHamper(0);
         assertTrue("removeHamper() did not remove hamper", app.getHampers().isEmpty());
     }
 
@@ -64,13 +55,8 @@ public class ApplicationTest {
     // getClient() returns an ArrayList containing the added client.
     @Test
     public void testAddClientAddsClient() {
-        try {
-            app.addHamper();
-            app.addClient(0, ClientType.CHILD_OVER_8, 1);
-        } catch (HamperHasNoClientsException e) {
-            // This exception is tested in another test.
-        }
-
+        app.addHamper();
+        app.addClient(0, ClientType.CHILD_OVER_8, 1);
         assertFalse("addClient() did not add client", app.getHampers().get(0).getClients().isEmpty());
     }
 
@@ -78,22 +64,17 @@ public class ApplicationTest {
     // getClient() returns an ArrayList where the removed client is absent.
     @Test
     public void testRemoveClientRemovesClient() {
-        try {
-            app.addHamper();
+        app.addHamper();
 
-            app.addClient(0, ClientType.ADULT_MALE, 1);
-            app.addClient(0, ClientType.ADULT_FEMALE, 10);
-            app.addClient(0, ClientType.CHILD_OVER_8, 20);
-            app.addClient(0, ClientType.CHILD_UNDER_8, 2);
+        app.addClient(0, ClientType.ADULT_MALE, 1);
+        app.addClient(0, ClientType.ADULT_FEMALE, 10);
+        app.addClient(0, ClientType.CHILD_OVER_8, 20);
+        app.addClient(0, ClientType.CHILD_UNDER_8, 2);
 
-            app.removeClient(0, ClientType.ADULT_MALE, 1);
-            app.removeClient(0, ClientType.ADULT_FEMALE, 10);
-            app.removeClient(0, ClientType.CHILD_OVER_8, 20);
-            app.removeClient(0, ClientType.CHILD_UNDER_8, 2);
-
-        } catch (HamperHasNoClientsException e) {
-            // This exception is tested in another test.
-        }
+        app.removeClient(0, ClientType.ADULT_MALE, 1);
+        app.removeClient(0, ClientType.ADULT_FEMALE, 10);
+        app.removeClient(0, ClientType.CHILD_OVER_8, 20);
+        app.removeClient(0, ClientType.CHILD_UNDER_8, 2);
 
         assertTrue("removeClient() did not remove client", app.getHampers().get(0).getClients().isEmpty());
     }
@@ -109,8 +90,6 @@ public class ApplicationTest {
             app.removeClient(0, ClientType.ADULT_MALE);
         } catch (IllegalStateException e){
             exceptionThrown = true;
-        } catch (HamperHasNoClientsException e){
-            // This exception is tested in another test.
         }
 
         assertTrue("removeClient() did not remove client when none existed"
@@ -123,19 +102,15 @@ public class ApplicationTest {
     public void testResetApplicationRemovesAllHampers(){
         boolean isEmpty = false;
 
-        try{
-            app.addHamper();
-            app.addClient(0, ClientType.ADULT_MALE, 2);
-            app.addHamper();
-            app.addClient(1, ClientType.ADULT_MALE, 1);
-            app.addClient(1, ClientType.ADULT_FEMALE, 1);
-            app.addClient(1, ClientType.CHILD_OVER_8, 1);
-            app.addClient(1, ClientType.CHILD_UNDER_8, 1);
-            app.resetApplication();
-            isEmpty = app.getHampers().isEmpty();
-        } catch (HamperHasNoClientsException e){
-            // This exception is tested in another test.
-        }
+        app.addHamper();
+        app.addClient(0, ClientType.ADULT_MALE, 2);
+        app.addHamper();
+        app.addClient(1, ClientType.ADULT_MALE, 1);
+        app.addClient(1, ClientType.ADULT_FEMALE, 1);
+        app.addClient(1, ClientType.CHILD_OVER_8, 1);
+        app.addClient(1, ClientType.CHILD_UNDER_8, 1);
+        app.resetApplication();
+        isEmpty = app.getHampers().isEmpty();
 
         assertTrue("resetApplication() did not empty hamper", isEmpty);
     }
@@ -146,12 +121,8 @@ public class ApplicationTest {
     public void testApplicationThrowsHamperHasNoClientsException(){
         boolean correctException = false;
 
-        try{
-            app.addHamper();
-            app.addHamper();
-        } catch (HamperHasNoClientsException e){
-            correctException = true;
-        }
+        app.addHamper();
+        app.addHamper();
 
         assertTrue("addHamper() did not throw HamperHasNoClientsException when an existing hamper is empty"
             , correctException);
