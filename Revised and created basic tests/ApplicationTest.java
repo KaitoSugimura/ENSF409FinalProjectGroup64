@@ -102,21 +102,19 @@ public class ApplicationTest {
     // removeClient() throws an exception.
     @Test
     public void testRemoveClientWhenNoClientsGivesException(){
-        boolean correctException = false;
+        boolean exceptionThrown = false;
 
         try{
-
             app.addHamper();
-            app.removeClient(0, ClientType.ADULT_MALE, 1);
-
+            app.removeClient(0, ClientType.ADULT_MALE);
         } catch (IllegalStateException e){
-            correctException = true;
+            exceptionThrown = true;
         } catch (HamperHasNoClientsException e){
             // This exception is tested in another test.
         }
 
-        assertEquals("removeClient() did not remove client when none existed"
-            , true, correctException);
+        assertTrue("removeClient() did not remove client when none existed"
+            , exceptionThrown);
     } 
 
     // resetApplication() is used to remove all hampers.
@@ -124,8 +122,8 @@ public class ApplicationTest {
     @Test
     public void testResetApplicationRemovesAllHampers(){
         boolean isEmpty = false;
-        try{
 
+        try{
             app.addHamper();
             app.addClient(0, ClientType.ADULT_MALE, 2);
             app.addHamper();
@@ -139,7 +137,7 @@ public class ApplicationTest {
             // This exception is tested in another test.
         }
 
-        assertEquals("resetApplication() did not empty hamper", true, isEmpty);
+        assertTrue("resetApplication() did not empty hamper", isEmpty);
     }
 
     // addHamper() is used where an existing hamper has no clients.
@@ -155,8 +153,8 @@ public class ApplicationTest {
             correctException = true;
         }
 
-        assertEquals("addHamper() did not throw HamperHasNoClientsException when an existing hamper is empty"
-            , true, correctException);
+        assertTrue("addHamper() did not throw HamperHasNoClientsException when an existing hamper is empty"
+            , correctException);
     }
 
     /* CLIENT TESTS */

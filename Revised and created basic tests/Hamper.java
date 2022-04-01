@@ -18,16 +18,6 @@ public class Hamper {
         }
     }
 
-    // Removes the first occurrence of a client with the given bodyType
-    public void removeClient(ClientType bodyType){
-        for(int i = 0; i < clients.size(); i++){
-            if(bodyType == clients.get(i).getType()){
-                clients.remove(i);
-                break;
-            }
-        }
-    }
-
     public ArrayList<FoodItem> getItems(){
         return this.foodItems;
     }
@@ -39,7 +29,7 @@ public class Hamper {
     // Removes N clients with the matching bodyType.
     // If N is greater than or equal to the number of matches, all matches will be removed
     public void removeClient(ClientType bodyType, int N) {
-        for(int i = 0, n = 0; i < clients.size() && n < N; i++){
+        for (int i = 0, n = 0; i < clients.size() && n < N; i++){
             if (bodyType == clients.get(i).getType()){
                 clients.remove(i--);
                 n++;
