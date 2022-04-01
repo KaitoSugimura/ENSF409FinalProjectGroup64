@@ -11,7 +11,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, ItemLi
     public GUI() {
         super("Food Bank Order Tool");
         setupGUI();
-        setSize(1000, 600);
+        setSize(400, 600);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -21,16 +22,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener, ItemLi
         JComboBox<String> dropdown = new JComboBox<>(dropdownItems);
         dropdown.setEditable(false);
         dropdown.addItemListener(this);
+        dropdownPane.add(new JButton("-"));
         dropdownPane.add(dropdown);
+        dropdownPane.add(new JButton("+"));
         
         // Create the cards
         JPanel card1 = new JPanel();
         card1.add(new JLabel("# of adult males"));
         card1.add(new JTextField(3));
-        card1.add(new JButton("Button 1"));
-        card1.add(new JButton("Button 2"));
-        card1.add(new JButton("Button 3"));
-        
+   
         JPanel card2 = new JPanel();
         card2.add(new JTextField("TextField", 20));
         
@@ -41,6 +41,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, ItemLi
         
         this.getContentPane().add(dropdownPane, BorderLayout.PAGE_START);
         this.getContentPane().add(cards, BorderLayout.CENTER);
+        this.getContentPane().add(new JButton("Submit order"), BorderLayout.PAGE_END);
+        // this.getContentPane().add(new JButton("Reset order"), BorderLayout.PAGE_END);
     }
 
     public void itemStateChanged(ItemEvent evt) {
