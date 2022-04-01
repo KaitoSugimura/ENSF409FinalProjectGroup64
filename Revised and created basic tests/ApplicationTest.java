@@ -82,12 +82,12 @@ public class ApplicationTest {
     // removeClient() is used to remove a client from a hamper with no clients.
     // removeClient() throws an exception.
     @Test
-    public void testRemoveClientWhenNoClientsGivesException(){
+    public void testRemoveClientWhenNoClientsGivesException() {
         boolean exceptionThrown = false;
 
         try{
             app.addHamper();
-            app.removeClient(0, ClientType.ADULT_MALE);
+            app.removeClient(0, ClientType.ADULT_MALE, 1);
         } catch (IllegalStateException e){
             exceptionThrown = true;
         }
