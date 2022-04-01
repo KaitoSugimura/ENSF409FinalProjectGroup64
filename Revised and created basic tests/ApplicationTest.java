@@ -248,7 +248,7 @@ public class ApplicationTest {
 
     /* NUTRITION TESTS(?) */
 
-    //Creates food item  and clientand tests return whole grains
+    // Creates food item and client and tests return whole grains
     @Test
     public void testAddGetWholeGrains(){
         int expected = 345;
@@ -256,7 +256,7 @@ public class ApplicationTest {
         int actual = myItem.getWholeGrains();
         assertEquals("FoodItem fails to correctly add/or get Wholegrains", expected, actual);
         Client client= new Client(ClientType.ADULT_MALE, false);
-        expected = 0; //Constant from database
+        expected = 0; // Constant from database
         actual = client.getWholeGrains();
         assertEquals("Client fails to correctly add/or get Wholegrains", expected, actual);
     }

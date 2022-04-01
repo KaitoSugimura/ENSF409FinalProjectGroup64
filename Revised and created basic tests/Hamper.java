@@ -39,12 +39,10 @@ public class Hamper {
     // Removes N clients with the matching bodyType.
     // If N is greater than or equal to the number of matches, all matches will be removed
     public void removeClient(ClientType bodyType, int N) {
-        for(int i = 0, n = 0; i < clients.size(); i++){
+        for(int i = 0, n = 0; i < clients.size() && n < N; i++){
             if (bodyType == clients.get(i).getType()){
                 clients.remove(i--);
-                if (n == N) {
-                    break;
-                }
+                n++;
             }
         }
     }

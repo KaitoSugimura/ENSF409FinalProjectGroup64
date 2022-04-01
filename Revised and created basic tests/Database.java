@@ -50,8 +50,8 @@ public class Database{
             Statement myStmt = dbConnect.createStatement();
             results = myStmt.executeQuery("SELECT * FROM food_inventory.daily_client_needs");
             
-            while (results.next()){
-                if(bodyType.equals(results.getString("Client"))){
+            while (results.next()) {
+                if (bodyType.equals(results.getString("Client"))) {
                     nutValues[0] = Integer.parseInt(results.getString("WholeGrains"));
                     nutValues[1] = Integer.parseInt(results.getString("FruitVeggies"));
                     nutValues[2] = Integer.parseInt(results.getString("Protein"));
