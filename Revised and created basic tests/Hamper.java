@@ -4,10 +4,6 @@ public class Hamper {
     private ArrayList<FoodItem> foodItems = new ArrayList<>();
     private ArrayList<Client> clients = new ArrayList<>();
 
-    public Hamper(){
-
-    }
-
     public void addItem(FoodItem item){
         this.foodItems.add(item);
     }

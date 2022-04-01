@@ -8,13 +8,7 @@ public class Application {
         inventory.validateOrder(this.hampers);
     }
 
-    public void addHamper() throws HamperHasNoClientsException {
-        // Check to ensure the user does not add another hamper if the last one has no clients
-        // I'm not sure we should keep this check anymore.
-        // The user might find it convenient to add several hampers in a row before adding any clients.
-        if (!hampers.isEmpty() && hampers.get(hampers.size() - 1).getClients().isEmpty()){
-            throw new HamperHasNoClientsException();
-        }
+    public void addHamper() {
         this.hampers.add(new Hamper());
     }
 
@@ -44,12 +38,17 @@ public class Application {
         this.hampers.get(i).removeClient(bodyType, quantity);
     }
 
-    public void resetApplication(){
+    public void resetApplication() {
         this.hampers = new ArrayList<>();
     }
 
-    public void requestOrderForm(){
-
+    public void requestOrderForm() throws HamperHasNoClientsException {
+        // Check to ensure all hampers have at least one client
+        for (Hamper hamper: hampers) {
+            if (hamper.getClients().isEmpty()) {
+                throw new HamperHasNoClientsException();
+            }
+        }
     }
 
     public ArrayList<Hamper> getHampers(){
