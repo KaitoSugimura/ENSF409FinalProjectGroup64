@@ -11,7 +11,7 @@ public class Main {
         try{
             app.addHamper();
             app.addClient(1, ClientType.ADULT_FEMALE, 2);
-            app.removeClient(1, ClientType.ADULT_FEMALE);
+            app.removeClient(1, ClientType.ADULT_FEMALE, 1);
         } catch (HamperHasNoClientsException e){
             e.printStackTrace();
         }

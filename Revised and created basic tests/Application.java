@@ -30,11 +30,12 @@ public class Application {
         this.hampers.get(i).addClient(bodyType, quantity);
     }
 
-    public void removeClient(int i, ClientType bodyType) throws IllegalStateException {
+
+    public void removeClient(int i, ClientType bodyType, int quantity) throws IllegalStateException {
         if(this.hampers.get(i).getClients().isEmpty()){
             throw new IllegalStateException();
         }
-        this.hampers.get(i).removeClient(bodyType);
+        this.hampers.get(i).removeClient(bodyType, quantity);
     }
 
     public void resetApplication(){

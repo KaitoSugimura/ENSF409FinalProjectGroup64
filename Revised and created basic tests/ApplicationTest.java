@@ -21,8 +21,8 @@ public class ApplicationTest {
     // addHamper() is used to add a hamper.
     // getHampers() returns an ArrayList which contains the added hamper.
     @Test
-    public void testAddHamperAddsHamper(){
-        try{
+    public void testAddHamperAddsHamper() {
+        try {
             app.addHamper();
         } catch (HamperHasNoClientsException e){
             // This exception is tested in another test.
@@ -34,8 +34,8 @@ public class ApplicationTest {
     // removeHamper() is used to remove a hamper.
     // getHampers() returns an ArrayList where the removed hamper is absent.
     @Test
-    public void testRemoveHamperRemovesHamper(){
-        try{
+    public void testRemoveHamperRemovesHamper() {
+        try {
             app.addHamper();
             app.removeHamper(0);
         } catch (HamperHasNoClientsException e){
@@ -47,10 +47,10 @@ public class ApplicationTest {
     // removeHamper() is called on an application with no hampers.
     // removeHamper() throws an exception.
     @Test
-    public void testRemoveHamperWhenNoHampersGivesException(){
+    public void testRemoveHamperWhenNoHampersGivesException() {
         boolean correctException = false;
 
-        try{
+        try {
             app.removeHamper(0);
         } catch (IllegalStateException e){
             correctException = true;
@@ -63,11 +63,11 @@ public class ApplicationTest {
     // addClient() is used to add a client to a hamper.
     // getClient() returns an ArrayList containing the added client.
     @Test
-    public void testAddClientAddsClient(){
-        try{
+    public void testAddClientAddsClient() {
+        try {
             app.addHamper();
-            app.addClient(0, ClientType.ADULT_MALE, 1);
-        } catch (HamperHasNoClientsException e){
+            app.addClient(0, ClientType.CHILD_OVER_8, 1);
+        } catch (HamperHasNoClientsException e) {
             // This exception is tested in another test.
         }
 
@@ -77,8 +77,8 @@ public class ApplicationTest {
     // removeClient() is used to remove a client from a hamper.
     // getClient() returns an ArrayList where the removed client is absent.
     @Test
-    public void testRemoveClientRemovesClient(){
-        try{
+    public void testRemoveClientRemovesClient() {
+        try {
             app.addHamper();
 
             app.addClient(0, ClientType.ADULT_MALE, 1);
@@ -86,15 +86,12 @@ public class ApplicationTest {
             app.addClient(0, ClientType.CHILD_OVER_8, 20);
             app.addClient(0, ClientType.CHILD_UNDER_8, 2);
 
-            app.removeClient(0, ClientType.ADULT_MALE);
-            for(int i = 0; i<10; i++)
-                app.removeClient(0, ClientType.ADULT_FEMALE);
-            for(int i = 0; i<20; i++)
-                app.removeClient(0, ClientType.CHILD_OVER_8);
-            app.removeClient(0, ClientType.CHILD_UNDER_8);
-            app.removeClient(0, ClientType.CHILD_UNDER_8);
+            app.removeClient(0, ClientType.ADULT_MALE, 1);
+            app.removeClient(0, ClientType.ADULT_FEMALE, 10);
+            app.removeClient(0, ClientType.CHILD_OVER_8, 20);
+            app.removeClient(0, ClientType.CHILD_UNDER_8, 2);
 
-        } catch (HamperHasNoClientsException e){
+        } catch (HamperHasNoClientsException e) {
             // This exception is tested in another test.
         }
 
@@ -110,7 +107,7 @@ public class ApplicationTest {
         try{
 
             app.addHamper();
-            app.removeClient(0, ClientType.ADULT_MALE);
+            app.removeClient(0, ClientType.ADULT_MALE, 1);
 
         } catch (IllegalStateException e){
             correctException = true;
