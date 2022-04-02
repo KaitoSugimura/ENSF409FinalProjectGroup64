@@ -24,28 +24,15 @@ public class Hamper {
 
     // Removes N clients with the matching bodyType.
     // If N is greater than or equal to the number of matches, all matches will be removed
-    public void removeClient(ClientType bodyType, int N) throws IllegalStateException {
-        // My code ain't good but we can improve it later
-        // Count up to N occurences
-        ArrayList<Client> toBeDeleted = new ArrayList<>();
-        int n = 0;
-        for (Client client: clients) {
-            if (client.getType() == bodyType) {
-                toBeDeleted.add(client);
-                if (++n == N) {
-                    break;
-                }
+    public void removeClient(ClientType bodyType, int N) throws IllegalArgumentException {
+        if(N < 0){
+            throw new IllegalArgumentException();
+        }
+        for (int i = 0, n = 0; i < clients.size() && n < N; i++){
+            if (bodyType == clients.get(i).getType()){
+                clients.remove(i--);
+                n++;
             }
-        }
-
-        // If # of occurrences < N, throw exception
-        if (n < N) {
-            throw new IllegalStateException();
-        }
-
-        // Delete
-        for (Client client: toBeDeleted){
-            clients.remove(client); 
         }
     }
 
