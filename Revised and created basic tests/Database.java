@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.*;
 
 public class Database{
     public final String DBURL;
@@ -31,15 +32,15 @@ public class Database{
     }
     
     // getters
-    String getDburl() {
+    public String getDburl() {
         return this.DBURL;
     }
 
-    String getUsername() {
+    public String getUsername() {
         return this.USERNAME;
     }
     
-    String getPassword() {
+    public String getPassword() {
         return this.PASSWORD;
     }
 
@@ -70,31 +71,31 @@ public class Database{
     }
 
     // PLEASE CHANGE THIS FUNCTION
-    public String[] getNextFoodValues(int i){
-        String[] foodValues = new String[7];
+    public ArrayList<FoodItem> getFoodValues(){
+        ArrayList<FoodItem> foodItems = new ArrayList<>();
 
         try {                    
             Statement myStmt = dbConnect.createStatement();
             results = myStmt.executeQuery("SELECT * FROM food_inventory.available_food");
 
-            for (int j = 0; j < i; j++){
-                results.next();
+            while(results.next()){
+                int ID = Integer.parseInt(results.getString("ItemID")); 
+                String name = results.getString("Name");
+                int wholeGrains = Integer.parseInt(results.getString("GrainContent"));
+                int fruitVeggies = Integer.parseInt(results.getString("FVContent"));
+                int protein = Integer.parseInt(results.getString("ProContent"));
+                int other = Integer.parseInt(results.getString("Other"));
+                int calories = Integer.parseInt(results.getString("Calories"));
+                FoodItem foodItem = new FoodItem(ID, name, wholeGrains, fruitVeggies, protein, other, calories);
+                foodItems.add(foodItem);
             }
-            
-            foodValues[0] = results.getString("ItemID"); 
-            foodValues[1] = results.getString("Name");
-            foodValues[2] = results.getString("GrainContent");
-            foodValues[3] = results.getString("FVContent");
-            foodValues[4] = results.getString("ProContent");
-            foodValues[5] = results.getString("Other");
-            foodValues[6] = results.getString("Calories");
-            
+        
             myStmt.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
-        return foodValues;
+        return foodItems;
     }
     
     /* Closes the Connection and ResultSet */
