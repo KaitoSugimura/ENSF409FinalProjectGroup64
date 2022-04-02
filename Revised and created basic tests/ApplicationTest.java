@@ -118,14 +118,17 @@ public class ApplicationTest {
     // addHamper() is used where an existing hamper has no clients.
     // addHamper() throws HamperHasNoClientsException.
     @Test
-    public void testApplicationThrowsHamperHasNoClientsException(){
-        boolean correctException = false;
+    public void testRequestOrderFormThrowsHamperHasNoClientsException(){
+        boolean exceptionThrown = false;
 
-        app.addHamper();
-        app.addHamper();
+        try{
+            app.requestOrderForm();
+        } catch (HamperHasNoClientsException e){
+            exceptionThrown = true;
+        }
 
         assertTrue("addHamper() did not throw HamperHasNoClientsException when an existing hamper is empty"
-            , correctException);
+            , exceptionThrown);
     }
 
     /* CLIENT TESTS */
@@ -139,7 +142,7 @@ public class ApplicationTest {
         assertEquals("getType() did not return the correct type",ClientType.ADULT_MALE, actualType);
     }
 
-    // Client(ClientType) is called
+    // Client(ClientType, boolean) is called
     // isHandicapped() returns the correct Boolean
     @Test
     public void testisHandicapped() {

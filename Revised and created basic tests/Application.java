@@ -37,6 +37,9 @@ public class Application {
 
     public void requestOrderForm() throws HamperHasNoClientsException {
         // Check to ensure all hampers have at least one client
+        if (hampers.isEmpty()) {
+            throw new HamperHasNoClientsException();
+        }
         for (Hamper hamper: hampers) {
             if (hamper.getClients().isEmpty()) {
                 throw new HamperHasNoClientsException();
