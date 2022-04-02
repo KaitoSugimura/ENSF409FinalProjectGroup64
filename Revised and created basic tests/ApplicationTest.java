@@ -21,7 +21,7 @@ public class ApplicationTest {
     // addHamper() is used to add a hamper.
     // getHampers() returns an ArrayList which contains the added hamper.
     @Test
-    public void testAddHamperAddsHamper() {
+    public void testAddHamperGetHamper() {
         app.addHamper();
         assertFalse("addHamper() did not add hamper", app.getHampers().isEmpty());
     }
@@ -54,7 +54,7 @@ public class ApplicationTest {
     // addClient() is used to add a client to a hamper.
     // getClient() returns an ArrayList containing the added client.
     @Test
-    public void testAddClientAddsClient() {
+    public void testAddClientGetClient() {
         app.addHamper();
         app.addClient(0, ClientType.CHILD_OVER_8, 1);
         assertFalse("addClient() did not add client", app.getHampers().get(0).getClients().isEmpty());
@@ -146,7 +146,7 @@ public class ApplicationTest {
     // Client(ClientType, boolean) is called
     // isHandicapped() returns the correct Boolean
     @Test
-    public void testisHandicapped() {
+    public void testIsHandicapped() {
         Client client = new Client(ClientType.ADULT_MALE, true);
         Boolean actualBool = client.isHandicapped();
         assertTrue("isHandicapped() did not return the correct boolean", actualBool);
@@ -197,7 +197,7 @@ public class ApplicationTest {
 	// removeClient() is called when the hamper has no clients
 	// removeClient() throws an IllegalStateException
 	@Test
-	public void testRemoveClientThrowsException() {
+	public void testRemoveClientWhenNoClientsThrowsException() {
         Boolean exceptionThrown = false;
 		Hamper hamper = new Hamper();
         try {
@@ -235,7 +235,7 @@ public class ApplicationTest {
         assertEquals("FoodItem fails to correctly add/or get name", expected, actual);     
     }
 
-    /* NUTRITION TESTS(?) */
+    /* NUTRITION TESTS */
 
     // Creates food item and client and tests return whole grains
     @Test
