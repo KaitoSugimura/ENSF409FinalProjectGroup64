@@ -27,7 +27,7 @@ public class Database{
      * DBURL (path-url), USERNAME (username), and PASSWORD (password)
      * Throws an SQLException if connection cannot be made
      */
-    public void initializeConnection() throws SQLException{
+    public void initializeConnection() throws SQLException {
         dbConnect = DriverManager.getConnection(this.DBURL, this.USERNAME, this.PASSWORD);         
     }
     
