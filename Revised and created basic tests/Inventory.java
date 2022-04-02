@@ -36,7 +36,7 @@ public class Inventory {
         return foodItems;
     }
 
-    public void printShortages(){
-        
+    public void printShortages() throws InsufficientInventoryException {
+        throw new InsufficientInventoryException();
     }
 }
