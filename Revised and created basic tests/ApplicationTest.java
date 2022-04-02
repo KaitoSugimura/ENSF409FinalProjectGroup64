@@ -211,7 +211,58 @@ public class ApplicationTest {
 		assertTrue("removeClient() did not throw an IllegalStateException when there are no clients to remove", exceptionThrown);
 	}
 
+    // Checks if hamper throws an IllegalArgumentException when a negative amount 
+    // of clients are specified 
+    @Test
+    public void testHamperThrowsIllegalArgumentException(){
+        boolean exceptionThrown = false;
+        try{
+            Hamper hamper = new Hamper();
+            hamper.removeClient(ClientType.ADULT_FEMALE, -1);
+        } catch(IllegalArgumentException e){
+            exceptionThrown = true;
+        }
+
+        assertTrue("removeClient did not throw IllegalArgumentException when argument is negative amount of clients"
+            , exceptionThrown);
+
+    }
+
     /* INVENTORY TESTS */
+
+    // test that printShortages throws a proper exception
+    // InsufficientInventoryException() (Custom exception)
+    @Test
+    public void testPrintShortagesThrowsInsufficientInventoryException(){
+        boolean exceptionThrown = false;
+        try{
+            Inventory inventory = new Inventory();
+            inventory.printShortages();
+        } catch(InsufficientInventoryException e){
+            exceptionThrown = true;
+        }
+
+        assertTrue("printShortages did not throw an InsufficientInventoryException when tested with insuffienct foods in ArrayList"
+            , exceptionThrown);
+    }
+
+    // test the getter and validateOrder function
+    // validateOrder() should populate the FoodItem ArrayList
+    // getFoodItems() should return the FoodItem ArrayList
+    @Test
+    public void testGetFoodItems(){
+        ArrayList<Hamper> list = new ArrayList<>();
+        Hamper hamper = new Hamper();
+        Inventory inventory = new Inventory();
+
+		hamper.addClient(ClientType.ADULT_MALE, 1);
+        list.add(hamper);
+        inventory.validateOrder(list);
+        ArrayList<FoodItem> check = null;
+        check = inventory.getFoodItems();
+
+        assertNotNull("getFoodItems returns null even after order is validated", check);
+    }
 
     
     /* DATABASE TESTS */
