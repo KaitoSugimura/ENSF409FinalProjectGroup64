@@ -21,7 +21,7 @@ public class ApplicationTest {
     // addHamper() is used to add a hamper.
     // getHampers() returns an ArrayList which contains the added hamper.
     @Test
-    public void testAddHamperGetHamper() {
+    public void testAddHamperAddsHamper() {
         app.addHamper();
         assertFalse("addHamper() did not add hamper", app.getHampers().isEmpty());
     }
@@ -54,7 +54,7 @@ public class ApplicationTest {
     // addClient() is used to add a client to a hamper.
     // getClient() returns an ArrayList containing the added client.
     @Test
-    public void testAddClientGetClient() {
+    public void testAddClientAddsClient() {
         app.addHamper();
         app.addClient(0, ClientType.CHILD_OVER_8, 1);
         assertFalse("addClient() did not add client", app.getHampers().get(0).getClients().isEmpty());
@@ -115,10 +115,10 @@ public class ApplicationTest {
         assertTrue("resetApplication() did not empty hamper", isEmpty);
     }
 
-    // requestOrderForm() is called when no hampers were added.
-    // requestOrderForm() throws a HamperHasNoClientsException.
+    // addHamper() is used where an existing hamper has no clients.
+    // addHamper() throws HamperHasNoClientsException.
     @Test
-    public void testRequestOrderFormGivesException() {
+    public void testRequestOrderFormThrowsHamperHasNoClientsException(){
         boolean exceptionThrown = false;
 
         try{
@@ -127,10 +127,9 @@ public class ApplicationTest {
             exceptionThrown = true;
         }
 
-        assertTrue("requestOrderForm() did not remove client when none existed"
+        assertTrue("addHamper() did not throw HamperHasNoClientsException when an existing hamper is empty"
             , exceptionThrown);
-    } 
-
+    }
 
     /* CLIENT TESTS */
 
@@ -146,37 +145,35 @@ public class ApplicationTest {
     // Client(ClientType, boolean) is called
     // isHandicapped() returns the correct Boolean
     @Test
-    public void testIsHandicapped() {
+    public void testisHandicapped() {
         Client client = new Client(ClientType.ADULT_MALE, true);
         Boolean actualBool = client.isHandicapped();
-        assertTrue("isHandicapped() did not return the correct boolean", actualBool);
+        assertEquals("isHandicapped() did not return the correct boolean", true, actualBool);
     }
 
     /* HAMPER TESTS */
-
-	// addItem() is used to add a FoodItem to the hamper.
-    // getItems() is used to return the hamper's FoodItems as an ArrayList.
-	// The element present in this ArrayList should be same as the added FoodItem. 
+	//FoodItem is called and FoodItem object is added to Hamper. 
+	//The element present in ArrayList should be same as the created FoodItem. 
 	@Test
-	public void testAddItemGetItems() {
-		Hamper hamper = new Hamper();
-		FoodItem food = new FoodItem(0,"default",0,0,0,0,0);
+	public void testAddGetFood(){
+		Hamper hamper=new Hamper();
+		FoodItem food=new FoodItem(0,"default",0,0,0,0,0);
 		hamper.addItem(food);
-		ArrayList<FoodItem> returnArray = hamper.getItems();
-		FoodItem actualFood = returnArray.get(0);
-		assertEquals("Hamper failed to correctly add and/or get FoodItem",food,actualFood);
+		ArrayList<FoodItem> returnArray=hamper.getItems();
+		FoodItem actualFood=returnArray.get(0);
+		assertEquals("Hamper fails to correctly add and/or get FoodItem",food,actualFood);
 	}
 	
 	//Client(ClientType, int id) is called and added to ArrayList clients in Hamper
-	//The element present in clients should be the same as the added Client
+	//The element present in clients should be the same as the created Client
 	@Test
-	public void testAddClient(){
+	public void testAddGetClient(){
 		Hamper hamper = new Hamper();
-		ClientType expectedClientType = ClientType.CHILD_UNDER_8;
-		hamper.addClient(ClientType.CHILD_UNDER_8, 10);
+		ClientType expectedClientType = ClientType.ADULT_MALE;
+		hamper.addClient(ClientType.ADULT_MALE, 10);
 		ArrayList<Client> clients=hamper.getClients();
 		ClientType actualClientType=clients.get(0).getType();
-		assertEquals("Hamper failed to correctly add and/or get Client",expectedClientType,actualClientType);
+		assertEquals("Hamper fails to correctly add and/or get Client",expectedClientType,actualClientType);
 	}
 	
 	// Client(ClientType, int) is called and added to Array
@@ -194,20 +191,24 @@ public class ApplicationTest {
 		assertTrue("The client object was not removed from the clients ArrayList", removed);
 	}
 
-	// removeClient() is called when the hamper has no clients
-	// removeClient() throws an IllegalStateException
-	@Test
-	public void testRemoveClientWhenNoClientsThrowsException() {
-        Boolean exceptionThrown = false;
-		Hamper hamper = new Hamper();
-        try {
-            hamper.removeClient(ClientType.ADULT_MALE, 10);
-        } catch (IllegalStateException e) {
+    // Checks if hamper throws an IllegalArgumentException when a negative amount 
+    // of clients are specified 
+    @Test
+    public void testHamperThrowsIllegalArgumentException(){
+        boolean exceptionThrown = false;
+        try{
+            Hamper hamper = new Hamper();
+            hamper.removeClient(ClientType.ADULT_FEMALE, -1);
+        } catch(IllegalArgumentException e){
             exceptionThrown = true;
         }
 
-		assertTrue("removeClient() did not throw an IllegalStateException when there are no clients to remove", exceptionThrown);
-	}
+        assertTrue("removeClient did not throw IllegalArgumentException when argument is negative amount of clients"
+            , exceptionThrown);
+
+    }
+
+
 
     /* INVENTORY TESTS */
 
@@ -235,7 +236,7 @@ public class ApplicationTest {
         assertEquals("FoodItem fails to correctly add/or get name", expected, actual);     
     }
 
-    /* NUTRITION TESTS */
+    /* NUTRITION TESTS(?) */
 
     // Creates food item and client and tests return whole grains
     @Test
