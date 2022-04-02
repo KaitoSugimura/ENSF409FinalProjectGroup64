@@ -107,5 +107,21 @@ public class Database{
             e.printStackTrace();
         }              
     }
-}
 
+    // Testing
+    public static void main(String[] args) {
+        Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
+
+        try {
+            database.initializeConnection();
+        } catch (SQLException e) {
+            System.out.println("Connection failed");
+            System.exit(1);
+        }
+
+        ArrayList<FoodItem> foodItems = database.getFoodValues();
+        for (int i = 0; i < 10; i++) {
+            System.out.println(foodItems.get(i).getName());
+        }
+    }
+}
