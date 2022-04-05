@@ -162,8 +162,10 @@ public class ApplicationTest {
 	@Test
 	public void testAddItemGetItems() {
 		Hamper hamper = new Hamper();
-		FoodItem food = new FoodItem(0,"default",0,0,0,0,0);
-		hamper.addItem(food);
+		ArrayList<FoodItem> testItems = new ArrayList<>();
+        FoodItem food = new FoodItem(0,"default",0,0,0,0,0);
+		testItems.add(food);
+		hamper.setItems(testItems);
 		ArrayList<FoodItem> returnArray = hamper.getItems();
 		FoodItem actualFood = returnArray.get(0);
 		assertEquals("Hamper failed to correctly add and/or get FoodItem",food,actualFood);
@@ -271,7 +273,7 @@ public class ApplicationTest {
     // initializeConnection() should not throw an exception for a valid URL and credentials
     @Test
     public void testInitializeConnectionValidURLAndCredentials() {
-        Database database = new Database("jdbc:mysql://localhost/available_food", "student", "ensf");
+        Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
         Boolean exceptionThrown = false;
         try {
             database.initializeConnection();

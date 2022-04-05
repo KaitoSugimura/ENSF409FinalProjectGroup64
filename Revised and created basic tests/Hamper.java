@@ -4,8 +4,12 @@ public class Hamper {
     private ArrayList<FoodItem> foodItems = new ArrayList<>();
     private ArrayList<Client> clients = new ArrayList<>();
 
-    public void addItem(FoodItem item){
-        this.foodItems.add(item);
+    public void resetItems() {
+        this.foodItems = new ArrayList<>();
+    }
+
+    public void setItems(ArrayList<FoodItem> items){
+        this.foodItems = items;
     }
 
     public void addClient(ClientType bodyType, int quantity){
@@ -53,5 +57,4 @@ public class Hamper {
             clients.remove(client); 
         }
     }
-
 }
