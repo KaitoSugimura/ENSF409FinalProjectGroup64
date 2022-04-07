@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Stack;
 
 import javax.swing.*;
 
@@ -17,9 +16,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener, ItemLi
 
     private JLabel currentLabel;
     private ArrayList<JPanel> hamperConfigPanels = new ArrayList<>();
-    private int currentConfigPanel = 0;
 
-    private Stack<JButton> hamperButtons = new Stack<>();
+    private ArrayList<JButton> hamperButtons = new ArrayList<>();
+    private int hamperNo = 0;
+    private int currentPannelIndex = -1;
 
     public GUI() {
         super("Food Bank Order Tool");
@@ -78,7 +78,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, ItemLi
 
     private void createLeftPanel(){
         leftPanel = new JPanel();
-        leftPanel.setBackground(Color.lightGray);
+        leftPanel.setBackground(new Color(0x434e62));
         leftPanel.setBounds(0, 0, 300, 620);
         leftPanel.setLayout(new BorderLayout());
     }
@@ -86,14 +86,14 @@ public class GUI extends JFrame implements ActionListener, MouseListener, ItemLi
     private void createRightPanel(){
         rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
-        rightPanel.setBackground(Color.gray);
+        rightPanel.setBackground(new Color(0x97afde));
         rightPanel.setBounds(300, 0, 660, 620);
     }
 
     private JPanel createLeftPanelCenterPannel(){
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(10, 1));
-        panel.setBackground(Color.black);
+        panel.setBackground(new Color(0x7588ac));
         //leftPanelHampers.setPreferredSize(new Dimension(300, 420));
         return panel;
     }
@@ -101,6 +101,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, ItemLi
     private JLabel createLeftPanelTopLabel(){
         JLabel label = new JLabel();
         label.setText("Hampers");
+        label.setForeground(Color.white);
         label.setPreferredSize(new Dimension(300, 100));
         label.setFont(new Font("Comic Sans", Font.BOLD, 42));
         label.setHorizontalAlignment(JLabel.CENTER);
@@ -116,7 +117,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, ItemLi
 
     private JPanel createRightCenterTextFieldPanel(){
         JPanel panel = new JPanel();
-        panel.setBackground(Color.gray);
+        panel.setBackground(new Color(0xa8c3f7));
         return panel;
     }
 
@@ -132,39 +133,70 @@ public class GUI extends JFrame implements ActionListener, MouseListener, ItemLi
 
     private JPanel createHamperConfigField(){
         JPanel panel = new JPanel();
-        panel.setBackground(Color.lightGray);
-        panel.setPreferredSize(new Dimension(600, 300));
+        panel.setBackground(new Color(0xa8c3f7));
+        panel.setPreferredSize(new Dimension(600, 340));
 
         JTextField adultMaleText = new JTextField();
-        adultMaleText.setPreferredSize(new Dimension(100, 20));
+        adultMaleText.setPreferredSize(new Dimension(100, 40));
+        Font bigFont = adultMaleText.getFont().deriveFont(Font.PLAIN, 24f);
+        adultMaleText.setFont(bigFont);
         JTextField adultFemaleText = new JTextField();
-        adultFemaleText.setPreferredSize(new Dimension(100, 20));
+        adultFemaleText.setPreferredSize(new Dimension(100, 40));
+        adultFemaleText.setFont(bigFont);
         JTextField childOver8Text = new JTextField();
-        childOver8Text.setPreferredSize(new Dimension(100, 20));
+        childOver8Text.setPreferredSize(new Dimension(100, 40));
+        childOver8Text.setFont(bigFont);
         JTextField childUnder8Text = new JTextField();
-        childUnder8Text.setPreferredSize(new Dimension(100, 20));
+        childUnder8Text.setPreferredSize(new Dimension(100, 40));
+        childUnder8Text.setFont(bigFont);
 
         JPanel card1 = new JPanel();
-        card1.add(new JLabel("# of adult males"));
+        JLabel lb1 = new JLabel("# of adult males: ");
+        lb1.setFont(new Font("Comic Sans", Font.ITALIC, 24));
+        card1.add(lb1);
         card1.add(adultMaleText);
-        card1.setPreferredSize(new Dimension(400, 50));
+        card1.setBackground(new Color(0xeeeeee));
+        card1.setPreferredSize(new Dimension(500, 60));
         JPanel card2 = new JPanel();
-        card2.add(new JLabel("# of adult females"));
+        JLabel lb2 = new JLabel("# of adult females: ");
+        lb2.setFont(new Font("Comic Sans", Font.ITALIC, 24));
+        card2.add(lb2);
         card2.add(adultFemaleText);
-        card2.setPreferredSize(new Dimension(400, 50));
+        card2.setBackground(new Color(0xe1e1e1));
+        card2.setPreferredSize(new Dimension(500, 60));
         JPanel card3 = new JPanel();
-        card3.add(new JLabel("# of children over 8"));
+        JLabel lb3 = new JLabel("# of children over 8: ");
+        lb3.setFont(new Font("Comic Sans", Font.ITALIC, 24));
+        card3.add(lb3);
         card3.add(childOver8Text);
-        card3.setPreferredSize(new Dimension(400, 50));
+        card3.setBackground(new Color(0xd4d4d4));
+        card3.setPreferredSize(new Dimension(500, 60));
         JPanel card4 = new JPanel();
-        card4.add(new JLabel("# of children under 8"));
+        JLabel lb4 = new JLabel("# of children under 8: ");
+        lb4.setFont(new Font("Comic Sans", Font.ITALIC, 24));
+        card4.add(lb4);
         card4.add(childUnder8Text);
-        card4.setPreferredSize(new Dimension(400, 50));
+        card4.setBackground(new Color(0xc7c7c7));
+        card4.setPreferredSize(new Dimension(500, 60));
+
+        JButton resetButton = new JButton();
+        resetButton.setText("Reset fields");
+        resetButton.setFocusable(false);
+        resetButton.setPreferredSize(new Dimension(170, 54));
+        resetButton.setFont(new Font("Comic Sans", Font.PLAIN, 24));
+        resetButton.addActionListener(event -> {
+            adultMaleText.setText("");
+            adultFemaleText.setText("");
+            childOver8Text.setText("");
+            childUnder8Text.setText("");
+            System.out.println("Reset");
+        });
 
         panel.add(card1);
         panel.add(card2);
         panel.add(card3);
         panel.add(card4);
+        panel.add(resetButton);
         return panel;
     }
 
@@ -224,12 +256,21 @@ public class GUI extends JFrame implements ActionListener, MouseListener, ItemLi
 
     private void createNewHamper(){
         var button = new JButton();
-        button.setText("Hamper #" + (hamperButtons.size() + 1));
+        hamperButtons.add(button);
+        button.setText("Hamper #" + ++hamperNo);
         button.setFocusable(false);
         button.setBounds(200, 100, 100, 100);
         button.setFont(new Font("Comic Sans", Font.PLAIN, 25));
-        button.addActionListener(this);
-        hamperButtons.push(button);
+        button.addActionListener(event -> {
+            JButton thisButton = (JButton) event.getSource();
+
+            if(currentPannelIndex != -1){
+                hamperConfigPanels.get(currentPannelIndex).setVisible(false);
+            }
+            currentPannelIndex = hamperButtons.indexOf(thisButton);
+            hamperConfigPanels.get(currentPannelIndex).setVisible(true);
+            currentLabel.setText("Configure: " + thisButton.getText());
+        });
         JPanel hamperConfig = createHamperConfigField();
         hamperConfigPanels.add(hamperConfig);
         rightCenterTextFieldPanel.add(hamperConfig);
@@ -238,24 +279,21 @@ public class GUI extends JFrame implements ActionListener, MouseListener, ItemLi
     }
 
     private void removeHamper(){
-        if(!hamperButtons.empty()){
-            leftCenterHamperPanel.remove(hamperButtons.pop());
+        if(currentPannelIndex != -1){
+            rightCenterTextFieldPanel.remove(hamperConfigPanels.get(currentPannelIndex));
+            hamperConfigPanels.remove(currentPannelIndex);
+
+            leftCenterHamperPanel.remove(hamperButtons.get(currentPannelIndex));
+            hamperButtons.remove(currentPannelIndex);
+
+            currentPannelIndex = -1;
+            currentLabel.setText("Please select a Hamper");
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent event){
-        if(event.getSource() instanceof JButton){
-            JButton button = (JButton) event.getSource();
-            String subString = button.getText().substring(8);
-            int num = Integer.parseInt(subString);
-            System.out.println(num);
-            hamperConfigPanels.get(currentConfigPanel).setVisible(false);
-            hamperConfigPanels.get(num-1).setVisible(true);
-            currentConfigPanel = num-1;
 
-            currentLabel.setText("Configure Hamper #" + num);
-        }
     }
 
     public void itemStateChanged(ItemEvent evt) {
