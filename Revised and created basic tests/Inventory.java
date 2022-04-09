@@ -120,9 +120,13 @@ public class Inventory {
         // }
 
         ArrayList<Hamper> hampers = new ArrayList<>();
-        Hamper hamper = new Hamper();
-        hamper.addClient(ClientType.ADULT_FEMALE, 2);
-        hampers.add(hamper);
+        Hamper hamper1 = new Hamper();
+        hamper1.addClient(ClientType.ADULT_FEMALE, 2);
+        hampers.add(hamper1);
+        Hamper hamper2 = new Hamper();
+        hamper2.addClient(ClientType.CHILD_OVER_8, 1);
+        hamper2.addClient(ClientType.CHILD_UNDER_8, 1);
+        hampers.add(hamper2);
 
         long startTime = System.nanoTime();
         inventory.validateOrder(hampers);

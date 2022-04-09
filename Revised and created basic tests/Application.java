@@ -63,7 +63,7 @@ public class Application {
                 System.out.println("    - FruitVeggies: " + client.getFruitVeggies());
                 System.out.println("    - Protien: " + client.getProtein());
                 System.out.println("    - Other: " + client.getOther());
-                System.out.println("    - Calories: " + client.getCalories());
+                // System.out.println("    - Calories: " + client.getCalories());
             }
             System.out.println("     _______________________________");
             System.out.println("    |     FoodItems:");
