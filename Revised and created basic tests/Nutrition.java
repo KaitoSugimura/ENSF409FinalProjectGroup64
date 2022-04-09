@@ -9,7 +9,7 @@ public class Nutrition {
 
     public Nutrition(ClientType bodyType){
         Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
-
+        
         try {
             database.initializeConnection();
         } catch(SQLException e){
@@ -17,21 +17,21 @@ public class Nutrition {
         }
         
         int[] nutValues = database.getClientValues(bodyType.toString());
-
-        this.WHOLE_GRAINS = nutValues[0];
-        this.FRUIT_VEGGIES = nutValues[1];
-        this.PROTEIN = nutValues[2];
-        this.OTHER = nutValues[3];
+        
+        this.WHOLE_GRAINS = (int)Math.ceil(nutValues[0] / 100.0 * nutValues[4]);
+        this.FRUIT_VEGGIES = (int)Math.ceil(nutValues[1] / 100.0 * nutValues[4]);
+        this.PROTEIN = (int)Math.ceil(nutValues[2] / 100.0 * nutValues[4]);
+        this.OTHER = (int)Math.ceil(nutValues[3] / 100.0 * nutValues[4]);
         this.CALORIES = nutValues[4];
 
         database.close();
     }
 
     public Nutrition(int wholeGrains, int fruitVeggies, int protein, int other, int calories){
-        this.WHOLE_GRAINS = wholeGrains;
-        this.FRUIT_VEGGIES = fruitVeggies;
-        this.PROTEIN = protein;
-        this.OTHER = other;
+        this.WHOLE_GRAINS = (int)Math.ceil(wholeGrains / 100.0 * calories);
+        this.FRUIT_VEGGIES = (int)Math.ceil(fruitVeggies / 100.0 * calories);
+        this.PROTEIN = (int)Math.ceil(protein / 100.0 * calories);
+        this.OTHER = (int)Math.ceil(other / 100.0 * calories);
         this.CALORIES = calories;
     }
 
@@ -53,5 +53,11 @@ public class Nutrition {
 
     public int getCalories(){
         return this.CALORIES;
+    }
+
+    public static void main(String[] args) {
+        Nutrition test = new Nutrition(ClientType.ADULT_MALE);
+        System.out.println(test.getCalories());
+        System.out.println(test.getProtein());
     }
 }

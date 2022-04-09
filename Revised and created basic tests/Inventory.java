@@ -22,20 +22,17 @@ public class Inventory {
             int reqFruitsVeggies = 0;
             int reqProtein = 0;
             int reqOther = 0;
-            int reqCalories = 0;
             for (Client client: hamper.getClients()) {
                 reqWholeGrains += client.getWholeGrains();
                 reqFruitsVeggies += client.getFruitVeggies();
                 reqProtein += client.getProtein();
                 reqOther += client.getOther();
-                reqCalories += client.getCalories();
             }
 
             System.out.printf("reqWholeGrains: %d\n", reqWholeGrains);
             System.out.printf("reqFruitsVeggies: %d\n", reqFruitsVeggies);
             System.out.printf("reqProtein: %d\n", reqProtein);
             System.out.printf("reqOther: %d\n", reqOther);
-            System.out.printf("reqCalories: %d\n", reqCalories);
 
             ArrayList<FoodItem> bestComb = null;
             int minWaste = 0;
@@ -52,7 +49,6 @@ public class Inventory {
                 int currFruitsVeggies = 0;
                 int currProtein = 0;
                 int currOther = 0;
-                int currCalories = 0;
     
                 String code = Integer.toBinaryString(N | i).substring(1);
                 for (int j = 0; j < n; j++) {
@@ -63,13 +59,12 @@ public class Inventory {
                         currFruitsVeggies += item.getFruitVeggies();
                         currProtein += item.getProtein();
                         currOther += item.getOther();
-                        currCalories += item.getCalories();        
                     }
                 }
                 
                 // If currComb meets requirements and has less waste than bestComb, replace bestComb
-                if (currWholeGrains >= reqWholeGrains && currFruitsVeggies >= reqFruitsVeggies && currProtein >= reqProtein && currOther >= reqOther && currCalories >= reqCalories) {
-                    int currWaste = currWholeGrains - reqWholeGrains + currFruitsVeggies - reqFruitsVeggies + currProtein - reqProtein + currOther - reqOther + currCalories - reqCalories;
+                if (currWholeGrains >= reqWholeGrains && currFruitsVeggies >= reqFruitsVeggies && currProtein >= reqProtein && currOther >= reqOther) {
+                    int currWaste = currWholeGrains - reqWholeGrains + currFruitsVeggies - reqFruitsVeggies + currProtein - reqProtein + currOther - reqOther;
                     if (bestComb == null || currWaste < minWaste) {
                         bestComb = currComb;
                         minWaste = currWaste;
@@ -80,8 +75,8 @@ public class Inventory {
 
             // If a best combination exists, add items to hamper and remove from inventory
             if (bestComb != null) {
-                foodItems.removeAll(bestComb);
                 hamper.setItems(bestComb);
+                foodItems.removeAll(bestComb);
 
             } else { // If no combination meets the requirements, put all items back in inventory and return false
                 for (Hamper hamperUndo: hampers) {
@@ -98,7 +93,7 @@ public class Inventory {
     public void convertDatabaseToFoodItemsList() {
         this.foodItems = database.getFoodValues();
         // FOR TESTING PURPOSES: keeps only a few items in foodItems
-        foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 15));
+        foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 20));
     }
 
     public ArrayList<FoodItem> getFoodItems(){
