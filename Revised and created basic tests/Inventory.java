@@ -2,9 +2,7 @@ import java.util.*;
 import java.sql.SQLException;
 
 public class Inventory {
-    /* THIS IS NOT IMPLEMENTED PROPERLY AT ALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-     * temporary test to see if others are working
-     */
+
     
     private ArrayList<FoodItem> foodItems = new ArrayList<>();
     private Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
