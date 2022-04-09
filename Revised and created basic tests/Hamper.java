@@ -85,7 +85,7 @@ public class Hamper {
     /**
      * removeALl() - removes all clients linked to hamper
      */
-    public void removeAll(){
+    public void removeAllClients(){
         this.clients = new ArrayList<>();
     }
 }
