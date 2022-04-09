@@ -1,12 +1,25 @@
+/**
+@author Danny Duong, Kaito Sugimura, Kevin Johnson, Joshua Walters
+@version 2.1
+@since 1.0
+*/
+
+/*
+class Nutrition - extended by client and food item to store common nutrition values and methods
+shared between the two.
+*/
 import java.sql.SQLException;
 
-public class Nutrition {
+public abstract class Nutrition {
+
+    //Fields
     private final int WHOLE_GRAINS;
     private final int FRUIT_VEGGIES;
     private final int PROTEIN;
     private final int OTHER;
     private final int CALORIES;
 
+    //Constructors
     public Nutrition(ClientType bodyType){
         Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
         
@@ -37,28 +50,46 @@ public class Nutrition {
         this.CALORIES = calories;
     }
 
+    //Public methods
+    /**
+     * getWholeGrains - retuns whole grain nutrition value.
+     * @return WHOLE_GRAINS
+     */
     public int getWholeGrains(){
         return this.WHOLE_GRAINS;
     }
 
+    /**
+     * getFruitVeggies - returns fruit and veggie nutrition values.
+     * @return FRUIT_VEGGIES
+     */
     public int getFruitVeggies(){
         return this.FRUIT_VEGGIES;
     }
 
+    /**
+     * getProtein - reutn protein nutrition values.
+     * @return PROTEIN
+     */
     public int getProtein(){
         return this.PROTEIN;
     }
 
+    /**
+     * getOther - reutnrs nutrition for the other category.
+     * @return OTHER
+     */
     public int getOther(){
         return this.OTHER;
     }
 
+    /**
+     * getCalories - returns calories
+     * @return CALORIES
+     */
     public int getCalories(){
         return this.CALORIES;
     }
 
-    public static void main(String[] args) {
-        Nutrition test = new Nutrition(ClientType.ADULT_MALE);
-        System.out.println(test.getProtein());
-    }
+    
 }
