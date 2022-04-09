@@ -1,11 +1,7 @@
 import java.util.*;
 import java.sql.SQLException;
 
-public class Inventory {
-    /* THIS IS NOT IMPLEMENTED PROPERLY AT ALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-     * temporary test to see if others are working
-     */
-    
+public class Inventory {    
     private ArrayList<FoodItem> foodItems = new ArrayList<>();
     private Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
 
@@ -17,89 +13,104 @@ public class Inventory {
         }
 
         for (Hamper hamper: hampers) {
-            // Calculate hamper requirements
-            int reqWholeGrains = 0;
-            int reqFruitsVeggies = 0;
-            int reqProtein = 0;
-            int reqOther = 0;
+            // Calculate required values
+            int[] reqValues = new int[]{0,0,0,0};
             for (Client client: hamper.getClients()) {
-                reqWholeGrains += client.getWholeGrains();
-                reqFruitsVeggies += client.getFruitVeggies();
-                reqProtein += client.getProtein();
-                reqOther += client.getOther();
+                reqValues[0] += client.getWholeGrains();
+                reqValues[1] += client.getFruitVeggies();
+                reqValues[2] += client.getProtein();
+                reqValues[3] += client.getOther();                
             }
 
-            System.out.printf("reqWholeGrains: %d\n", reqWholeGrains);
-            System.out.printf("reqFruitsVeggies: %d\n", reqFruitsVeggies);
-            System.out.printf("reqProtein: %d\n", reqProtein);
-            System.out.printf("reqOther: %d\n", reqOther);
-
+            // Attempt to find a best combination if one exists
             ArrayList<FoodItem> bestComb = null;
-            int minWaste = 0;
-            
-            int n = foodItems.size(); // # of food items
-            int N = (int) Math.pow(2d, Double.valueOf(n)); // # of combinations
-            
-            // Iterate through all combinations of food items
-            // I adapted this code for finding all combinations:
-            // https://stackoverflow.com/questions/37835286/generate-all-possible-combinations-java
-            for (int i = 1; i < N; i++) {
-                ArrayList<FoodItem> currComb = new ArrayList<>();
-                int currWholeGrains = 0;
-                int currFruitsVeggies = 0;
-                int currProtein = 0;
-                int currOther = 0;
-    
-                String code = Integer.toBinaryString(N | i).substring(1);
-                for (int j = 0; j < n; j++) {
-                    if (code.charAt(j) == '1') {
-                        FoodItem item = foodItems.get(j);
-                        currComb.add(item);
-                        currWholeGrains += item.getWholeGrains();
-                        currFruitsVeggies += item.getFruitVeggies();
-                        currProtein += item.getProtein();
-                        currOther += item.getOther();
-                    }
-                }
-                
-                // If currComb meets requirements and has less waste than bestComb, replace bestComb
-                if (currWholeGrains >= reqWholeGrains && currFruitsVeggies >= reqFruitsVeggies && currProtein >= reqProtein && currOther >= reqOther) {
-                    int currWaste = currWholeGrains - reqWholeGrains + currFruitsVeggies - reqFruitsVeggies + currProtein - reqProtein + currOther - reqOther;
-                    if (bestComb == null || currWaste < minWaste) {
-                        bestComb = currComb;
-                        minWaste = currWaste;
-                        System.out.printf("New minWaste: %d\n", minWaste);
-                    }
-                }
+            for (int i = 0; i < foodItems.size(); i++) {
+                bestComb = combinations(new ArrayList<>(), bestComb, new int[]{0,0,0,0}, reqValues, i);
             }
 
             // If a best combination exists, add items to hamper and remove from inventory
             if (bestComb != null) {
                 hamper.setItems(bestComb);
                 foodItems.removeAll(bestComb);
-
             } else { // If no combination meets the requirements, put all items back in inventory and return false
                 for (Hamper hamperUndo: hampers) {
                     foodItems.addAll(hamperUndo.getItems());
                     hamperUndo.resetItems();
                 }
+                System.out.println("Insufficient inventory. No items were removed.");
                 return false;
             }
         }
 
+        System.out.println("Order fulfilled. Items removed from inventory.");
         return true;
     }
+    
+    // A recursive method that calculates and returns the combination of foods that
+    // 1. meets the caloric requirements of reqValues
+    // 2. minimizes caloric waste
+    // If no combination meets the requirements, returns null
+    // 
+    // currComb: each recursion adds an item to currComb
+    // bestComb: the current combination with the least waste
+    // currValues: the nutritional contents of currComb
+    // reqValues: the required nutritional contents
+    // pos: the index in foodItems that the recursion uses
+    private ArrayList<FoodItem> combinations(ArrayList<FoodItem> currComb, ArrayList<FoodItem> bestComb, int[] currValues, int[] reqValues, int pos) {
+        // update currValues
+        currComb.add(foodItems.get(pos));
+        currValues[0] += foodItems.get(pos).getWholeGrains();
+        currValues[1] += foodItems.get(pos).getFruitVeggies();
+        currValues[2] += foodItems.get(pos).getProtein();
+        currValues[3] += foodItems.get(pos).getOther();
 
+        // Calculate minWaste
+        int minWaste = -reqValues[0] - reqValues[1] - reqValues[2] - reqValues[3];
+        if (bestComb != null) {
+            for (FoodItem item: bestComb) {
+                minWaste += item.getCalories();
+            }
+        }
+        
+        // If currComb meets requirements
+        if (currValues[0] >= reqValues[0] && currValues[1] >= reqValues[1] && currValues[2] >= reqValues[2] && currValues[3] >= reqValues[3]) {
+            int currWaste = currValues[0] - reqValues[0] + currValues[1] - reqValues[1] + currValues[2] - reqValues[2] + currValues[3] - reqValues[3];
+            // If currComb's waste is less than minWaste, replace bestComb
+            if (bestComb == null || currWaste < minWaste) {
+                // System.out.printf("New minWaste: %d\n", currWaste);
+                bestComb = new ArrayList<>(currComb);
+            } else {
+                currComb.remove(foodItems.get(pos));
+                currValues[0] -= foodItems.get(pos).getWholeGrains();
+                currValues[1] -= foodItems.get(pos).getFruitVeggies();
+                currValues[2] -= foodItems.get(pos).getProtein();
+                currValues[3] -= foodItems.get(pos).getOther();
+                return bestComb;
+            }
+        }
+
+        for (int i = pos + 1; i < foodItems.size(); i++) {
+            bestComb = combinations(currComb, bestComb, currValues, reqValues, i);
+        }
+
+        currComb.remove(foodItems.get(pos));
+        currValues[0] -= foodItems.get(pos).getWholeGrains();
+        currValues[1] -= foodItems.get(pos).getFruitVeggies();
+        currValues[2] -= foodItems.get(pos).getProtein();
+        currValues[3] -= foodItems.get(pos).getOther();
+        return bestComb;
+    }
+    
     public void convertDatabaseToFoodItemsList() {
         this.foodItems = database.getFoodValues();
         // FOR TESTING PURPOSES: keeps only a few items in foodItems
-        foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 20));
+        foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 30));
     }
 
     public ArrayList<FoodItem> getFoodItems(){
         return foodItems;
     }
-
+    
     public void printShortages() throws InsufficientInventoryException {
         throw new InsufficientInventoryException();
     }
@@ -114,14 +125,10 @@ public class Inventory {
             System.exit(1);
         }
         inventory.convertDatabaseToFoodItemsList();
-
-        // for (FoodItem foodItem: inventory.foodItems) {
-        //     System.out.println(foodItem.getName());
-        // }
-
+        
         ArrayList<Hamper> hampers = new ArrayList<>();
         Hamper hamper1 = new Hamper();
-        hamper1.addClient(ClientType.ADULT_FEMALE, 2);
+        hamper1.addClient(ClientType.ADULT_FEMALE, 1);
         hampers.add(hamper1);
         Hamper hamper2 = new Hamper();
         hamper2.addClient(ClientType.CHILD_OVER_8, 1);
@@ -129,7 +136,7 @@ public class Inventory {
         hampers.add(hamper2);
 
         long startTime = System.nanoTime();
-        inventory.validateOrder(hampers);
+        System.out.println(inventory.validateOrder(hampers));
         double elapsedTime = (System.nanoTime() - startTime) / 1E9;
         System.out.printf("Elapsed time: %f seconds\n", elapsedTime);
     }
