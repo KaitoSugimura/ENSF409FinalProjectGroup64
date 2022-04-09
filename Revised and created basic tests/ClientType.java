@@ -1,3 +1,12 @@
+/**
+@author Danny Duong, Kaito Sugimura, Kevin Johnson, Joshua Walters
+@version 1.1
+@since 1.0
+*/
+
+/*
+enum ClientType - enum used to validate the constant client types for the Client class.
+*/
 public enum ClientType {
     ADULT_MALE{
         @Override
@@ -24,5 +33,9 @@ public enum ClientType {
         }
     };
 
+    //Methods
+    /**
+     * toString - returns the type name as a string.
+     */
     public abstract String toString();
 }
