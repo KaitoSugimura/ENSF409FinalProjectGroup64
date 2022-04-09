@@ -104,7 +104,7 @@ public class Inventory {
     public void convertDatabaseToFoodItemsList() {
         this.foodItems = database.getFoodValues();
         // FOR TESTING PURPOSES: keeps only a few items in foodItems
-        foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 30));
+        foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 25));
     }
 
     public ArrayList<FoodItem> getFoodItems(){
@@ -126,14 +126,15 @@ public class Inventory {
         }
         inventory.convertDatabaseToFoodItemsList();
         
+        // 1372, 2271
         ArrayList<Hamper> hampers = new ArrayList<>();
         Hamper hamper1 = new Hamper();
         hamper1.addClient(ClientType.ADULT_FEMALE, 1);
         hampers.add(hamper1);
-        // Hamper hamper2 = new Hamper();
-        // hamper2.addClient(ClientType.CHILD_OVER_8, 1);
+        Hamper hamper2 = new Hamper();
+        hamper2.addClient(ClientType.CHILD_OVER_8, 1);
         // hamper2.addClient(ClientType.CHILD_UNDER_8, 1);
-        // hampers.add(hamper2);
+        hampers.add(hamper2);
 
         long startTime = System.nanoTime();
         System.out.println(inventory.validateOrder(hampers));
