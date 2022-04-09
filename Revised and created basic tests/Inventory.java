@@ -77,7 +77,7 @@ public class Inventory {
             int currWaste = currValues[0] - reqValues[0] + currValues[1] - reqValues[1] + currValues[2] - reqValues[2] + currValues[3] - reqValues[3];
             // If currComb's waste is less than minWaste, replace bestComb
             if (bestComb == null || currWaste < minWaste) {
-                // System.out.printf("New minWaste: %d\n", currWaste);
+                System.out.printf("New minWaste: %d\n", currWaste);
                 bestComb = new ArrayList<>(currComb);
             } else {
                 currComb.remove(foodItems.get(pos));
@@ -130,10 +130,10 @@ public class Inventory {
         Hamper hamper1 = new Hamper();
         hamper1.addClient(ClientType.ADULT_FEMALE, 1);
         hampers.add(hamper1);
-        Hamper hamper2 = new Hamper();
-        hamper2.addClient(ClientType.CHILD_OVER_8, 1);
-        hamper2.addClient(ClientType.CHILD_UNDER_8, 1);
-        hampers.add(hamper2);
+        // Hamper hamper2 = new Hamper();
+        // hamper2.addClient(ClientType.CHILD_OVER_8, 1);
+        // hamper2.addClient(ClientType.CHILD_UNDER_8, 1);
+        // hampers.add(hamper2);
 
         long startTime = System.nanoTime();
         System.out.println(inventory.validateOrder(hampers));
