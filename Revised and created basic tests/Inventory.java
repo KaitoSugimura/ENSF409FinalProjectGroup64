@@ -129,6 +129,9 @@ public class Inventory {
         hamper.addClient(ClientType.ADULT_FEMALE, 2);
         hampers.add(hamper);
 
+        long startTime = System.nanoTime();
         inventory.validateOrder(hampers);
+        double elapsedTime = (System.nanoTime() - startTime) / 1E9;
+        System.out.printf("Elapsed time: %f seconds\n", elapsedTime);
     }
 }
