@@ -54,7 +54,6 @@ public class Inventory {
     // 1. meets the caloric requirements of reqValues
     // 2. minimizes caloric waste
     // If no combination meets the requirements, returns null
-    // Adapted from https://stackoverflow.com/questions/59351266/how-to-generate-combinations-from-a-set-of-objects
     private ArrayList<FoodItem> combinations(ArrayList<FoodItem> currComb, ArrayList<FoodItem> bestComb, int[] currValues, int[] reqValues, int pos) {
         // Update currValues
         currComb.add(foodItems.get(pos));
