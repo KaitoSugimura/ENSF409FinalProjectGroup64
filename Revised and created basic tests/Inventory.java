@@ -5,6 +5,9 @@ public class Inventory {
     private ArrayList<FoodItem> foodItems = new ArrayList<>();
     private Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
 
+    // Fills the hampers with food satisfying their nutritional requirements, minimizing waste
+    // If successful, moves items from inventory to hampers and returns true
+    // If inventory is insufficient, nothing is moved and returns false
     public boolean validateOrder(ArrayList<Hamper> hampers) {
         try {
             database.initializeConnection();
@@ -12,34 +15,35 @@ public class Inventory {
             e.printStackTrace();
         }
 
-        for (Hamper hamper: hampers) {
+        for (int i = 0; i < hampers.size(); i++) {
             // Calculate required values
             int[] reqValues = new int[]{0,0,0,0};
-            for (Client client: hamper.getClients()) {
+            for (Client client: hampers.get(i).getClients()) {
                 reqValues[0] += client.getWholeGrains();
                 reqValues[1] += client.getFruitVeggies();
                 reqValues[2] += client.getProtein();
                 reqValues[3] += client.getOther();                
             }
-
+    
             // Attempt to find a best combination if one exists
             ArrayList<FoodItem> bestComb = null;
-            for (int i = 0; i < foodItems.size(); i++) {
-                bestComb = combinations(new ArrayList<>(), bestComb, new int[]{0,0,0,0}, reqValues, i);
+            for (int j = 0; j < foodItems.size(); j++) {
+                bestComb = combinations(new ArrayList<>(), bestComb, new int[]{0,0,0,0}, reqValues, j);
             }
-
+    
             // If a best combination exists, add items to hamper and remove from inventory
             if (bestComb != null) {
-                hamper.setItems(bestComb);
+                hampers.get(i).setItems(bestComb);
                 foodItems.removeAll(bestComb);
             } else { // If no combination meets the requirements, put all items back in inventory and return false
                 for (Hamper hamperUndo: hampers) {
                     foodItems.addAll(hamperUndo.getItems());
                     hamperUndo.resetItems();
                 }
-                System.out.println("Insufficient inventory. No items were removed.");
+                System.out.printf("Insufficient inventory for hamper #%d. No items were removed.\n", i + 1);
                 return false;
             }
+
         }
 
         System.out.println("Order fulfilled. Items removed from inventory.");
@@ -50,14 +54,9 @@ public class Inventory {
     // 1. meets the caloric requirements of reqValues
     // 2. minimizes caloric waste
     // If no combination meets the requirements, returns null
-    // 
-    // currComb: each recursion adds an item to currComb
-    // bestComb: the current combination with the least waste
-    // currValues: the nutritional contents of currComb
-    // reqValues: the required nutritional contents
-    // pos: the index in foodItems that the recursion uses
+    // Adapted from https://stackoverflow.com/questions/59351266/how-to-generate-combinations-from-a-set-of-objects
     private ArrayList<FoodItem> combinations(ArrayList<FoodItem> currComb, ArrayList<FoodItem> bestComb, int[] currValues, int[] reqValues, int pos) {
-        // update currValues
+        // Update currValues
         currComb.add(foodItems.get(pos));
         currValues[0] += foodItems.get(pos).getWholeGrains();
         currValues[1] += foodItems.get(pos).getFruitVeggies();
@@ -104,7 +103,7 @@ public class Inventory {
     public void convertDatabaseToFoodItemsList() {
         this.foodItems = database.getFoodValues();
         // FOR TESTING PURPOSES: keeps only a few items in foodItems
-        foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 25));
+        foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 30));
     }
 
     public ArrayList<FoodItem> getFoodItems(){
@@ -126,7 +125,6 @@ public class Inventory {
         }
         inventory.convertDatabaseToFoodItemsList();
         
-        // 1372, 2271
         ArrayList<Hamper> hampers = new ArrayList<>();
         Hamper hamper1 = new Hamper();
         hamper1.addClient(ClientType.ADULT_FEMALE, 1);
