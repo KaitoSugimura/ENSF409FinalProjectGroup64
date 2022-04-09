@@ -23,20 +23,11 @@ public class FoodItem extends Nutrition{
         this.NAME = name;
     }
 
-    //Public Methods
-
-    /**
-     * getItemID() - returns the ItemID of a given food item.
-     * @return ITEM_ID
-     */
+    //Getters
     public int getItemID(){
         return this.ITEM_ID;
     }
 
-    /**
-     * getName() - returns the name of a given food item.
-     * @return NAME
-     */
     public String getName(){
         return this.NAME;
     }
