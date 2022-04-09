@@ -50,43 +50,28 @@ public abstract class Nutrition {
         this.CALORIES = calories;
     }
 
-    //Public methods
-    /**
-     * getWholeGrains - retuns whole grain nutrition value.
-     * @return WHOLE_GRAINS
-     */
+    //Getters
+    
     public int getWholeGrains(){
         return this.WHOLE_GRAINS;
     }
 
-    /**
-     * getFruitVeggies - returns fruit and veggie nutrition values.
-     * @return FRUIT_VEGGIES
-     */
+    
     public int getFruitVeggies(){
         return this.FRUIT_VEGGIES;
     }
 
-    /**
-     * getProtein - reutn protein nutrition values.
-     * @return PROTEIN
-     */
+    
     public int getProtein(){
         return this.PROTEIN;
     }
 
-    /**
-     * getOther - reutnrs nutrition for the other category.
-     * @return OTHER
-     */
+    
     public int getOther(){
         return this.OTHER;
     }
 
-    /**
-     * getCalories - returns calories
-     * @return CALORIES
-     */
+    
     public int getCalories(){
         return this.CALORIES;
     }
