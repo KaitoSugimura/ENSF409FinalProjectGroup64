@@ -1,7 +1,17 @@
+/**
+@author Danny Duong, Kaito Sugimura, Kevin Johnson, Joshua Walters
+@version 2.5
+@since 1.0
+*/
+
+/*
+class Database - class that deals with connections between the database and program.
+*/
 import java.sql.*;
 import java.util.*;
 
 public class Database{
+    //Fields
     public final String DBURL;
     public final String USERNAME;
     public final String PASSWORD;    
@@ -14,6 +24,7 @@ public class Database{
     //javac -cp .;lib/mysql-connector-java-8.0.23.jar *.java
     //java -cp .;lib/mysql-connector-java-8.0.23.jar Main
 
+    //Constructors
     public Database(String url, String user, String pw){
         // Database URL
         this.DBURL = url;
