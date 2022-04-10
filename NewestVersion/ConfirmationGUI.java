@@ -64,6 +64,7 @@ public class ConfirmationGUI extends JFrame implements ActionListener {
         JTextArea orderPreview = new JTextArea();
         orderPreview.setEditable(false);
         orderPreview.append(app.toString());
+        orderPreview.setCaretPosition(0);
         JScrollPane scroll = new JScrollPane(orderPreview);
         scroll.setPreferredSize(new Dimension(400, 475));
         scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);

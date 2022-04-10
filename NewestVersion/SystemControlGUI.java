@@ -6,24 +6,23 @@ import javax.swing.*;
 
 
 public class SystemControlGUI extends JFrame implements ActionListener {
-    private JButton reviewButton;
 
     private JPanel rightPanel;
     private JPanel leftPanel;
-    
     private JPanel leftCenterHamperPanel;
     private JPanel rightCenterTextFieldPanel;
 
     private JLabel currentLabel;
-    private ArrayList<ConfigurationPannelGUI> hamperConfigPanels = new ArrayList<>();
+    private JButton reviewButton;
 
+    private ArrayList<ConfigurationPannelGUI> hamperConfigPanels = new ArrayList<>();
     private ArrayList<JButton> hamperButtons = new ArrayList<>();
     private int hamperNo = 0;
     private int currentPannelIndex = -1;
 
     private Application app;
 
-    public static Boolean buttonNotRecentlyPressed = true; // To make review changes unspammable 
+    public static Boolean buttonNotRecentlyPressed = true; // To make review changes button unspammable 
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -72,7 +71,7 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         createRightPanel();     // Create and set up the Right Panel
         createRightCenterLabel();  // Create currentLabel
 
-        JLabel rightPanelTopLabel = createRightPanelTopLabel();
+        JPanel rightPanelTopLabel = createRightPanelTopPanel();
         rightCenterTextFieldPanel = createRightCenterTextFieldPanel();
         rightCenterTextFieldPanel.add(currentLabel);
         setupReviewButton();    // Create submit button
@@ -97,7 +96,6 @@ public class SystemControlGUI extends JFrame implements ActionListener {
     private void createRightPanel(){
         rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
-        rightPanel.setBackground(new Color(0x97afde));
         rightPanel.setBounds(300, 0, 660, 620);
     }
 
@@ -131,14 +129,50 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         return panel;
     }
 
-    private JLabel createRightPanelTopLabel(){
+    private JPanel createRightPanelTopPanel(){
+        JPanel panel = new JPanel();
+        panel.setPreferredSize(new Dimension(660, 100));
+        panel.setBackground(new Color(0x97afde));
+
         JLabel label = new JLabel();
         label.setText("Configure Hampers");
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setPreferredSize(new Dimension(300, 100));
+        //label.setVerticalAlignment(JLabel.CENTER);
         label.setFont(new Font("Comic Sans", Font.BOLD, 42));
-        label.setBackground(Color.white);
-        return label;
+        label.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 40));
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+        buttonPanel.setBackground(new Color(0x97afde));
+        JButton resetButton = new JButton();
+        resetButton.setText("Reset All");
+        resetButton.setFocusable(false);
+        resetButton.setPreferredSize(new Dimension(100, 50));
+        resetButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        resetButton.addActionListener(event -> {
+            removeArrayElements();
+            app.resetApplication();
+            hamperNo = 0;
+            currentPannelIndex = -1;
+            revalidate();
+            repaint();
+        });
+        buttonPanel.add(resetButton);
+
+        panel.add(label);
+        panel.add(buttonPanel);
+
+        return panel;
+    }
+
+    private void removeArrayElements(){
+        for(ConfigurationPannelGUI panel : hamperConfigPanels){
+            rightCenterTextFieldPanel.remove(panel.getPanel());
+        }
+        for(JButton button : hamperButtons){
+            leftCenterHamperPanel.remove(button);
+        }
+        hamperConfigPanels = new ArrayList<>();
+        hamperButtons = new ArrayList<>();
     }
 
     // **** **** BUTTON SET UP **** ****
@@ -152,13 +186,25 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         reviewButton.addActionListener(event -> {
             if(buttonNotRecentlyPressed){
                 buttonNotRecentlyPressed = false;
-                    app.removeAllClients(); // Remove any existing clients
+                app.removeAllClients(); // Remove any existing clients
+                int male;
+                int female;
+                int childOver8;
+                int childUnder8;
 
                 for(ConfigurationPannelGUI config : hamperConfigPanels){
-                    app.addClient(hamperConfigPanels.indexOf(config), ClientType.ADULT_MALE, parseInt(config.getMaleText()));
-                    app.addClient(hamperConfigPanels.indexOf(config), ClientType.ADULT_FEMALE, parseInt(config.getFemaleText()));
-                    app.addClient(hamperConfigPanels.indexOf(config), ClientType.CHILD_OVER_8, parseInt(config.getChildOver8Text()));
-                    app.addClient(hamperConfigPanels.indexOf(config), ClientType.CHILD_UNDER_8, parseInt(config.getChildUnder8Text()));
+                    try{
+                        male = parseInt(config.getMaleText());
+                        female = parseInt(config.getFemaleText());
+                        childOver8 = parseInt(config.getChildOver8Text());
+                        childUnder8 = parseInt(config.getChildUnder8Text());
+                    } catch (NumberFormatException e){
+                        return;
+                    }
+                    app.addClient(hamperConfigPanels.indexOf(config), ClientType.ADULT_MALE, male);
+                    app.addClient(hamperConfigPanels.indexOf(config), ClientType.ADULT_FEMALE, female);
+                    app.addClient(hamperConfigPanels.indexOf(config), ClientType.CHILD_OVER_8, childOver8);
+                    app.addClient(hamperConfigPanels.indexOf(config), ClientType.CHILD_UNDER_8, childUnder8);
                 }
                 try{
                     app.calculateOrder();
@@ -171,7 +217,7 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         });
     }
 
-    private int parseInt(String arg){
+    private int parseInt(String arg) throws NumberFormatException{
         try{
             return Integer.parseInt(arg);
         } catch(NumberFormatException e){
@@ -180,7 +226,7 @@ public class SystemControlGUI extends JFrame implements ActionListener {
             }
             JOptionPane.showMessageDialog(this, "Please make sure all of your inputs are Integer values");
             buttonNotRecentlyPressed = true;
-            throw new IllegalArgumentException();
+            throw new NumberFormatException();
         }
     }
 
