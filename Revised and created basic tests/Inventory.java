@@ -19,10 +19,10 @@ public class Inventory {
             // Calculate required values
             int[] reqValues = new int[]{0,0,0,0};
             for (Client client: hampers.get(i).getClients()) {
-                reqValues[0] += client.getWholeGrains() * 7;
-                reqValues[1] += client.getFruitVeggies() * 7;
-                reqValues[2] += client.getProtein() * 7;
-                reqValues[3] += client.getOther() * 7;                
+                reqValues[0] += client.getWholeGrains();
+                reqValues[1] += client.getFruitVeggies();
+                reqValues[2] += client.getProtein();
+                reqValues[3] += client.getOther();                
             }
     
             // Attempt to find a best combination if one exists
@@ -102,7 +102,7 @@ public class Inventory {
     public void convertDatabaseToFoodItemsList() {
         this.foodItems = database.getFoodValues();
         // FOR TESTING PURPOSES: keeps only a few items in foodItems
-        // foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 34));
+        foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 30));
     }
 
     public ArrayList<FoodItem> getFoodItems(){
@@ -126,9 +126,9 @@ public class Inventory {
         
         ArrayList<Hamper> hampers = new ArrayList<>();
         Hamper hamper1 = new Hamper();
-        hamper1.addClient(ClientType.ADULT_MALE, 1);
-        hamper1.addClient(ClientType.ADULT_FEMALE, 1);
-        hamper1.addClient(ClientType.CHILD_UNDER_8, 1);
+        // hamper1.addClient(ClientType.ADULT_MALE, 1);
+        // hamper1.addClient(ClientType.ADULT_FEMALE, 1);
+        // hamper1.addClient(ClientType.CHILD_UNDER_8, 1);
         hamper1.addClient(ClientType.CHILD_OVER_8, 1);
         hampers.add(hamper1);
         // Hamper hamper2 = new Hamper();

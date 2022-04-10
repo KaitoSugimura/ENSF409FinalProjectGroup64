@@ -53,7 +53,7 @@ public class Application {
             }
         }
 
-        OrderForm.printOrder(this.hampers);
+        // OrderForm.printOrder(this.hampers);
     }
 
     public ArrayList<Hamper> getHampers(){
