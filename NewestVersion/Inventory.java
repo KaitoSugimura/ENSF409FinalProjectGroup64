@@ -81,7 +81,6 @@ public class Inventory {
         currValues[1] += item.getFruitVeggies();
         currValues[2] += item.getProtein();
         currValues[3] += item.getOther();
-
         
         // If currComb meets requirements
         if ((currValues[0] >= reqValues[0] && currValues[1] >= reqValues[1] && currValues[2] >= reqValues[2] && currValues[3] >= reqValues[3])) {
@@ -91,12 +90,7 @@ public class Inventory {
             if (bestComb == null || currWaste < minWaste) {
                 System.out.printf("New minWaste: %d\n", currWaste);
                 bestComb = new ArrayList<>(currComb);
-                minWaste = -reqValues[0] - reqValues[1] - reqValues[2] - reqValues[3];
-                if (bestComb != null) {
-                    for (FoodItem food: bestComb) {
-                        minWaste += food.getCalories();
-                    }
-                }
+                minWaste = currWaste;
             } else {
                 currComb.remove(item);
                 currValues[0] -= item.getWholeGrains();
@@ -159,7 +153,7 @@ public class Inventory {
         // hampers.add(hamper2);
 
         long startTime = System.nanoTime();
-        System.out.println(inventory.validateOrder(hampers));
+        inventory.validateOrder(hampers);
         double elapsedTime = (System.nanoTime() - startTime) / 1E9;
         System.out.printf("Elapsed time: %f seconds\n", elapsedTime);
     }
