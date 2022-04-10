@@ -9,9 +9,12 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-/** MAIN CLASS WITH MAIN FUNCTION
+/**    ****** ******  MAIN CLASS ****** ******  
+ * 
  *  Please run this class to run our entire program
  *  Creates the main GUI and an instance of the application
+ *  Read setUpGUI() for more detail on GUI functionality
+ * 
  */
 public class SystemControlGUI extends JFrame implements ActionListener {
 
@@ -391,6 +394,7 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         }
     }
 
+    // Interface requirement   
     public void actionPerformed(ActionEvent event){}
     
 }

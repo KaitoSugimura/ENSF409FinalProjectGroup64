@@ -47,6 +47,8 @@ public class ConfirmationGUI extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
+    // Set up the title
+    // Simple top banner 
     private void setUpTitle(){
         JLabel title = new JLabel("Review your Hampers", SwingConstants.CENTER);
         title.setBackground(new Color(0x434e62));
@@ -56,6 +58,10 @@ public class ConfirmationGUI extends JFrame implements ActionListener {
         this.add(title, BorderLayout.PAGE_START);
     }
 
+    /* Set up the Review text (Unfactoered code for simple one function view)
+     * Create a uneditable text area inside a scroller
+     * Create a panel that contains the above and a button to go back
+     */
     private void setUpReviewText(){
         JPanel panelMiddle = new JPanel();
         panelMiddle.setBackground(new Color(0x434e62));
@@ -85,6 +91,9 @@ public class ConfirmationGUI extends JFrame implements ActionListener {
         this.add(panelMiddle, BorderLayout.CENTER);
     }
 
+    /* Confirm Button
+     * Requests an order form upon order and sends the user a message
+     */
     private void setupConfirmButton(){
         JButton ConfirmButton = new JButton();
         ConfirmButton.setText("Confirm Order");
@@ -103,7 +112,7 @@ public class ConfirmationGUI extends JFrame implements ActionListener {
         this.add(ConfirmButton, BorderLayout.PAGE_END);
     }
 
-        
+    // Interface requirement        
     public void actionPerformed(ActionEvent event){}
 
 }
