@@ -41,6 +41,41 @@ public class Hamper {
         }
     }
 
+    /**
+     * getClientCount - retunrs client info in format for the order form
+     * @return arraylist of client type count
+     */
+    public int[] getClientCount(){
+        int[] clientCount = new int[4];
+        for(int i =0;i<this.clients.size();i++){
+            Client temp = this.clients.get(i);
+            if(temp.getType().toString().compareTo("Adult Male") == 0){clientCount[0]++;}
+            else if(temp.getType().toString().compareTo("Adult Female") == 0){clientCount[1]++;}
+            else if(temp.getType().toString().compareTo("Child over 8") == 0){clientCount[2]++;}
+            else if(temp.getType().toString().compareTo("Child under 8") == 0){clientCount[0]++;}
+        }
+        return clientCount;
+    }
+
+    /**
+     * getFooditemCount - returns food items in proper format for oder form
+     * @return hashmap of all food and quatity
+     */
+    public HashMap<String, Integer> getFoodItemCount(){
+        HashMap<String, Integer> myFoodCount = new HashMap<>();
+        ArrayList<FoodItem> temp = this.foodItems;
+        for(int i =0;i<temp.size();i++){
+            String tempFood = temp.get(i).getName();
+            if(myFoodCount.get(tempFood)!= null){
+                myFoodCount.put(tempFood, myFoodCount.get(tempFood)+1);
+            }
+            else{
+                myFoodCount.put(tempFood, 1);
+            }
+        }
+        return myFoodCount;
+    }
+
     //getters
     public ArrayList<FoodItem> getItems(){
         return this.foodItems;
