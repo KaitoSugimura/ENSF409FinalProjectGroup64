@@ -1,3 +1,8 @@
+/**
+@author Danny Duong, Kaito Sugimura, Kevin Johnson, Joshua Walters
+@version 2.4
+@since 1.0
+*/
 import java.util.*;
 import java.sql.SQLException;
 
