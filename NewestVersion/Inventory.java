@@ -5,6 +5,7 @@
 */
 import java.util.*;
 import java.sql.SQLException;
+import java.util.stream.*;
 
 public class Inventory {    
     private ArrayList<FoodItem> foodItems = new ArrayList<>();
@@ -55,7 +56,7 @@ public class Inventory {
 
         }
 
-        System.out.println("Order fulfilled. Items removed from inventory.");
+        System.out.println("Order fulfilled. Items removed from inventory.\n");
         return true;
     }
     
@@ -77,18 +78,19 @@ public class Inventory {
         currValues[2] += foodItems.get(pos).getProtein();
         currValues[3] += foodItems.get(pos).getOther();
 
-        // Calculate minWaste
-        int minWaste = -reqValues[0] - reqValues[1] - reqValues[2] - reqValues[3];
-        if (bestComb != null) {
-            for (FoodItem item: bestComb) {
-                minWaste += item.getCalories();
-            }
-        }
         
         // If currComb meets requirements
-        if (currValues[0] >= reqValues[0] && currValues[1] >= reqValues[1] && currValues[2] >= reqValues[2] && currValues[3] >= reqValues[3]) {
+        if ((currValues[0] >= reqValues[0] && currValues[1] >= reqValues[1] && currValues[2] >= reqValues[2] && currValues[3] >= reqValues[3])) {
             int currWaste = currValues[0] - reqValues[0] + currValues[1] - reqValues[1] + currValues[2] - reqValues[2] + currValues[3] - reqValues[3];
+            
             // If currComb's waste is less than minWaste, replace bestComb
+            int minWaste = -reqValues[0] - reqValues[1] - reqValues[2] - reqValues[3];
+            if (bestComb != null) {
+                for (FoodItem item: bestComb) {
+                    minWaste += item.getCalories();
+                }
+            }
+
             if (bestComb == null || currWaste < minWaste) {
                 System.out.printf("New minWaste: %d\n", currWaste);
                 bestComb = new ArrayList<>(currComb);
@@ -129,6 +131,34 @@ public class Inventory {
     
     public void printShortages() throws InsufficientInventoryException {
         throw new InsufficientInventoryException();
+    }
+
+    public static void main(String[] args) {
+        Inventory inventory = new Inventory();
+        try {
+            inventory.database.initializeConnection();
+        } catch (SQLException e) {
+            System.out.println("Connection failed");
+            System.exit(1);
+        }
+        inventory.convertDatabaseToFoodItemsList();
+        
+        ArrayList<Hamper> hampers = new ArrayList<>();
+        Hamper hamper1 = new Hamper();
+        // hamper1.addClient(ClientType.ADULT_MALE, 1);
+        // hamper1.addClient(ClientType.ADULT_FEMALE, 1);
+        hamper1.addClient(ClientType.CHILD_UNDER_8, 1);
+        hamper1.addClient(ClientType.CHILD_OVER_8, 1);
+        hampers.add(hamper1);
+        // Hamper hamper2 = new Hamper();
+        // hamper2.addClient(ClientType.CHILD_OVER_8, 1);
+        // hamper2.addClient(ClientType.CHILD_UNDER_8, 1);
+        // hampers.add(hamper2);
+
+        long startTime = System.nanoTime();
+        System.out.println(inventory.validateOrder(hampers));
+        double elapsedTime = (System.nanoTime() - startTime) / 1E9;
+        System.out.printf("Elapsed time: %f seconds\n", elapsedTime);
     }
 
 }
