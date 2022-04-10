@@ -5,9 +5,11 @@ public class Inventory {
     private ArrayList<FoodItem> foodItems = new ArrayList<>();
     private Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
 
-    // Fills the hampers with food satisfying their nutritional requirements, minimizing waste
-    // If successful, moves items from inventory to hampers and returns true
-    // If inventory is insufficient, nothing is moved and returns false
+    /*Fills the hampers with food satisfying their nutritional requirements, minimizing waste
+     If successful, moves items from inventory to hampers and returns true
+     If inventory is insufficient, nothing is moved and returns false
+     @param hampers- ArrayList containing all the hampers which we need to make the order for
+    */
     public boolean validateOrder(ArrayList<Hamper> hampers) {
         try {
             database.initializeConnection();
@@ -52,10 +54,16 @@ public class Inventory {
         return true;
     }
     
-    // A recursive method that calculates and returns the combination of foods that
-    // 1. meets the caloric requirements of reqValues
-    // 2. minimizes caloric waste
-    // If no combination meets the requirements, returns null
+    /* A recursive method that calculates and returns the combination of foods that
+     1. meets the caloric requirements of reqValues
+     2. minimizes caloric waste
+     If no combination meets the requirements, returns null
+     @param currComb- current combination of FoodItems that satisfy the client requirements
+     @param bestComb- the most efficient combination of FoodItems thus far that satisfy the client requirements
+     @param currValues- array containing the amount of nutrients in the hamper
+     @param reqValues- array containing the required amount of nutrients for the clients
+     @param pos
+    */
     private ArrayList<FoodItem> combinations(ArrayList<FoodItem> currComb, ArrayList<FoodItem> bestComb, int[] currValues, int[] reqValues, int pos) {
         // Update currValues
         currComb.add(foodItems.get(pos));
@@ -101,12 +109,15 @@ public class Inventory {
         return bestComb;
     }
     
+    // Stores the food items in the database in the member variable foodItems
     public void convertDatabaseToFoodItemsList() {
         this.foodItems = database.getFoodValues();
         // FOR TESTING PURPOSES: keeps only a few items in foodItems
         foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 30));
     }
-
+    /* Returns member variable foodItems
+    @return foodItems
+    */
     public ArrayList<FoodItem> getFoodItems(){
         return foodItems;
     }
