@@ -1,21 +1,27 @@
 /**
- * @author Danny Duong, Kaito Sugimura, Kevin Johnson, Joshua Walters
- * @version 2.4
- * @since 1.0
+@author Danny Duong, Kaito Sugimura, Kevin Johnson, Joshua Walters
+@version 2.4
+@since 1.0
 */
+
 import java.util.*;
 import java.sql.SQLException;
 
+/** 
+ * Contains and manages the inventory of food items
+ */
 public class Inventory {    
     private ArrayList<FoodItem> foodItems = new ArrayList<>();
     private Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
     private int minWaste;
 
-    /*Fills the hampers with food satisfying their nutritional requirements, minimizing waste
-     If successful, moves items from inventory to hampers and returns true
-     If inventory is insufficient, nothing is moved and returns false
-     @param hampers- ArrayList containing all the hampers which we need to make the order for
-    */
+    /**
+     * Fills the hampers with food satisfying their nutritional requirements, minimizing waste
+     * If successful, moves items from inventory to hampers and returns true
+     * If inventory is insufficient, nothing is moved and returns false
+     * @param hampers - ArrayList containing all hampers which we need to make the order for
+     * @return true if successful, false otherwise
+     */
     public boolean validateOrder(ArrayList<Hamper> hampers) {
         try {
             database.initializeConnection();
@@ -61,29 +67,34 @@ public class Inventory {
         return true;
     }
     
-    /* A recursive method that calculates and returns the combination of foods that
-     1. meets the caloric requirements of reqValues
-     2. minimizes caloric waste
-     If no combination meets the requirements, returns null
-     @param currComb- current combination of FoodItems that satisfy the client requirements
-     @param bestComb- the most efficient combination of FoodItems thus far that satisfy the client requirements
-     @param currValues- array containing the amount of nutrients in the hamper
-     @param reqValues- array containing the required amount of nutrients for the clients
-     @param pos
-    */
+    /** 
+     * A recursive method that calculates and returns the combination of foods that
+     * 1. meets the caloric requirements of reqValues
+     * 2. minimizes caloric waste
+     * If no combination meets the requirements, returns null
+     * @param currComb - current combination of food items being considered
+     * @param bestComb - the most efficient combination of food items thus far that satisfy the hamper's requirements
+     * @param currValues - array containing the amount of nutrients in the hamper
+     * @param reqValues - array containing the required amount of nutrients for the hamper
+     * @param pos - index in the Arraylist of food items
+     * @return the bestComb of the current recursion. The base call will return the bestComb of all recursions 
+     */
     private ArrayList<FoodItem> combinations(ArrayList<FoodItem> currComb, ArrayList<FoodItem> bestComb, int[] currValues, int[] reqValues, int pos) {
         FoodItem item = foodItems.get(pos);
+        int wholeGrains = item.getWholeGrains();
+        int fruitsVeggies = item.getFruitVeggies();
+        int protein = item.getProtein();
+        int other = item.getOther();
 
         // Update currValues
-        currComb.add(item);
-        currValues[0] += item.getWholeGrains();
-        currValues[1] += item.getFruitVeggies();
-        currValues[2] += item.getProtein();
-        currValues[3] += item.getOther();
+        currValues[0] += wholeGrains;
+        currValues[1] += fruitsVeggies;
+        currValues[2] += protein;
+        currValues[3] += other;
         
         // If currComb meets requirements
         if ((currValues[0] >= reqValues[0] && currValues[1] >= reqValues[1] && currValues[2] >= reqValues[2] && currValues[3] >= reqValues[3])) {
-            // If currComb's waste is less than minWaste, replace bestComb
+            // If bestComb doesn't exist or currComb's waste is less than minWaste, replace bestComb
             int currWaste = currValues[0] - reqValues[0] + currValues[1] - reqValues[1] + currValues[2] - reqValues[2] + currValues[3] - reqValues[3];
             
             if (bestComb == null || currWaste < minWaste) {
@@ -91,36 +102,40 @@ public class Inventory {
                 bestComb = new ArrayList<>(currComb);
                 minWaste = currWaste;
             } else {
-                currComb.remove(item);
-                currValues[0] -= item.getWholeGrains();
-                currValues[1] -= item.getFruitVeggies();
-                currValues[2] -= item.getProtein();
-                currValues[3] -= item.getOther();
+                currValues[0] -= wholeGrains;
+                currValues[1] -= fruitsVeggies;
+                currValues[2] -= protein;
+                currValues[3] -= other;
                 return bestComb;
             }
         }
-
+        
+        currComb.add(item);
         for (int i = pos + 1; i < foodItems.size(); i++) {
             bestComb = combinations(currComb, bestComb, currValues, reqValues, i);
         }
 
         currComb.remove(item);
-        currValues[0] -= item.getWholeGrains();
-        currValues[1] -= item.getFruitVeggies();
-        currValues[2] -= item.getProtein();
-        currValues[3] -= item.getOther();
+        currValues[0] -= wholeGrains;
+        currValues[1] -= fruitsVeggies;
+        currValues[2] -= protein;
+        currValues[3] -= other;
         return bestComb;
     }
     
-    // Stores the food items in the database in the member variable foodItems
+    /**
+     * Reads all food items in the database into the ArrayList foodItems
+     */ 
     public void convertDatabaseToFoodItemsList() {
         this.foodItems = database.getFoodValues();
         // FOR TESTING PURPOSES: keeps only a few items in foodItems
         foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 30));
     }
-    /* Returns member variable foodItems
-    @return foodItems
-    */
+
+    /**
+     *  Returns the ArrayList of food items
+     * @return the ArrayList of food items
+     */
     public ArrayList<FoodItem> getFoodItems(){
         return foodItems;
     }
@@ -129,15 +144,9 @@ public class Inventory {
         throw new InsufficientInventoryException();
     }
 
+    // REMOVE BEFORE SUBMITTING ----------------------------------------
     public static void main(String[] args) {
         Inventory inventory = new Inventory();
-        try {
-            inventory.database.initializeConnection();
-        } catch (SQLException e) {
-            System.out.println("Connection failed");
-            System.exit(1);
-        }
-        inventory.convertDatabaseToFoodItemsList();
         
         ArrayList<Hamper> hampers = new ArrayList<>();
         Hamper hamper1 = new Hamper();

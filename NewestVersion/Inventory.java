@@ -77,7 +77,7 @@ public class Inventory {
      * @param currValues - array containing the amount of nutrients in the hamper
      * @param reqValues - array containing the required amount of nutrients for the hamper
      * @param pos - index in the Arraylist of food items
-     * @return the bestComb of this recursion. The base call will return the bestComb of all recursions 
+     * @return the bestComb of the current recursion. The base call will return the bestComb of all recursions 
      */
     private ArrayList<FoodItem> combinations(ArrayList<FoodItem> currComb, ArrayList<FoodItem> bestComb, int[] currValues, int[] reqValues, int pos) {
         FoodItem item = foodItems.get(pos);
@@ -94,7 +94,7 @@ public class Inventory {
         
         // If currComb meets requirements
         if ((currValues[0] >= reqValues[0] && currValues[1] >= reqValues[1] && currValues[2] >= reqValues[2] && currValues[3] >= reqValues[3])) {
-            // If currComb's waste is less than minWaste, replace bestComb
+            // If bestComb doesn't exist or currComb's waste is less than minWaste, replace bestComb
             int currWaste = currValues[0] - reqValues[0] + currValues[1] - reqValues[1] + currValues[2] - reqValues[2] + currValues[3] - reqValues[3];
             
             if (bestComb == null || currWaste < minWaste) {
@@ -147,13 +147,6 @@ public class Inventory {
     // REMOVE BEFORE SUBMITTING ----------------------------------------
     public static void main(String[] args) {
         Inventory inventory = new Inventory();
-        try {
-            inventory.database.initializeConnection();
-        } catch (SQLException e) {
-            System.out.println("Connection failed");
-            System.exit(1);
-        }
-        inventory.convertDatabaseToFoodItemsList();
         
         ArrayList<Hamper> hampers = new ArrayList<>();
         Hamper hamper1 = new Hamper();
