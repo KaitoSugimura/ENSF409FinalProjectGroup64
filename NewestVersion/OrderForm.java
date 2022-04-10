@@ -25,10 +25,10 @@ public class OrderForm {
             for(int i =0; i<hampers.size();i++){
                 writer.write("\nHamper"+(i+1)+": ");
                 int[] count = hampers.get(i).getClientCount();
-                if(count[0]!=0){writer.write(count[0]+"Adult Males, ");}
-                if(count[1]!=0){writer.write(count[1]+"Adult Females, ");}
-                if(count[2]!=0){writer.write(count[2]+"Children Over 8, ");}
-                if(count[3]!=0){writer.write(count[3]+"Children Under 8 ");}                
+                if(count[0]!=0){writer.write(count[0]+" Adult Males, ");}
+                if(count[1]!=0){writer.write(count[1]+" Adult Females, ");}
+                if(count[2]!=0){writer.write(count[2]+" Children Over 8, ");}
+                if(count[3]!=0){writer.write(count[3]+" Children Under 8 ");}                
             }
             writer.write("\n\n");
             for(int i =0; i<hampers.size();i++){
