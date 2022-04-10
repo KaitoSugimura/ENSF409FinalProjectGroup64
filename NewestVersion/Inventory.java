@@ -5,7 +5,6 @@
 */
 import java.util.*;
 import java.sql.SQLException;
-import java.util.stream.*;
 
 public class Inventory {    
     private ArrayList<FoodItem> foodItems = new ArrayList<>();
@@ -74,13 +73,16 @@ public class Inventory {
     */
     private ArrayList<FoodItem> combinations(ArrayList<FoodItem> currComb, ArrayList<FoodItem> bestComb, int[] currValues, int[] reqValues, int pos) {
         FoodItem item = foodItems.get(pos);
+        int wholeGrains = item.getWholeGrains();
+        int fruitsVeggies = item.getFruitVeggies();
+        int protein = item.getProtein();
+        int other = item.getOther();
 
         // Update currValues
-        currComb.add(item);
-        currValues[0] += item.getWholeGrains();
-        currValues[1] += item.getFruitVeggies();
-        currValues[2] += item.getProtein();
-        currValues[3] += item.getOther();
+        currValues[0] += wholeGrains;
+        currValues[1] += fruitsVeggies;
+        currValues[2] += protein;
+        currValues[3] += other;
         
         // If currComb meets requirements
         if ((currValues[0] >= reqValues[0] && currValues[1] >= reqValues[1] && currValues[2] >= reqValues[2] && currValues[3] >= reqValues[3])) {
@@ -92,24 +94,24 @@ public class Inventory {
                 bestComb = new ArrayList<>(currComb);
                 minWaste = currWaste;
             } else {
-                currComb.remove(item);
-                currValues[0] -= item.getWholeGrains();
-                currValues[1] -= item.getFruitVeggies();
-                currValues[2] -= item.getProtein();
-                currValues[3] -= item.getOther();
+                currValues[0] -= wholeGrains;
+                currValues[1] -= fruitsVeggies;
+                currValues[2] -= protein;
+                currValues[3] -= other;
                 return bestComb;
             }
         }
-
+        
+        currComb.add(item);
         for (int i = pos + 1; i < foodItems.size(); i++) {
             bestComb = combinations(currComb, bestComb, currValues, reqValues, i);
         }
 
         currComb.remove(item);
-        currValues[0] -= item.getWholeGrains();
-        currValues[1] -= item.getFruitVeggies();
-        currValues[2] -= item.getProtein();
-        currValues[3] -= item.getOther();
+        currValues[0] -= wholeGrains;
+        currValues[1] -= fruitsVeggies;
+        currValues[2] -= protein;
+        currValues[3] -= other;
         return bestComb;
     }
     
@@ -119,6 +121,7 @@ public class Inventory {
         // FOR TESTING PURPOSES: keeps only a few items in foodItems
         foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 30));
     }
+    
     /* Returns member variable foodItems
     @return foodItems
     */
@@ -130,6 +133,7 @@ public class Inventory {
         throw new InsufficientInventoryException();
     }
 
+    // REMOVE BEFORE SUBMITTING ----------------------------------------
     public static void main(String[] args) {
         Inventory inventory = new Inventory();
         try {
