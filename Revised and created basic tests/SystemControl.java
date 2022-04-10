@@ -6,7 +6,7 @@ import javax.swing.*;
 
 
 public class SystemControl extends JFrame implements ActionListener, MouseListener, ItemListener {
-    private JButton submitButton;
+    private JButton reviewButton;
 
     private JPanel rightPanel;
     private JPanel leftPanel;
@@ -67,11 +67,11 @@ public class SystemControl extends JFrame implements ActionListener, MouseListen
         JLabel rightPanelTopLabel = createRightPanelTopLabel();
         rightCenterTextFieldPanel = createRightCenterTextFieldPanel();
         rightCenterTextFieldPanel.add(currentLabel);
-        setupSubmitButton();    // Create submit button
+        setupReviewButton();    // Create submit button
 
         rightPanel.add(rightPanelTopLabel, BorderLayout.PAGE_START);
         rightPanel.add(rightCenterTextFieldPanel, BorderLayout.CENTER);
-        rightPanel.add(submitButton, BorderLayout.PAGE_END);
+        rightPanel.add(reviewButton, BorderLayout.PAGE_END);
         this.add(rightPanel);  // Add Panel to JFrame
 
     }
@@ -136,13 +136,16 @@ public class SystemControl extends JFrame implements ActionListener, MouseListen
 
     // **** **** BUTTON SET UP **** ****
 
-    private void setupSubmitButton(){
-        submitButton = new JButton();
-        submitButton.setText("Submit order");
-        submitButton.setFocusable(false);
-        submitButton.setPreferredSize(new Dimension(300, 110));
-        submitButton.setFont(new Font("Comic Sans", Font.BOLD, 42));
-        submitButton.addActionListener(event -> {
+    private void setupReviewButton(){
+        reviewButton = new JButton();
+        reviewButton.setText("Review Order");
+        reviewButton.setFocusable(false);
+        reviewButton.setPreferredSize(new Dimension(300, 110));
+        reviewButton.setFont(new Font("Comic Sans", Font.BOLD, 42));
+        reviewButton.addActionListener(event -> {
+
+            app.removeAllClients(); // Remove any existing clients
+
             for(ConfigurationPannelGUI config : hamperConfigPanels){
                 app.addClient(hamperConfigPanels.indexOf(config), ClientType.ADULT_MALE, parseInt(config.getMaleText()));
                 app.addClient(hamperConfigPanels.indexOf(config), ClientType.ADULT_FEMALE, parseInt(config.getFemaleText()));
@@ -156,7 +159,8 @@ public class SystemControl extends JFrame implements ActionListener, MouseListen
                 System.out.println("ChildUnder8: " + config.getChildUnder8Text());
 
             }
-            app.calculateOrder();
+
+            new Confirmation(this, app);
         });
     }
 
@@ -167,6 +171,7 @@ public class SystemControl extends JFrame implements ActionListener, MouseListen
             if(arg.equals("")){
                 return 0;
             }
+            JOptionPane.showMessageDialog(this, "Please make sure all of your inputs are Integer values");
             throw new IllegalArgumentException();
         }
     }
@@ -256,7 +261,6 @@ public class SystemControl extends JFrame implements ActionListener, MouseListen
     }
 
     public void actionPerformed(ActionEvent event){
-        
     }
 
     public void itemStateChanged(ItemEvent evt) {

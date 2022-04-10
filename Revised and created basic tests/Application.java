@@ -14,7 +14,7 @@ public class Application {
 
     // Removes the hamper at index i in the hampers ArrayList
     public void removeHamper(int i) throws IllegalStateException{
-        if (this.hampers.isEmpty() || i < 0 | i >= hampers.size()) {
+        if (this.hampers.isEmpty() || i < 0 || i >= hampers.size()) {
             throw new IllegalStateException();
         }
         this.hampers.remove(i);
@@ -31,6 +31,13 @@ public class Application {
         this.hampers.get(i).removeClient(bodyType, quantity);
     }
 
+    public void removeAllClients() {
+        for(Hamper hamper : hampers){
+            hamper.removeAllClients();
+        }
+    }
+
+
     public void resetApplication() {
         this.hampers = new ArrayList<>();
     }
@@ -45,6 +52,8 @@ public class Application {
                 throw new HamperHasNoClientsException();
             }
         }
+
+        OrderForm.printOrder(this.hampers);
     }
 
     public ArrayList<Hamper> getHampers(){
@@ -53,29 +62,23 @@ public class Application {
 
     @Override
     public String toString() {
+        StringBuilder builder = new StringBuilder();
         int i = 1;
         int j = 1;
         for (Hamper hamper : hampers) {
-            System.out.println("Hamper" + i++ + ":");
+            builder.append("\nHamper" + i++ + ":");
             for (Client client : hamper.getClients()) {
-                System.out.println("    Client" + j++ + " (" + client.getType() + ") :");
-                System.out.println("    - WholeGrains: " + client.getWholeGrains());
-                System.out.println("    - FruitVeggies: " + client.getFruitVeggies());
-                System.out.println("    - Protien: " + client.getProtein());
-                System.out.println("    - Other: " + client.getOther());
-                // System.out.println("    - Calories: " + client.getCalories());
+                builder.append("\n\n    Client" + j++ + " (" + client.getType() + ") :");
+                builder.append("\n\t    - WholeGrains: " + client.getWholeGrains());
+                builder.append("\n\t    - FruitVeggies: " + client.getFruitVeggies());
+                builder.append("\n\t    - Protien: " + client.getProtein());
+                builder.append("\n\t    - Other: " + client.getOther());
+                builder.append("\n\t    - Calories: " + client.getCalories() + "\n");
             }
-            System.out.println("     _______________________________");
-            System.out.println("    |     FoodItems:");
-            for (FoodItem item : hamper.getItems()) {
-                System.out.println("    |     - " + item.getName());
-                System.out.println("    |        > ItemID: " + item.getItemID());
-                System.out.println("    |        > Calories: " + item.getCalories());
-            }
-            System.out.println("    |_______________________________");
+            builder.append("\n------------------------------------------------");
         }
-        System.out.println("------------------------------------------------");
-        return super.toString();
+        builder.append("\n------------------------------------------------");
+        return builder.toString();
     }
 
 
