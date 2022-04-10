@@ -7,7 +7,7 @@
 /*
  * Throws exception for cases where a hamper is expected
  * to have clients but has none.
-*/
+ */
 public class HamperHasNoClientsException extends Exception{
     /**
      * Constructor 

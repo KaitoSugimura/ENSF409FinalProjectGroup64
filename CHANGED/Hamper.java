@@ -4,12 +4,12 @@
 @since 1.0
 */
 
+import java.util.*;
+
 /* Hamper class
  * Contains data for a given order's hampers.
  * that is ArrayList of calculated foodItems and specified Clients
-*/
-import java.util.*;
-
+ */
 public class Hamper {
     //Fields
     private ArrayList<FoodItem> foodItems = new ArrayList<>();
@@ -76,7 +76,7 @@ public class Hamper {
         return myFoodCount;
     }
 
-    //getters
+    // getters
     public ArrayList<FoodItem> getItems(){
         return this.foodItems;
     }

@@ -4,12 +4,12 @@
 @since 1.0
 */
 
-/*
- * Class that deals with connections between the database and program.
-*/
 import java.sql.*;
 import java.util.*;
 
+/*
+ * Class that deals with connections between the database and program.
+*/
 public class Database{
     //Fields
     public final String DBURL;

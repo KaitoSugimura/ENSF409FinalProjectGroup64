@@ -7,7 +7,7 @@
 /*
  * Throws an exception for cases when there are not enough
  * items in the inventory for the attempted operations.
-*/
+ */
 public class InsufficientInventoryException extends Exception {
     /**
      * Constructor

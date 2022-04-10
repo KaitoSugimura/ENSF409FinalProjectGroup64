@@ -4,28 +4,24 @@
 @since 1.0
 */
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 /*
  * Helper class
  * Writes an orderform to text file
-*/
-
+ */
 public class OrderForm {
     /**
      * Writes order form to textfile
      * The name of the output will be OrderForm.txt
      * @param hampers ArrayList of hampers for a given order
      */
-    public static void printOrder(ArrayList<Hamper> hampers){
+    public static void printOrder(ArrayList<Hamper> hampers) {
         try {
             FileWriter writer = new FileWriter("OrderForm.txt");
             writer.write("64 Food Bank\nHamper Order Form\n\nName:\nDate:\n\nOriginal Request\n");
-            for(int i =0; i<hampers.size();i++){
+            for(int i = 0; i < hampers.size(); i++){
                 writer.write("\nHamper"+(i+1)+": ");
                 int[] count = hampers.get(i).getClientCount();
                 if(count[0]!=0){writer.write(count[0]+" Adult Males, ");}
@@ -34,7 +30,7 @@ public class OrderForm {
                 if(count[3]!=0){writer.write(count[3]+" Children Under 8 ");}                
             }
             writer.write("\n\n");
-            for(int i =0; i<hampers.size();i++){
+            for (int i =0; i<hampers.size();i++) {
                 writer.write("Hamper "+(i+1)+" Items:\n");
                 HashMap <String, Integer> temp = hampers.get(i).getFoodItemCount();
                 for(Map.Entry<String, Integer> mapElement: temp.entrySet()){
@@ -47,8 +43,6 @@ public class OrderForm {
             
         } catch (IOException e) {
             System.out.println("Error writing to file!");
-        }
-        
+        }  
     } 
-
 }

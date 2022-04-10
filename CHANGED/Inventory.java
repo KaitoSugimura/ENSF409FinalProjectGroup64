@@ -133,7 +133,7 @@ public class Inventory {
     }
 
     /**
-     *  Returns the ArrayList of food items
+     * Returns the ArrayList of food items
      * @return the ArrayList of food items
      */
     public ArrayList<FoodItem> getFoodItems(){

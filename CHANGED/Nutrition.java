@@ -4,12 +4,12 @@
 @since 1.0
 */
 
+import java.sql.SQLException;
+
 /*
  * Extended by client and food item to store common nutrition values and methods
  * shared between the two.
-*/
-import java.sql.SQLException;
-
+ */
 public abstract class Nutrition {
 
     //Fields
@@ -64,11 +64,10 @@ public abstract class Nutrition {
         this.CALORIES = calories;
     }
 
-    //Getters
+    // Getters
     public int getWholeGrains(){ return this.WHOLE_GRAINS; }
     public int getFruitVeggies(){ return this.FRUIT_VEGGIES; }
     public int getProtein(){ return this.PROTEIN; }
     public int getOther(){ return this.OTHER; }
     public int getCalories(){ return this.CALORIES; }
-
 }

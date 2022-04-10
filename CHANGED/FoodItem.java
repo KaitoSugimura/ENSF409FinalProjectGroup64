@@ -7,8 +7,7 @@
 /*
  * Fooditem represents the various fooditems contained within the inventory
  * and extends nutrition to hold the nutrition values of each food.
-*/
-
+ */
 public class FoodItem extends Nutrition{
 
     //Fields
