@@ -1,3 +1,9 @@
+/**
+@author Danny Duong, Kaito Sugimura, Kevin Johnson, Joshua Walters
+@version 2.1
+@since 1.0
+*/
+
 import java.util.*;
 
 public class Application {
