@@ -10,6 +10,7 @@ import java.util.stream.*;
 public class Inventory {    
     private ArrayList<FoodItem> foodItems = new ArrayList<>();
     private Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
+    private int minWaste;
 
     /*Fills the hampers with food satisfying their nutritional requirements, minimizing waste
      If successful, moves items from inventory to hampers and returns true
@@ -37,6 +38,7 @@ public class Inventory {
     
             // Attempt to find a best combination if one exists
             ArrayList<FoodItem> bestComb = null;
+            minWaste = 0;
             for (int j = 0; j < foodItems.size(); j++) {
                 bestComb = combinations(new ArrayList<>(), bestComb, new int[]{0,0,0,0}, reqValues, j);
             }
@@ -81,19 +83,18 @@ public class Inventory {
         
         // If currComb meets requirements
         if ((currValues[0] >= reqValues[0] && currValues[1] >= reqValues[1] && currValues[2] >= reqValues[2] && currValues[3] >= reqValues[3])) {
+            // If currComb's waste is less than minWaste, replace bestComb
             int currWaste = currValues[0] - reqValues[0] + currValues[1] - reqValues[1] + currValues[2] - reqValues[2] + currValues[3] - reqValues[3];
             
-            // If currComb's waste is less than minWaste, replace bestComb
-            int minWaste = -reqValues[0] - reqValues[1] - reqValues[2] - reqValues[3];
-            if (bestComb != null) {
-                for (FoodItem item: bestComb) {
-                    minWaste += item.getCalories();
-                }
-            }
-
             if (bestComb == null || currWaste < minWaste) {
                 System.out.printf("New minWaste: %d\n", currWaste);
                 bestComb = new ArrayList<>(currComb);
+                minWaste = -reqValues[0] - reqValues[1] - reqValues[2] - reqValues[3];
+                if (bestComb != null) {
+                    for (FoodItem item: bestComb) {
+                        minWaste += item.getCalories();
+                    }
+                }
             } else {
                 currComb.remove(foodItems.get(pos));
                 currValues[0] -= foodItems.get(pos).getWholeGrains();
