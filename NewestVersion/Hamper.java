@@ -52,7 +52,7 @@ public class Hamper {
             if(temp.getType().toString().compareTo("Adult Male") == 0){clientCount[0]++;}
             else if(temp.getType().toString().compareTo("Adult Female") == 0){clientCount[1]++;}
             else if(temp.getType().toString().compareTo("Child over 8") == 0){clientCount[2]++;}
-            else if(temp.getType().toString().compareTo("Child under 8") == 0){clientCount[0]++;}
+            else if(temp.getType().toString().compareTo("Child under 8") == 0){clientCount[3]++;}
         }
         return clientCount;
     }
