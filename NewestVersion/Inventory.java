@@ -73,12 +73,14 @@ public class Inventory {
      @param pos
     */
     private ArrayList<FoodItem> combinations(ArrayList<FoodItem> currComb, ArrayList<FoodItem> bestComb, int[] currValues, int[] reqValues, int pos) {
+        FoodItem item = foodItems.get(pos);
+
         // Update currValues
-        currComb.add(foodItems.get(pos));
-        currValues[0] += foodItems.get(pos).getWholeGrains();
-        currValues[1] += foodItems.get(pos).getFruitVeggies();
-        currValues[2] += foodItems.get(pos).getProtein();
-        currValues[3] += foodItems.get(pos).getOther();
+        currComb.add(item);
+        currValues[0] += item.getWholeGrains();
+        currValues[1] += item.getFruitVeggies();
+        currValues[2] += item.getProtein();
+        currValues[3] += item.getOther();
 
         
         // If currComb meets requirements
@@ -91,16 +93,16 @@ public class Inventory {
                 bestComb = new ArrayList<>(currComb);
                 minWaste = -reqValues[0] - reqValues[1] - reqValues[2] - reqValues[3];
                 if (bestComb != null) {
-                    for (FoodItem item: bestComb) {
-                        minWaste += item.getCalories();
+                    for (FoodItem food: bestComb) {
+                        minWaste += food.getCalories();
                     }
                 }
             } else {
-                currComb.remove(foodItems.get(pos));
-                currValues[0] -= foodItems.get(pos).getWholeGrains();
-                currValues[1] -= foodItems.get(pos).getFruitVeggies();
-                currValues[2] -= foodItems.get(pos).getProtein();
-                currValues[3] -= foodItems.get(pos).getOther();
+                currComb.remove(item);
+                currValues[0] -= item.getWholeGrains();
+                currValues[1] -= item.getFruitVeggies();
+                currValues[2] -= item.getProtein();
+                currValues[3] -= item.getOther();
                 return bestComb;
             }
         }
@@ -109,11 +111,11 @@ public class Inventory {
             bestComb = combinations(currComb, bestComb, currValues, reqValues, i);
         }
 
-        currComb.remove(foodItems.get(pos));
-        currValues[0] -= foodItems.get(pos).getWholeGrains();
-        currValues[1] -= foodItems.get(pos).getFruitVeggies();
-        currValues[2] -= foodItems.get(pos).getProtein();
-        currValues[3] -= foodItems.get(pos).getOther();
+        currComb.remove(item);
+        currValues[0] -= item.getWholeGrains();
+        currValues[1] -= item.getFruitVeggies();
+        currValues[2] -= item.getProtein();
+        currValues[3] -= item.getOther();
         return bestComb;
     }
     
