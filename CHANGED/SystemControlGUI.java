@@ -11,7 +11,7 @@ import javax.swing.*;
 
 /**    ****** ******  MAIN CLASS ****** ******  
  * 
- *  Please run this class to run our entire program
+ *  Please run this class to run the entire program
  *  Creates the main GUI and an instance of the application
  *  Read setUpGUI() for more detail on GUI functionality
  * 
@@ -35,16 +35,19 @@ public class SystemControlGUI extends JFrame implements ActionListener {
 
     public static Boolean buttonNotRecentlyPressed = true; // To make review changes button unspammable 
 
-    /*   *******  Main function  *******
-     * Run the Entire GUI and Application */
+    /**  *******  Main function  *******
+     * Run the Entire GUI and Application
+     */
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             new SystemControlGUI().setVisible(true);        
         });
     }
 
-    /**Contructor, calls setupGUI for further panel setups
-     * Create an instance of application */
+    /**
+     * Contructor, calls setupGUI for further panel setups
+     * Create an instance of application 
+     */
     public SystemControlGUI() {
         super("Food Bank Order Tool");
         this.setSize(960, 660);
@@ -56,10 +59,12 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         this.app = new Application();
     }
 
-    /**The GUI will be split up in 2 sections:
+    /**
+     * The GUI will be split up in 2 sections:
      * A Left panel and a Right panel
      * The Left will contain a list of all the different selectable Hampers
-     * The Right will contain all the specifications of each selected Hamper */
+     * The Right will contain all the specifications of each selected Hamper 
+     */
     public void setupGUI(){
     
         // **** **** LEFT PANEL **** ****
@@ -67,7 +72,8 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         /* Create three panels inside Left pannel:
          *  Top Label 
          *  Center List of Hampers
-         *  Bottom buttons for adding/removing Hampers*/
+         *  Bottom buttons for adding/removing Hampers
+         */
         JLabel leftPanelTopLabel = createLeftPanelTopLabel();         // Top
         this.leftCenterHamperPanel = createLeftPanelCenterPannel();   // Center
         JPanel leftPanelButtons = createLeftPanelHamperConfigButtons(); // Bottom
@@ -98,21 +104,23 @@ public class SystemControlGUI extends JFrame implements ActionListener {
 
     // **** **** CREATE PANELS **** ****
 
-    /**Create the left panel, this panel will contain 3 more sub sections */
+    /** Create the left panel; this panel will contain 3 more sub sections */
     private void createLeftPanel(){
         leftPanel = new JPanel();
         leftPanel.setBackground(new Color(0x434e62));
         leftPanel.setBounds(0, 0, 300, 620);
         leftPanel.setLayout(new BorderLayout());
     }
-    /**Create the right panel, this panel will contain 3 more sub sections */
+    /** Create the right panel; this panel will contain 3 more sub sections */
     private void createRightPanel(){
         rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
         rightPanel.setBounds(300, 0, 660, 620);
     }
-    /**Create left top section panel, contains a simple title "Hampers" 
-     * @return panel */
+    /** 
+     * Create left top section panel; contains a simple title "Hampers" 
+     * @return panel 
+     */
     private JLabel createLeftPanelTopLabel(){
         JLabel label = new JLabel();
         label.setText("Hampers");
@@ -122,16 +130,20 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         label.setHorizontalAlignment(JLabel.CENTER);
         return label;
     }
-    /**Create left center section panel, contains the list of hampers
+    /**
+     * Create left center section panel, contains the list of hampers
      * The list of hampers will be buttons to select a working hamper 
-     * @return panel */
+     * @return panel 
+     */
     private JPanel createLeftPanelCenterPannel(){
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(10, 1));
         panel.setBackground(new Color(0x7588ac));
         return panel;
     }
-    /** Create two buttons, one to add a hamper, one to remove a selected hamper
+
+    /** 
+     * Create two buttons, one to add a hamper, one to remove a selected hamper
      * @return created panel of buttons
      */
     private JPanel createLeftPanelHamperConfigButtons(){
@@ -144,22 +156,27 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         leftPannelButtons.add(addRemoveHampersButton, BorderLayout.PAGE_END);
         return leftPannelButtons;
     }
-    /**Create right center section panel, contains the configure panel for the selected hamper
+
+    /**
+     * Create right center section panel, contains the configure panel for the selected hamper
      * A ConfigurationPannelGUI will be added upon user hamper addition  
-     * @return created panel */
+     * @return created panel 
+     */
     private JPanel createRightCenterTextFieldPanel(){
         JPanel panel = new JPanel();
         panel.setBackground(new Color(0xa8c3f7));
         return panel;
     }
-    /**Create label for right center panel */
+
+    /** Create label for right center panel */
     private void createRightCenterLabel(){
         currentLabel = new JLabel();
         currentLabel.setText("Please select a Hamper");
         currentLabel.setFont(new Font("Comic Sans", Font.BOLD, 30));
         currentLabel.setPreferredSize(new Dimension(400, 50));
     }
-    /**Create right top section panel, contains the title and ResetAll button
+    /**
+     * Create right top section panel, contains the title and ResetAll button
      * Contains multiple panels just to adjust style
      * @return created panel
      */
@@ -187,13 +204,14 @@ public class SystemControlGUI extends JFrame implements ActionListener {
 
     // **** **** BUTTON SET UP **** ****
 
-    /** Review order button setup
-     *  If button is pressed:
-     *  1. Remove any existing clients
-     *  2. Obtain values of each hamper text field and append into the application
-     *  3. Calculate the order through the application
-     *  4. Open up the confirmation screen GUI
-     *  The function catches any exceptions and gives the User a Message
+    /** 
+     * Review order button setup
+     * If button is pressed:
+     * 1. Remove any existing clients
+     * 2. Obtain values of each hamper text field and append into the application
+     * 3. Calculate the order through the application
+     * 4. Open up the confirmation screen GUI
+     * The function catches any exceptions and gives the User a Message
      */
     private void setupReviewButton(){
         reviewButton = new JButton();
@@ -236,10 +254,11 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         });
     }
 
-    /** Button that removes a selected hamper
-     *  The remove button can not be spammed
-     *  That is, the user must first select the hamper they wish to delete
-     *  @return the created button
+    /** 
+     * Button that removes a selected hamper
+     * The remove button can not be spammed
+     * That is, the user must first select the hamper they wish to delete
+     * @return the created button
      */
     private JButton createRemoveHampersButton(){
         JButton button = new JButton();
@@ -255,10 +274,12 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         });
         return button;
     }
-    /** Button that adds a new hamper
-     *  The user will see a new added hamper
-     *  Currently selected hamper should still remain the same
-     *  @return the created button
+
+    /** 
+     * Button that adds a new hamper
+     * The user will see a new added hamper
+     * Currently selected hamper should still remain the same
+     * @return the created button
      */
     private JButton createAddNewHampersButton(){
         JButton button = new JButton();
@@ -274,9 +295,11 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         });
         return button;
     }
-    /** Reset everything button
-     *  All Hampers, Clients, etc are removed (reset)
-     *  @return the created button
+
+    /** 
+     * Reset everything button
+     * All Hampers, Clients, etc are removed (reset)
+     * @return the created button
      */
     private JButton createResetAllButton(){
         JButton resetButton = new JButton();
@@ -295,12 +318,14 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         });
         return resetButton;
     }
-    /** Create a Hamper button
-     *  This button will be created upon user hitting the "Add new Hamper" button
-     *  Will contain multiple instances inside the list of hampers
-     *  Button acts as a selection for the user to select their working hamper
-     *  The naming indexes should only increase, even after removal of previous Hampers
-     *  @return created button
+
+    /** 
+     * Create a Hamper button
+     * This button will be created upon user hitting the "Add new Hamper" button
+     * Will contain multiple instances inside the list of hampers
+     * Button acts as a selection for the user to select their working hamper
+     * The naming indexes should only increase, even after removal of previous Hampers
+     * @return created button
      */
     private JButton createHamperListButton(){
         JButton button = new JButton();
@@ -324,11 +349,12 @@ public class SystemControlGUI extends JFrame implements ActionListener {
 
     // **** **** FUNCTIONALITY **** ****
 
-    /** Functionality to create a new hamper
-     *  Creates a ConfigurationPanelGUI 
-     *  Adds the new config panel to the right Center panel
-     *  Adds the newly created button to the left center list
-     *  Adds a physical hamper in the application
+    /** 
+     * Functionality to create a new hamper
+     * Creates a ConfigurationPanelGUI 
+     * Adds the new config panel to the right Center panel
+     * Adds the newly created button to the left center list
+     * Adds a physical hamper in the application
      */
     private void createNewHamper(){
         var button = createHamperListButton();
@@ -342,8 +368,9 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         app.addHamper();
     }
 
-    /** Remove a selected hamper
-     *  Should not remove if nothing is selected
+    /** 
+     * Remove a selected hamper
+     * Should not remove if nothing is selected
      */
     private void removeHamper(){
         if(currentPannelIndex != -1){
@@ -360,8 +387,10 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         }
 
     }
-    /** Remove the elements in the ArrayList
-     *  Aswell as reset ArrayList
+
+    /** 
+     * Remove the elements in the ArrayList
+     * Aswell as reset ArrayList
      */
     private void removeArrayElements(){
         for(ConfigurationPanelGUI panel : hamperConfigPanels){
@@ -373,7 +402,9 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         hamperConfigPanels = new ArrayList<>();
         hamperButtons = new ArrayList<>();
     }
-    /**Parses the argument String
+
+    /**
+     * Parses the argument String
      * If the argument can simply be parsed, return the value
      * If the argument contains no characters ("") then return 0
      * Else rethrow the exception
@@ -394,7 +425,7 @@ public class SystemControlGUI extends JFrame implements ActionListener {
         }
     }
 
-    // Interface requirement   
+    /** Interface requirement */   
     public void actionPerformed(ActionEvent event){}
     
 }
