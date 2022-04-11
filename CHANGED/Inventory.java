@@ -32,7 +32,7 @@ public class Inventory {
         convertDatabaseToFoodItemsList();
 
         for (int i = 0; i < hampers.size(); i++) {
-            // Calculate required values
+            // Calculate required nutrition
             int[] reqValues = new int[]{0,0,0,0};
             for (Client client: hampers.get(i).getClients()) {
                 reqValues[0] += client.getWholeGrains();
@@ -50,11 +50,12 @@ public class Inventory {
                 maxValues[3] += item.getOther();
             }
         
-            // Find a best combination if one exists
+            // Check if a combination exists
             if (maxValues[0] >= reqValues[0] && maxValues[1] >= reqValues[1] && maxValues[2] >= reqValues[2] && maxValues[3] >= reqValues[3]) {
                 ArrayList<FoodItem> bestComb = null;
                 minWaste = 0;
 
+                // Find best combination
                 for (int j = 0; j < foodItems.size(); j++) {
                     bestComb = combinations(new ArrayList<>(), bestComb, new int[]{0,0,0,0}, reqValues, j);
                 }
@@ -63,7 +64,7 @@ public class Inventory {
                 hampers.get(i).setItems(bestComb);
                 foodItems.removeAll(bestComb);
 
-            } else { // If no combination meets the requirements, put all items back in inventory and report shortages before returning false
+            } else { // If no combination can meet the requirements, put all items back in inventory and report shortages before returning false
                 for (Hamper hamperUndo: hampers) {
                     foodItems.addAll(hamperUndo.getItems());
                     hamperUndo.resetItems();
@@ -82,6 +83,7 @@ public class Inventory {
             }
         }
 
+        // At this point all hampers are successfully filled with food items
         // Update database
         for (Hamper hamper: hampers) {
             for (FoodItem item: hamper.getItems()) {
