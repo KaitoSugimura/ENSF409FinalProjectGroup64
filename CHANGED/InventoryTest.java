@@ -9,7 +9,7 @@ public class InventoryTest {
     // test that printShortages throws a proper exception
     // InsufficientInventoryException() (Custom exception)
     @Test
-    public void testPrintShortagesThrowsInsufficientInventoryException(){
+    public void testPrintShortagesThrowsInsufficientInventoryException(){        
         boolean exceptionThrown = false;
         try{
             Inventory inventory = new Inventory();

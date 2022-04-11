@@ -3,6 +3,12 @@ import static org.junit.Assert.*;
 
 
 public class ClientTest {
+    private Application app;
+
+    @Before
+    public void setUp() {
+        app = new Application();
+    }
 
 
     /* CLIENT TESTS */

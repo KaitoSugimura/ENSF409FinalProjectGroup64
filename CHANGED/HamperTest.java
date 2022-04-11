@@ -5,8 +5,12 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 public class HamperTest {
+	private Application app;
 
-  
+    @Before
+    public void setUp() {
+        app = new Application();
+    }
 
      /* HAMPER TESTS */
 

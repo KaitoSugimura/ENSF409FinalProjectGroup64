@@ -1,6 +1,12 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 public class NutritionTest {
+    private Application app;
+
+    @Before
+    public void setUp() {
+        app = new Application();
+    }
    
 
     /* NUTRITION TESTS */
