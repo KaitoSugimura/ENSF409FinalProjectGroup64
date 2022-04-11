@@ -1,9 +1,6 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "Better Rough Draft/lib/hamcrest-core-1.3.jar",
-        "Better Rough Draft/lib/junit-4.13.2.jar",
-        "Better Rough Draft/lib/mysql-connector-java-8.0.23.jar",
         "NewestVersion/lib/hamcrest-core-1.3.jar",
         "NewestVersion/lib/junit-4.13.2.jar",
         "NewestVersion/lib/mysql-connector-java-8.0.23.jar"

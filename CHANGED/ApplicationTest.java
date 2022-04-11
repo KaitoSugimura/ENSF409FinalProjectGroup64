@@ -1,4 +1,3 @@
-
 //package edu.ucalgary.ensf409;
 
 // javac -cp .;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar;lib/mysql-connector-java-8.0.23.jar *.java
@@ -200,21 +199,21 @@ public class ApplicationTest {
 
     /* INVENTORY TESTS */
 
-    // test that printShortages throws a proper exception
-    // InsufficientInventoryException() (Custom exception)
-    @Test
-    public void testPrintShortagesThrowsInsufficientInventoryException(){
-        boolean exceptionThrown = false;
-        try{
-            Inventory inventory = new Inventory();
-            inventory.printShortages();
-        } catch(InsufficientInventoryException e){
-            exceptionThrown = true;
-        }
+    // // test that printShortages throws a proper exception
+    // // InsufficientInventoryException() (Custom exception)
+    // @Test
+    // public void testPrintShortagesThrowsInsufficientInventoryException(){
+    //     boolean exceptionThrown = false;
+    //     try{
+    //         Inventory inventory = new Inventory();
+    //         inventory.printShortages();
+    //     } catch(InsufficientInventoryException e){
+    //         exceptionThrown = true;
+    //     }
 
-        assertTrue("printShortages did not throw an InsufficientInventoryException when tested with insuffienct foods in ArrayList"
-            , exceptionThrown);
-    }
+    //     assertTrue("printShortages did not throw an InsufficientInventoryException when tested with insuffienct foods in ArrayList"
+    //         , exceptionThrown);
+    // }
 
     // test the getter and validateOrder function
     // validateOrder() should populate the FoodItem ArrayList

@@ -40,24 +40,44 @@ public class Inventory {
                 reqValues[2] += client.getProtein();
                 reqValues[3] += client.getOther();                
             }
-    
-            // Attempt to find a best combination if one exists
-            ArrayList<FoodItem> bestComb = null;
-            minWaste = 0;
-            for (int j = 0; j < foodItems.size(); j++) {
-                bestComb = combinations(new ArrayList<>(), bestComb, new int[]{0,0,0,0}, reqValues, j);
+
+            // Calculate maximum possible nutrition in inventory
+            int[] maxValues = new int[]{0,0,0,0};
+            for (FoodItem item: foodItems) {
+                maxValues[0] += item.getWholeGrains();
+                maxValues[1] += item.getFruitVeggies();
+                maxValues[2] += item.getProtein();
+                maxValues[3] += item.getOther();
             }
-    
-            // If a best combination exists, add items to hamper and remove from inventory
-            if (bestComb != null) {
+        
+            // Find a best combination if one exists
+            if (maxValues[0] >= reqValues[0] && maxValues[1] >= reqValues[1] && maxValues[2] >= reqValues[2] && maxValues[3] >= reqValues[3]) {
+                ArrayList<FoodItem> bestComb = null;
+                minWaste = 0;
+
+                for (int j = 0; j < foodItems.size(); j++) {
+                    bestComb = combinations(new ArrayList<>(), bestComb, new int[]{0,0,0,0}, reqValues, j);
+                }
+
+                // Add items to hamper and remove from inventory
                 hampers.get(i).setItems(bestComb);
                 foodItems.removeAll(bestComb);
-            } else { // If no combination meets the requirements, put all items back in inventory and return false
+
+            } else { // If no combination meets the requirements, put all items back in inventory and report shortages before returning false
                 for (Hamper hamperUndo: hampers) {
                     foodItems.addAll(hamperUndo.getItems());
                     hamperUndo.resetItems();
                 }
-                System.out.printf("Insufficient inventory for hamper #%d. No items were removed.\n", i + 1);
+
+                ArrayList<String> shortages = new ArrayList<>();
+                if (maxValues[0] < reqValues[0]) shortages.add("Whole grains");
+                if (maxValues[1] < reqValues[1]) shortages.add("Fruits and veggies");
+                if (maxValues[2] < reqValues[2]) shortages.add("Protein");
+                if (maxValues[3] < reqValues[3]) shortages.add("Other");
+
+                System.out.printf("Inventory has insufficient nutrients of the following category/categories: %s\n", shortages.toString());
+                System.out.printf("No items were removed.\n");
+
                 return false;
             }
         }
@@ -69,7 +89,7 @@ public class Inventory {
             }
         }
 
-        System.out.println("Order fulfilled. Items removed from inventory.\n");
+        System.out.println("Order fulfilled.\n Items removed from inventory.\n");
         return true;
     }
     
@@ -99,7 +119,7 @@ public class Inventory {
         currValues[3] += other;
         
         // If currComb meets requirements
-        if ((currValues[0] >= reqValues[0] && currValues[1] >= reqValues[1] && currValues[2] >= reqValues[2] && currValues[3] >= reqValues[3])) {
+        if (currValues[0] >= reqValues[0] && currValues[1] >= reqValues[1] && currValues[2] >= reqValues[2] && currValues[3] >= reqValues[3]) {
             // If bestComb doesn't exist or currComb's waste is less than minWaste, replace bestComb
             int currWaste = currValues[0] - reqValues[0] + currValues[1] - reqValues[1] + currValues[2] - reqValues[2] + currValues[3] - reqValues[3];
             
@@ -146,10 +166,6 @@ public class Inventory {
         return foodItems;
     }
     
-    public void printShortages() throws InsufficientInventoryException {
-        throw new InsufficientInventoryException();
-    }
-
     // REMOVE BEFORE SUBMITTING ----------------------------------------
     public static void main(String[] args) {
         Inventory inventory = new Inventory();
@@ -158,7 +174,7 @@ public class Inventory {
         Hamper hamper1 = new Hamper();
         // hamper1.addClient(ClientType.ADULT_MALE, 1);
         // hamper1.addClient(ClientType.ADULT_FEMALE, 1);
-        hamper1.addClient(ClientType.CHILD_UNDER_8, 1);
+        hamper1.addClient(ClientType.CHILD_UNDER_8, 20);
         hamper1.addClient(ClientType.CHILD_OVER_8, 1);
         hampers.add(hamper1);
         // Hamper hamper2 = new Hamper();
