@@ -124,7 +124,21 @@ public class Database{
      * @param ID - the ID of the item to be deleted
      */
     public void removeItem(int ID) {
+        try {
+            String query = "DELETE FROM food_inventory.available_food WHERE ItemID = ?";
+            PreparedStatement myStmt = dbConnect.prepareStatement(query);
 
+            myStmt.setString(1, Integer.toString(ID));
+
+            int rowCount = myStmt.executeUpdate();
+            if (rowCount < 1){
+                throw new SQLException();
+            }
+                        
+            myStmt.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
     
     /* Closes the Connection and ResultSet */
