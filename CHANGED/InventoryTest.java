@@ -6,22 +6,6 @@ public class InventoryTest {
 
      /* INVENTORY TESTS */
 
-    // test that printShortages throws a proper exception
-    // InsufficientInventoryException() (Custom exception)
-    @Test
-    public void testPrintShortagesThrowsInsufficientInventoryException(){        
-        boolean exceptionThrown = false;
-        try{
-            Inventory inventory = new Inventory();
-            inventory.printShortages();
-        } catch(InsufficientInventoryException e){
-            exceptionThrown = true;
-        }
-
-        assertTrue("printShortages did not throw an InsufficientInventoryException when tested with insuffienct foods in ArrayList"
-            , exceptionThrown);
-    }
-
     // test the getter and validateOrder function
     // validateOrder() should populate the FoodItem ArrayList
     // getFoodItems() should return the FoodItem ArrayList
