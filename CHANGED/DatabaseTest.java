@@ -2,14 +2,9 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-public class DatabaseTest {
-    private Application app;
 
-    @Before
-    public void setUp() {
-        app = new Application();
-    }
+public class DatabaseTest {
+    
      /* DATABASE TESTS */
 
     // Database() is used to create a Database object

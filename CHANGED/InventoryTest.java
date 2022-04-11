@@ -1,16 +1,8 @@
 import org.junit.*;
 import static org.junit.Assert.*;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 public class InventoryTest {
 
-    private Application app;
-
-    @Before
-    public void setUp() {
-        app = new Application();
-    }
 
      /* INVENTORY TESTS */
 

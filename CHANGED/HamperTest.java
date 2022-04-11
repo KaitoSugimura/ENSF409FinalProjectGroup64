@@ -1,17 +1,12 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 
 public class HamperTest {
 
-    private Application app;
-
-    @Before
-    public void setUp() {
-        app = new Application();
-    }
+  
 
      /* HAMPER TESTS */
 
