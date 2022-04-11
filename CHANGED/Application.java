@@ -13,7 +13,6 @@ import java.util.*;
  * Option to add remove Hampers/Clients
  * Overrides toString()
  */
-
 public class Application {
 
     private ArrayList<Hamper> hampers = new ArrayList<>();
@@ -63,7 +62,7 @@ public class Application {
      * @param i-index where the hamper to which we want to add client resides
      * @param bodyType- the body type of the client we want to add to the hamper
      * @param quantity- the number of clients of the specified body type we want to add
-    */
+     */
     public void addClient(int i, ClientType bodyType, int quantity){
         this.hampers.get(i).addClient(bodyType, quantity);
     }
@@ -83,6 +82,7 @@ public class Application {
     public void resetApplication() {
         this.hampers = new ArrayList<>();
     }
+
     /**
      * Writes out the order based on the hampers in member variable hampers to a text file
      * Throws HamperHasNoClientsException if member variable hampers is empty or if any hamper present in member variable hampers is empty
@@ -101,6 +101,7 @@ public class Application {
 
         OrderForm.printOrder(this.hampers);
     }
+
     /**
      * Returns member variable hampers
      * @return hampers ArrayList
@@ -108,6 +109,7 @@ public class Application {
     public ArrayList<Hamper> getHampers(){
         return hampers;
     }
+
     /**
      * Converts the Hampers present into a deatiled list of clients
      * @return String list
@@ -131,6 +133,4 @@ public class Application {
         }
         return builder.toString();
     }
-
-
 }

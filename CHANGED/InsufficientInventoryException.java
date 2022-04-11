@@ -4,7 +4,7 @@
 @since 1.0
 */
 
-/*
+/**
  * Throws an exception for cases when there are not enough
  * items in the inventory for the attempted operations.
  */

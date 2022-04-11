@@ -9,7 +9,7 @@ import java.util.*;
 
 /*
  * Class that deals with connections between the database and program.
-*/
+ */
 public class Database{
     //Fields
     public final String DBURL;
@@ -141,7 +141,7 @@ public class Database{
         }
     }
     
-    /* Closes the Connection and ResultSet */
+    /** Closes the Connection and ResultSet */
     public void close() {
         try {
             results.close();
@@ -150,5 +150,4 @@ public class Database{
             e.printStackTrace();
         }              
     }
-
 }

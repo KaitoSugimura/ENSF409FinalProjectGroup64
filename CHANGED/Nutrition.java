@@ -6,7 +6,7 @@
 
 import java.sql.SQLException;
 
-/*
+/**
  * Extended by client and food item to store common nutrition values and methods
  * shared between the two.
  */

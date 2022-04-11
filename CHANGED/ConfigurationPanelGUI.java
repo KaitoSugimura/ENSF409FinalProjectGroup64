@@ -20,7 +20,8 @@ public class ConfigurationPanelGUI {
     /** Class to create Card Panels
      *  Card panel are each of the panels in the Right center that contains
      *  A text field where users enter in each specific client type amount
-     *  Contains a error message that appears once the User enters a non integer */
+     *  Contains a error message that appears once the User enters a non integer 
+     */
     private class CardPanel{
 
         private JPanel card;
@@ -163,5 +164,4 @@ public class ConfigurationPanelGUI {
     public String getFemaleText(){ return adultFemaleText.getText(); }
     public String getChildOver8Text(){ return childOver8Text.getText(); }
     public String getChildUnder8Text(){ return childUnder8Text.getText(); }
-
 }

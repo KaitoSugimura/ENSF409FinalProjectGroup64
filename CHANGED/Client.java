@@ -4,10 +4,10 @@
 @since 1.0
 */
 
-/*
+/**
  * class to create the Client data type
  * Extends Nutrition and holds data for ClientType's nutritional values
-*/
+ */
 public class Client extends Nutrition {
 
     private final ClientType TYPE;

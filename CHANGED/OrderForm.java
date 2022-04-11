@@ -7,7 +7,7 @@
 import java.io.*;
 import java.util.*;
 
-/*
+/**
  * Helper class
  * Writes an orderform to text file
  */

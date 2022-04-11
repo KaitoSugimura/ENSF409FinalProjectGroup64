@@ -4,7 +4,7 @@
 @since 1.0
 */
 
-/*
+/**
  * Throws exception for cases where a hamper is expected
  * to have clients but has none.
  */

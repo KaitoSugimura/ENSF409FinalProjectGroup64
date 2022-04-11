@@ -4,7 +4,7 @@
 @since 1.0
 */
 
-/*
+/**
  * Fooditem represents the various fooditems contained within the inventory
  * and extends nutrition to hold the nutrition values of each food.
  */

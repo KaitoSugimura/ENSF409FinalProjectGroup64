@@ -6,7 +6,7 @@
 
 /*
  * enumerator ClientType - enum used to validate the constant client types for the Client class.
-*/
+ */
 public enum ClientType {
     ADULT_MALE{
         @Override
@@ -33,7 +33,6 @@ public enum ClientType {
         }
     };
 
-    //Methods
     /**
      * toString - returns the type name as a string.
      */

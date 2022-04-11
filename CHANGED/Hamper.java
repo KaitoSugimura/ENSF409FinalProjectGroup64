@@ -6,7 +6,8 @@
 
 import java.util.*;
 
-/* Hamper class
+/**
+ * Hamper class
  * Contains data for a given order's hampers.
  * that is ArrayList of calculated foodItems and specified Clients
  */
@@ -76,6 +77,13 @@ public class Hamper {
         return myFoodCount;
     }
 
+    /**
+     * Removes all clients linked to hamper
+     */
+    public void removeAllClients(){
+        this.clients = new ArrayList<>();
+    }
+
     // getters
     public ArrayList<FoodItem> getItems(){
         return this.foodItems;
@@ -83,12 +91,5 @@ public class Hamper {
 
     public ArrayList<Client> getClients(){
         return this.clients;
-    }
-
-    /**
-     * Removes all clients linked to hamper
-     */
-    public void removeAllClients(){
-        this.clients = new ArrayList<>();
     }
 }

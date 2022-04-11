@@ -171,5 +171,4 @@ public class Inventory {
         double elapsedTime = (System.nanoTime() - startTime) / 1E9;
         System.out.printf("Elapsed time: %f seconds\n", elapsedTime);
     }
-
 }
