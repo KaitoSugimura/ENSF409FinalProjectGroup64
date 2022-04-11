@@ -118,6 +118,14 @@ public class Database{
 
         return foodItems;
     }
+
+    /** 
+     * Removes the food items with the matching ID from the databse
+     * @param ID - the ID of the item to be deleted
+     */
+    public void removeItem(int ID) {
+
+    }
     
     /* Closes the Connection and ResultSet */
     public void close() {

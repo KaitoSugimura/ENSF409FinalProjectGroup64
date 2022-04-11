@@ -60,7 +60,13 @@ public class Inventory {
                 System.out.printf("Insufficient inventory for hamper #%d. No items were removed.\n", i + 1);
                 return false;
             }
+        }
 
+        // Update database
+        for (Hamper hamper: hampers) {
+            for (FoodItem item: hamper.getItems()) {
+                database.removeItem(item.getItemID());
+            }
         }
 
         System.out.println("Order fulfilled. Items removed from inventory.\n");
