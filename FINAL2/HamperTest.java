@@ -63,5 +63,64 @@ public class HamperTest {
 
 		assertFalse("removeClient() threw an unknown error when called on empty hamper", exceptionThrown);
 	}
-    
+	
+	//resetItems() should replace the current FoodItem ArrayList with an empty one
+	//Checks if the ArrayList is empty after resetting
+	@Test
+	public void testResetItems(){
+		Hamper hamper=new Hamper();
+		ArrayList<FoodItem> testItems = new ArrayList<>();
+        	FoodItem food = new FoodItem(0,"default",0,0,0,0,0);
+		testItems.add(food);
+		hamper.setItems(testItems);
+		hamper.resetItems();
+		boolean empty=false;
+		ArrayList<FoodItem> newItems=hamper.getItems();
+		if(newItems.isEmpty()){
+			empty=true;
+		}
+		assertTrue("resetItems() did not overwrite the FoodItem ArrayList with an empty one",empty);
+	}
+	
+	//getClientCount() should return an array containing the correct number of a type of client to its corresponding index
+	//Adult male count at index 0
+	//Adult Female count at index 1
+	//Child Over 8 count at index 2
+	//Child under 8 count at index 3
+	@Test
+	public void testGetClientCountWithOnlyAdultMaleClient(){
+		Hamper hamper = new Hamper();
+		int expected=10;
+		hamper.addClient(ClientType.ADULT_MALE, expected);
+		int[] result=hamper.getClientCount();
+		int maleCount=result[0];
+		boolean equals=false;
+		assertEquals("getClientCount() did not return the expected value for Adult Male clients",expected,maleCount);
+		assertEquals("getClientCount() returned a value for Adult Female count when no Adult Females were passed to the hamper",0,result[1]);
+		assertEquals("getClientCount() returned a value for Child Over 8 count when no Children over 8 were passed to the hamper",0,result[2]);
+		assertEquals("getClientCount() returned a value for Child under 8 count when no Children under 8 were passed to the hamper",0,result[3]);
+	}
+	
+	//Testing the same method as above but with every type of client present in the hamper
+	@Test
+	public void testGetClientCountWithEveryClient(){
+		Hamper hamper = new Hamper();
+		int expectedM=10;
+		hamper.addClient(ClientType.ADULT_MALE, expectedM);
+		int expectedF=5;
+		hamper.addClient(ClientType.ADULT_FEMALE, expectedF);
+		int expectedO=7;
+		hamper.addClient(ClientType.CHILD_OVER_8, expectedO);
+		int expectedU=2;
+		hamper.addClient(ClientType.CHILD_UNDER_8, expectedU);
+		int[] result=hamper.getClientCount();
+		int maleCount=result[0];
+		int femaleCount=result[1];
+		int childOverCount=result[2];
+		int childUnderCount=result[3];
+		assertEquals("getClientCount() did not return the expected value for Adult Male clients",expectedM,maleCount);
+		assertEquals("getClientCount() did not return the expected value for Adult Female clients",expectedF,femaleCount);
+		assertEquals("getClientCount() did not return the expected value for clients who are children over 8",expectedO,childOverCount);
+		assertEquals("getClientCount() did not return the expected value for clients who are children under 8",expectedU,childUnderCount);
+	}
 }
