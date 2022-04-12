@@ -6,7 +6,7 @@ public class NutritionTest {
     /* NUTRITION TESTS */
 
     // Creates food item and client and tests return whole grains
-    // Since FoodItem and Client extends Nutrition and both calls the Nutrition Constructor this is testing both Nutrition Constructors 
+    // Since FoodItem and Client extends Nutrition and both of their constructors calls the Nutrition Constructor this is, in actuality, testing both Nutrition Constructors 
     @Test
     public void testAddGetWholeGrains(){
         int expected = 300;
@@ -33,6 +33,7 @@ public class NutritionTest {
     }
 
     //Creates food item  and client and tests return Fruits and veggies
+   // Since FoodItem and Client extends Nutrition and both of their constructors calls the Nutrition Constructor this is, in actuality, testing both Nutrition Constructors 
     @Test
     public void testAddGetFruitsVeggies(){
         int expected = 700;
@@ -46,6 +47,7 @@ public class NutritionTest {
     }
 
     //Creates food item  and client and tests return protein
+   // Since FoodItem and Client extends Nutrition and both of their constructors calls the Nutrition Constructor this is, in actuality, testing both Nutrition Constructors 
     @Test
     public void testAddGetProtein(){
         int expected = 300;
@@ -59,6 +61,7 @@ public class NutritionTest {
     }
 
     //Creates food item  and client and tests return other
+   // Since FoodItem and Client extends Nutrition and both of their constructors calls the Nutrition Constructor this is, in actuality, testing both Nutrition Constructors 
     @Test
     public void testAddGetother(){
         int expected = 700;
@@ -72,6 +75,7 @@ public class NutritionTest {
     }
 
     //Creates food item  and client and tests return calories
+   // Since FoodItem and Client extends Nutrition and both of their constructors calls the Nutrition Constructor this is, in actuality, testing both Nutrition Constructors 
     @Test
     public void testAddGetCalories(){
         int expected = 5678;
