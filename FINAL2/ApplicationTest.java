@@ -16,6 +16,8 @@ public class ApplicationTest {
 
     /* APPLICATION TESTS */
 
+    
+
     // addHamper() is used to add a hamper.
     // getHampers() returns an ArrayList which contains the added hamper.
     // Add a hamper and should get a hamper
@@ -131,5 +133,28 @@ public class ApplicationTest {
         assertTrue("requestOrderForm() did not remove client when none existed"
             , exceptionThrown);
     } 
+
+    //toString() used to return a string in the proper format to be written to an output file.
+    //toString returns string in correct format.
+    @Test
+    public void testToString(){
+        Application testApp = new Application();
+        testApp.addHamper();
+        testApp.addClient(0, ClientType.ADULT_FEMALE, 2);
+        String actual = "";
+        
+        try {
+            testApp.calculateOrder();
+            actual = testApp.toString();
+            
+        } catch (Exception e) {
+            System.out.println("An exception occured during the test setup!");
+        }
+        String expected = "64 Food Bank\nHamper Order Form\n\nName:\nDate:\n\nOriginal Request\n\nHamper1: 2 Adult Females, \n\nHamper 1 Items:\n1\tTuna, six large cans\n1\tChicken breast, pound\n2\tBroccoli, 3 bunches\n1\tGranola Bar, box\n1\tChicken broth, can";  
+        expected = expected.trim();
+        actual = actual.trim();
+        assertEquals("The string was not returned in the proper format!",expected, actual);
+    }
+    
 
 }
