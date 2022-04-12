@@ -4,11 +4,11 @@ import static org.junit.Assert.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.nio.Buffer;
 import java.util.ArrayList;
 public class OrderFormTest {
     ArrayList<Hamper> myhampers = new ArrayList<>();
 
+    //Set up hampers for testing
     @Before
     public void setUp() {
         ArrayList<Hamper> myhampers = new ArrayList<>();
