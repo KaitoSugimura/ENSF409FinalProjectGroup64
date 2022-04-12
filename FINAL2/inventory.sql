@@ -24,10 +24,11 @@ CREATE TABLE DAILY_CLIENT_NEEDS (
 
 INSERT INTO DAILY_CLIENT_NEEDS (Client, WholeGrains, FruitVeggies, Protein, Other, Calories)
 VALUES
-('Adult Male',	16,	28,	26,	30,	2500),
-('Adult Female', 16, 28, 26, 30, 2000),
-('Child over 8', 21, 33, 31, 15, 2200),
-('Child under 8', 21, 33, 31, 15, 1400);
+-- All calorie totals divided by 10 for testing
+('Adult Male',	16,	28,	26,	30,	250), 
+('Adult Female', 16, 28, 26, 30, 200),
+('Child over 8', 21, 33, 31, 15, 220),
+('Child under 8', 21, 33, 31, 15, 140);
 
 DROP TABLE IF EXISTS AVAILABLE_FOOD;
 CREATE TABLE AVAILABLE_FOOD (
