@@ -1,0 +1,70 @@
+import org.junit.*;
+import static org.junit.Assert.*;
+
+import java.sql.SQLException;
+
+public class DatabaseTest {
+    
+     /* DATABASE TESTS */
+
+    // Database() is used to create a Database object
+    // initializeConnection() should not throw an exception for a valid URL and credentials
+    @Test
+    public void testInitializeConnectionValidURLAndCredentials() {
+        Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
+        Boolean exceptionThrown = false;
+        try {
+            database.initializeConnection();
+        } catch (SQLException e) {
+            exceptionThrown = true;
+        }
+
+        assertFalse("initializeConnect() threw an exception for a valid URL and credentials", exceptionThrown);
+    }
+
+    // Database() is used to create a Database object
+    // initializeConnection() should throw an exception for an invalid URL and credentials
+    @Test
+    public void testInitializeConnectionInvalidURLAndCredentialsThrowsException() {
+        Database database = new Database("bad_URL", "bad_username", "bad_password");
+        Boolean exceptionThrown = false;
+        try {
+            database.initializeConnection();
+        } catch (SQLException e) {
+            exceptionThrown = true;
+        }
+
+        assertTrue("initializeConnect() did not throw an exception for an invalid URL and credentials", exceptionThrown);
+    }
+
+    // Database() is used to create a Database object
+    // getUsername() should return the username given in the constructor
+    @Test
+    public void testGetUsername() {
+        Database database = new Database("jdbc:mysql://localhost/available_food", "student", "ensf");
+        String expected = "student";
+        String actual = database.getUsername();
+        assertEquals("getUsername() did not return the correct username", expected, actual);
+    }
+
+    // Database() is used to create a Database object
+    // getPassword() should return the password given in the constructor
+    @Test
+    public void testGetPassword() {
+        Database database = new Database("jdbc:mysql://localhost/available_food", "student", "ensf");
+        String expected = "ensf";
+        String actual = database.getPassword();
+        assertEquals("getPassword() did not return the correct password", expected, actual);
+    }
+
+    // Database() is used to create a Database object
+    // getClientValues() should return the password given in the constructor
+    @Test
+    public void testGetClientValues() {
+        Database database = new Database("jdbc:mysql://localhost/available_food", "student", "ensf");
+        String expected = "ensf";
+        String actual = database.getPassword();
+        assertEquals("getPassword() did not return the correct password", expected, actual);
+    }
+    
+}
