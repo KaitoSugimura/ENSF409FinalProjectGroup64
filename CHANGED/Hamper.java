@@ -36,7 +36,10 @@ public class Hamper {
      * @param bodyType ClientType enum body type
      * @param quantity amount of add
      */
-    public void addClient(ClientType bodyType, int quantity){
+    public void addClient(ClientType bodyType, int quantity) throws IllegalArgumentException{
+        if(quantity < 0){
+            throw new IllegalArgumentException();
+        }
         for(int i = 0; i < quantity; i++){
             // this.clients.addAll(Collections.nCopies(new Client(bodyType), quantity));
             this.clients.add(new Client(bodyType));
