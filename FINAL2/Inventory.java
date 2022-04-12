@@ -108,6 +108,7 @@ public class Inventory {
         int other = item.getOther();
 
         // Update currValues
+        currComb.add(item);
         currValues[0] += wholeGrains;
         currValues[1] += fruitsVeggies;
         currValues[2] += protein;
@@ -123,6 +124,7 @@ public class Inventory {
                 bestComb = new ArrayList<>(currComb);
                 minWaste = currWaste;
             } else {
+                currComb.remove(item);
                 currValues[0] -= wholeGrains;
                 currValues[1] -= fruitsVeggies;
                 currValues[2] -= protein;
@@ -131,7 +133,6 @@ public class Inventory {
             }
         }
         
-        currComb.add(item);
         for (int i = pos + 1; i < foodItems.size(); i++) {
             bestComb = combinations(currComb, bestComb, currValues, reqValues, i);
         }
@@ -176,7 +177,7 @@ public class Inventory {
     public void convertDatabaseToFoodItemsList() {
         this.foodItems = database.getFoodValues();
         // FOR TESTING PURPOSES: keeps only a few items in foodItems
-        foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 30));
+        foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 20));
     }
 
     /**
