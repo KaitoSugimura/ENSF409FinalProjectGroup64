@@ -1,7 +1,10 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.nio.Buffer;
 import java.util.ArrayList;
 public class OrderFormTest {
     ArrayList<Hamper> myhampers = new ArrayList<>();
@@ -48,5 +51,23 @@ public class OrderFormTest {
         assertEquals("File was not created as expected",expected, actual);
 
     }
-    
+
+    //Tests Output File format
+    @Test
+    public void testOutputFileFormat(){
+        String expected = "64 Food Bank\nHamper Order Form\n\nName:\nDate:\n\nOriginal Request\n\nHamper1: 2 Adult Males, 2 Adult Females, 2 Children Over 8, 2 Children Under 8 \nHamper2:\n\nHamper 1 Items:\n1\tBurger\n2\tLettuce\n1\tPeanutButter\n\nHamper 2 Items:\n1\tBurger\n2\tLettuce\n1\tPeanutButter";
+        String actual = "";
+        try {
+            File file = new File("OrderForm.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String st="";
+            while((st=br.readLine())!= null){
+                actual += st;
+            }
+            assertEquals("Output file was not formated as expected",expected, actual);
+            
+        } catch (Exception e) {
+            System.out.println("There was an error opening the file!");
+        }
+    }
 }
