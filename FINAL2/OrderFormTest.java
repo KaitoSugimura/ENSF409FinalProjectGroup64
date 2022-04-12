@@ -1,9 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.util.Scanner;
 public class OrderFormTest {
     
@@ -25,9 +23,10 @@ public class OrderFormTest {
         
     }
 
-    /* OrderForm TESTS */
+    /* ORDERFORM TESTS */
 
-    //Creates order form txt file
+    // printOrder is used to create and OrderForm txt file
+    //A file OrderForm.txt should be created.
     @Test
     public void testOrderFormTextFileCreated(){
         
@@ -38,6 +37,8 @@ public class OrderFormTest {
 
     }
 
+    // printOrder is used to create and OrderForm txt file
+    //A file OrderForm.txt should be created in the correct format.
     @Test
     public void testOrderFormFormat(){
         String expected = "64 Food Bank\nHamper Order Form\n\nName:\nDate:\n\nOriginal Request\n\nHamper1: 2 Adult Females, \n\nHamper 1 Items:\n1\tTuna, six large cans\n1\tChicken breast, pound\n2\tBroccoli, 3 bunches\n1\tGranola Bar, box\n1\tChicken broth, can"; 
