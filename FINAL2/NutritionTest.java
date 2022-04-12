@@ -13,7 +13,20 @@ public class NutritionTest {
         int actual = myItem.getWholeGrains();
         assertEquals("FoodItem fails to correctly add/or get Wholegrains", expected, actual);
         Client client= new Client(ClientType.ADULT_MALE);
+       //TO BE CHECKED
         expected = 16; // Constant from database
+        Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
+        
+        try {
+            database.initializeConnection();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        int[] nutValues = database.getClientValues(bodyType.toString());
+        //expected=nutValues[0];
+        int calories=nutValues[4]*7;
+        expected = (int)Math.ceil(nutValues[0] / 100.0 * calories);
         actual = client.getWholeGrains();
         assertEquals("Client fails to correctly add/or get Wholegrains", expected, actual);
     }
