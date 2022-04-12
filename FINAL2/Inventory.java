@@ -19,13 +19,12 @@ public class Inventory {
 
     /**
      * Fills the hampers with food satisfying their nutritional requirements, minimizing waste
-     * If successful, moves items from inventory to hampers and returns true
-     * If inventory is insufficient throws exception
+     * If successful, moves items from inventory to hampers
+     * If inventory is insufficient, throws exception
      * @param hampers - ArrayList containing all hampers which we need to make the order for
-     * @return true if successful, false otherwise
      * @throws InsufficientInventoryException
      */
-    public boolean validateOrder(ArrayList<Hamper> hampers) throws InsufficientInventoryException {
+    public void validateOrder(ArrayList<Hamper> hampers) throws InsufficientInventoryException {
         try {
             database.initializeConnection();
         } catch(SQLException e){
@@ -34,10 +33,10 @@ public class Inventory {
 
         convertDatabaseToFoodItemsList();
 
-        for (int i = 0; i < hampers.size(); i++) {
+        for (Hamper hamper: hampers) {
             // Calculate required nutrition
             int[] reqValues = new int[]{0,0,0,0};
-            for (Client client: hampers.get(i).getClients()) {
+            for (Client client: hamper.getClients()) {
                 reqValues[0] += client.getWholeGrains();
                 reqValues[1] += client.getFruitVeggies();
                 reqValues[2] += client.getProtein();
@@ -64,7 +63,7 @@ public class Inventory {
                 }
 
                 // Add items to hamper and remove from inventory
-                hampers.get(i).setItems(bestComb);
+                hamper.setItems(bestComb);
                 foodItems.removeAll(bestComb);
 
             } else { // If no combination can meet the requirements, put all items back in inventory and report shortages before returning false
@@ -87,7 +86,6 @@ public class Inventory {
         hampersToRemove = hampers;
 
         System.out.println("Order fulfilled.\n Items removed from inventory.\n");
-        return true;
     }
     
     /** 
