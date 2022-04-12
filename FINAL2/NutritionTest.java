@@ -15,7 +15,7 @@ public class NutritionTest {
         assertEquals("FoodItem fails to correctly add/or get Wholegrains", expected, actual);
         Client client= new Client(ClientType.ADULT_MALE);
        //TO BE CHECKED
-        expected = 16; // Constant from database
+        //expected = 16; // Constant from database
         Database database = new Database("jdbc:mysql://localhost/food_inventory", "student", "ensf");
         
         try {
