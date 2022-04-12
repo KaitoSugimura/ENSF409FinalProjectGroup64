@@ -28,6 +28,8 @@ public class InventoryTest {
         assertNotNull("getFoodItems returns null even after order is validated", check);
     }
 
+    // validateOrder() should populate the FoodItem ArrayList
+    // test that that an exception is thrown when insufficient items are present in the inventory
     @Test
     public void testValidateOrderThrowsInsufficientInventoryException(){
         ArrayList<Hamper> list = new ArrayList<>();
@@ -45,27 +47,5 @@ public class InventoryTest {
         assertTrue("validateOrder did not throw InsufficientInventoryException when not enough fooditems in inventory"
             , exceptionThrown);
     }
-    
-    
-    /* INVENTORY TESTS */
 
-    // // test that printShortages throws a proper exception
-    // // InsufficientInventoryException() (Custom exception)
-    // @Test
-    // public void testPrintShortagesThrowsInsufficientInventoryException(){
-    //     boolean exceptionThrown = false;
-    //     try{
-    //         Inventory inventory = new Inventory();
-    //         inventory.printShortages();
-    //     } catch(InsufficientInventoryException e){
-    //         exceptionThrown = true;
-    //     }
-
-    //     assertTrue("printShortages did not throw an InsufficientInventoryException when tested with insuffienct foods in ArrayList"
-    //         , exceptionThrown);
-    // }
-
-    // test the getter and validateOrder function
-    // validateOrder() should populate the FoodItem ArrayList
-    // getFoodItems() should return the FoodItem ArrayList
 }
