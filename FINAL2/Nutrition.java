@@ -37,11 +37,11 @@ public abstract class Nutrition {
         int[] nutValues = database.getClientValues(bodyType.toString());
         
         // Calculate values from the percentage and total calories
-        this.WHOLE_GRAINS = (int)Math.ceil(nutValues[0] / 100.0 * nutValues[4]);
-        this.FRUIT_VEGGIES = (int)Math.ceil(nutValues[1] / 100.0 * nutValues[4]);
-        this.PROTEIN = (int)Math.ceil(nutValues[2] / 100.0 * nutValues[4]);
-        this.OTHER = (int)Math.ceil(nutValues[3] / 100.0 * nutValues[4]);
-        this.CALORIES = nutValues[4];
+        this.CALORIES = nutValues[4] * 7;
+        this.WHOLE_GRAINS = (int)Math.ceil(nutValues[0] / 100.0 * CALORIES);
+        this.FRUIT_VEGGIES = (int)Math.ceil(nutValues[1] / 100.0 * CALORIES);
+        this.PROTEIN = (int)Math.ceil(nutValues[2] / 100.0 * CALORIES);
+        this.OTHER = (int)Math.ceil(nutValues[3] / 100.0 * CALORIES);
         
         database.close();
     }
