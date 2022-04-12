@@ -34,6 +34,7 @@ public class OrderFormTest {
 
         myhampers.add(hamper1);
         myhampers.add(hamper2);
+        OrderForm.printOrder(myhampers);
         
         
     }
@@ -43,7 +44,7 @@ public class OrderFormTest {
     //Creates order form txt file
     @Test
     public void testOrderFormTextFileCreated(){
-        OrderForm.printOrder(myhampers);
+        
         
         File f = new File("OrderForm.txt");
         boolean expected = true;
@@ -62,8 +63,9 @@ public class OrderFormTest {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String st="";
             while((st=br.readLine())!= null){
-                actual += st;
+                actual += st+"\n";
             }
+            
             assertEquals("Output file was not formated as expected",expected, actual);
             
         } catch (Exception e) {
