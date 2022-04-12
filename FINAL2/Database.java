@@ -123,22 +123,18 @@ public class Database{
      * Removes the food items with the matching ID from the databse
      * @param ID - the ID of the item to be deleted
      */
-    public void removeItem(int ID) {
-        try {
-            String query = "DELETE FROM food_inventory.available_food WHERE ItemID = ?";
-            PreparedStatement myStmt = dbConnect.prepareStatement(query);
+    public void removeItem(int ID) throws SQLException{
+        String query = "DELETE FROM food_inventory.available_food WHERE ItemID = ?";
+        PreparedStatement myStmt = dbConnect.prepareStatement(query);
 
-            myStmt.setString(1, Integer.toString(ID));
+        myStmt.setString(1, Integer.toString(ID));
 
-            int rowCount = myStmt.executeUpdate();
-            if (rowCount < 1){
-                throw new SQLException();
-            }
-                        
-            myStmt.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        int rowCount = myStmt.executeUpdate();
+        if (rowCount < 1){
+            throw new SQLException();
         }
+                    
+        myStmt.close();
     }
     
     /** Closes the Connection and ResultSet */

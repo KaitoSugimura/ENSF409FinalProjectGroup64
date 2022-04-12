@@ -155,7 +155,11 @@ public class Inventory {
         // Update database
         for (Hamper hamper: hampersToRemove) {
             for (FoodItem item: hamper.getItems()) {
-                database.removeItem(item.getItemID());
+                try{
+                    database.removeItem(item.getItemID());
+                } catch(SQLException e){
+                    System.out.println("The order has already removed");
+                }
             }
         }
     }
