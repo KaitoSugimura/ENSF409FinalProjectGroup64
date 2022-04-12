@@ -5,10 +5,11 @@ public class NutritionTest {
     /* NUTRITION TESTS */
 
     // Creates food item and client and tests return whole grains
+    // Since FoodItem and Client extends Nutrition and both calls the Nutrition Constructor this is testing both Nutrition Constructors 
     @Test
     public void testAddGetWholeGrains(){
-        int expected = 345;
-        FoodItem myItem = new FoodItem(42069, "Food?", 345, 456, 678, 7, 5678);
+        int expected = 300;
+        FoodItem myItem = new FoodItem(42069, "Food?", 30, 70, 0, 0, 1000);
         int actual = myItem.getWholeGrains();
         assertEquals("FoodItem fails to correctly add/or get Wholegrains", expected, actual);
         Client client= new Client(ClientType.ADULT_MALE);
@@ -20,8 +21,8 @@ public class NutritionTest {
     //Creates food item  and client and tests return Fruits and veggies
     @Test
     public void testAddGetFruitsVeggies(){
-        int expected = 456;
-        FoodItem myItem = new FoodItem(42069, "Food?", 345, 456, 678, 7, 5678);
+        int expected = 700;
+        FoodItem myItem = new FoodItem(42069, "Food?", 30, 70, 0, 0, 1000);
         int actual = myItem.getFruitVeggies();
         assertEquals("FoodItem fails to correctly add/or get FruitsVeggies", expected, actual);
         Client client= new Client(ClientType.ADULT_MALE);
@@ -33,8 +34,8 @@ public class NutritionTest {
     //Creates food item  and client and tests return protein
     @Test
     public void testAddGetProtein(){
-        int expected = 678;
-        FoodItem myItem = new FoodItem(42069, "Food?", 345, 456, 678, 7, 5678);
+        int expected = 300;
+        FoodItem myItem = new FoodItem(42069, "Food?", 0, 0, 30, 70, 1000);
         int actual = myItem.getProtein();
         assertEquals("FoodItem fails to correctly add/or get Protein", expected, actual);
         Client client= new Client(ClientType.ADULT_MALE);
@@ -46,14 +47,14 @@ public class NutritionTest {
     //Creates food item  and client and tests return other
     @Test
     public void testAddGetother(){
-        int expected = 7;
-        FoodItem myItem = new FoodItem(42069, "Food?", 345, 456, 678, 7, 5678);
+        int expected = 700;
+        FoodItem myItem = new FoodItem(42069, "Food?", 0, 0, 30, 70, 1000);
         int actual = myItem.getOther();
-        assertEquals("FoodItem fails to correctly add/or get other", expected, actual);
+        assertEquals("Nutrition through FoodItem fails to correctly add/or get other", expected, actual);
         Client client= new Client(ClientType.ADULT_MALE);
         expected = 30; //Constant from database
         actual = client.getOther();
-        assertEquals("Client fails to correctly add/or get other", expected, actual);
+        assertEquals("Nutrition through Client fails to correctly add/or get other", expected, actual);
     }
 
     //Creates food item  and client and tests return calories
