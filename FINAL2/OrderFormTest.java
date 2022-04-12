@@ -59,8 +59,8 @@ public class OrderFormTest {
             System.out.println("File error while running the test!");
         }
         System.out.println();
-        expected.trim();
-        actual.trim();
+        expected = expected.trim();
+        actual =actual.trim();
         assertEquals("File was not printed in the expected format!",expected, actual);
     }
     
