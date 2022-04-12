@@ -57,11 +57,11 @@ public abstract class Nutrition {
      */
     public Nutrition(int wholeGrains, int fruitVeggies, int protein, int other, int calories){
         // Calculate values from the percentage and total calories
-        this.WHOLE_GRAINS = (int)Math.ceil(wholeGrains / 100.0 * calories);
-        this.FRUIT_VEGGIES = (int)Math.ceil(fruitVeggies / 100.0 * calories);
-        this.PROTEIN = (int)Math.ceil(protein / 100.0 * calories);
-        this.OTHER = (int)Math.ceil(other / 100.0 * calories);
-        this.CALORIES = calories;
+        this.CALORIES = calories * 7;
+        this.WHOLE_GRAINS = (int)Math.ceil(wholeGrains / 100.0 * CALORIES);
+        this.FRUIT_VEGGIES = (int)Math.ceil(fruitVeggies / 100.0 * CALORIES);
+        this.PROTEIN = (int)Math.ceil(protein / 100.0 * CALORIES);
+        this.OTHER = (int)Math.ceil(other / 100.0 * CALORIES);
     }
 
     // Getters
