@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HamperTest {
 	
@@ -101,7 +102,7 @@ public class HamperTest {
 		assertEquals("getClientCount() returned a value for Child under 8 count when no Children under 8 were passed to the hamper",0,result[3]);
 	}
 	
-	//Testing the same method as above but with every type of client present in the hamper
+	//Testing getClientCount() but with every type of client present in the hamper
 	@Test
 	public void testGetClientCountWithEveryClient(){
 		Hamper hamper = new Hamper();
@@ -122,5 +123,39 @@ public class HamperTest {
 		assertEquals("getClientCount() did not return the expected value for Adult Female clients",expectedF,femaleCount);
 		assertEquals("getClientCount() did not return the expected value for clients who are children over 8",expectedO,childOverCount);
 		assertEquals("getClientCount() did not return the expected value for clients who are children under 8",expectedU,childUnderCount);
+	}
+	
+	//getFoodItemCount() should return the number of times a specific FoodItem appears in a hamper.
+	//In this test the FoodItem ArrayList in hamper only has one FoodItem in it.
+	@Test
+	public void testGetFoodItemCountOnlyOne(){
+		Hamper hamper=new Hamper();
+		ArrayList<FoodItem> testItems = new ArrayList<>();
+        	FoodItem food = new FoodItem(0,"default",0,0,0,0,0);
+		testItems.add(food);
+		hamper.setItems(testItems);
+		HashMap<String, Integer> foodCount=hamper.getFoodItemCount();
+		int defaultValue=foodCount.get("default");
+		assertEquals("getFoodItemCount() did not return 1 when hamper only has one FoodItem",1,defaultValue);
+	}
+	
+	//Testing getFoodItemCount() but with multiple FoodItems of varying frequency in the FoodItem ArrayList in the hamper
+	@Test
+	public void testGetFoodItemCountMany(){
+		Hamper hamper=new Hamper();
+		ArrayList<FoodItem> testItems = new ArrayList<>();
+        	FoodItem food = new FoodItem(0,"default",0,0,0,0,0);
+		testItems.add(food);
+		testItems.add(food);
+		int defaultExpected=2;
+		FoodItem food2 = new FoodItem(0,"random",0,0,0,0,0);
+		testItems.add(food2);
+		int randomExpected=1;
+		hamper.setItems(testItems);
+		HashMap<String, Integer> foodCount=hamper.getFoodItemCount();
+		int defaultValue=foodCount.get("default");
+		assertEquals("getFoodItemCount() did not return the expected value when hamper has multiple FoodItems",defaultExpected,defaultValue);
+		int randomValue=foodCount.get("random");
+		assertEquals("getFoodItemCount() did not return the expected value when hamper has multiple FoodItems",randomExpected,randomValue);
 	}
 }
