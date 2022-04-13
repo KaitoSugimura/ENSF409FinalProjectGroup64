@@ -1,3 +1,8 @@
+/**
+@author Danny Duong, Kaito Sugimura, Kevin Johnson, Joshua Walters
+@version 1.4
+@since 1.0
+*/
 import org.junit.*;
 import static org.junit.Assert.*;
 
