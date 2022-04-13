@@ -1,3 +1,8 @@
+/**
+@author Danny Duong, Kaito Sugimura, Kevin Johnson, Joshua Walters
+@version 1.9
+@since 1.0
+*/
 package edu.ucalgary.ensf409;
 
 import org.junit.*;
