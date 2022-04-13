@@ -16,12 +16,4 @@ public class InsufficientInventoryException extends Exception {
     public InsufficientInventoryException(){
         super("Insufficient resources in Inventory");
     }
-
-    /**
-     * Constructor
-     * Prints exception with custom message
-     */
-    public InsufficientInventoryException(String message){
-        super(message);
-    }
 }

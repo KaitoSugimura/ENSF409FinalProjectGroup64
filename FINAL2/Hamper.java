@@ -41,7 +41,6 @@ public class Hamper {
             throw new IllegalArgumentException();
         }
         for(int i = 0; i < quantity; i++){
-            // this.clients.addAll(Collections.nCopies(new Client(bodyType), quantity));
             this.clients.add(new Client(bodyType));
         }
     }

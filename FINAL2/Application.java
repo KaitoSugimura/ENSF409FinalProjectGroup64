@@ -19,10 +19,10 @@ public class Application {
     private Inventory inventory = new Inventory();
 
     /** 
-     * Constructor 
      * Calculates the order based off of the clients in the hamper. 
      * Throws HamperHasNoClientsException if there are no hampers or no clients in any of the hampers
      * @throws HamperHasNoClientsException
+     * @throws InsufficientInventoryException
      */
     public void calculateOrder() throws HamperHasNoClientsException, InsufficientInventoryException {
         if (hampers.isEmpty()) {
@@ -50,7 +50,7 @@ public class Application {
      * @param i specified removing index of Hamper ArrayList
      * @throws IllegalStateException
      */
-    public void removeHamper(int i) throws IllegalStateException{
+    public void removeHamper(int i) throws IllegalStateException {
         if (this.hampers.isEmpty() || i < 0 || i >= hampers.size()) {
             throw new IllegalStateException();
         }
@@ -59,7 +59,7 @@ public class Application {
     
     /** 
      * Adds a client to the Hamper present in private variable hampers at index i of hampers
-     * @param i-index where the hamper to which we want to add client resides
+     * @param i- index where the hamper to which we want to add client resides
      * @param bodyType- the body type of the client we want to add to the hamper
      * @param quantity- the number of clients of the specified body type we want to add
      */

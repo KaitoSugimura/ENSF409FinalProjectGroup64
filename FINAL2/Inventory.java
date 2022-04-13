@@ -180,8 +180,6 @@ public class Inventory {
      */ 
     public void convertDatabaseToFoodItemsList() {
         this.foodItems = database.getFoodValues();
-        // FOR TESTING PURPOSES: keeps only a few items in foodItems
-        foodItems = new ArrayList<FoodItem>(foodItems.subList(0, 20));
     }
 
     /**
@@ -191,5 +189,4 @@ public class Inventory {
     public ArrayList<FoodItem> getFoodItems(){
         return foodItems;
     }
-    
 }

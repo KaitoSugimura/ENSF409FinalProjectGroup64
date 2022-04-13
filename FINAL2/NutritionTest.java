@@ -29,7 +29,7 @@ public class NutritionTest {
             e.printStackTrace();
         }
         
-        int[] nutValues = database.getClientValues(bodyType.toString());
+        int[] nutValues = database.getClientValues(ClientType.ADULT_MALE.toString());
         //expected=nutValues[0];
         int calories=nutValues[4]*7;
         expected = (int)Math.ceil(nutValues[0] / 100.0 * calories);
